@@ -5,50 +5,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const esbuild = require('rollup-plugin-esbuild');
 const json = require('@rollup/plugin-json');
 const dts = require('rollup-plugin-dts');
-
-const NODEJS_EXTERNALS = [
-  'default',
-  'assert',
-  'async_hooks',
-  'async_hooks',
-  'buffer',
-  'child_process',
-  'cluster',
-  'console',
-  'crypto',
-  'diagnostics_channel',
-  'dns',
-  'domain',
-  'fs',
-  'fs/promises',
-  'http',
-  'http2',
-  'https',
-  'inspector',
-  'module',
-  'net',
-  'os',
-  'path',
-  'perf_hooks',
-  'process',
-  'punycode',
-  'querystring',
-  'readline',
-  'repl',
-  'stream',
-  'string_decoder',
-  'sys',
-  'timers',
-  'tls',
-  'trace_events',
-  'tty',
-  'url',
-  'util',
-  'v8',
-  'vm',
-  'worker_threads',
-  'zlib',
-];
+const { NODEJS_EXTERNALS } = require('@ui-library-architecture/builder-base');
 
 const rootPath = process.cwd();
 
@@ -71,7 +28,7 @@ const plugins = [
     target: 'es2015',
     tsconfig: path.resolve(rootPath, 'tsconfig.json'),
   }),
-].filter(Boolean)
+].filter(Boolean);
 
 /**
  * @type {import('rollup').RollupOptions[]}
