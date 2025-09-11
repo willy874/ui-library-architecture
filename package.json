@@ -5,7 +5,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
   "scripts": {
-    "setup": "bash scripts/setup.dev.sh"
+    "setup:dev": "bash scripts/setup.dev.sh",
+    "setup:prod": "bash scripts/setup.prod.sh"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -17,7 +18,10 @@
     }
   },
   "dependencies": {
+    "@prettier/plugin-oxc": "0.0.4",
     "@vitejs/plugin-react-oxc": "0.4.1",
+    "prettier": "3.6.2",
+    "prettier-plugin-rust": "0.1.9",
     "rolldown-vite": "7.1.8",
     "typescript": "5.9.2"
   }
