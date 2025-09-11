@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+  - apps/*
+
+catalog: null
+
+onlyBuiltDependencies: null
