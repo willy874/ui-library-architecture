@@ -1,0 +1,31 @@
+{
+  "name": "rollup-plugin-svgr",
+  "version": "1.0.0",
+  "main": "dist/main.common.js",
+  "types": "dist/main.d.ts",
+  "module": "dist/main.esm.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@rollup/pluginutils": "5.3.0",
+    "@svgr/core": "8.1.0",
+    "@svgr/plugin-jsx": "8.1.0",
+    "vite": "npm:rolldown-vite@7.1.8"
+  },
+  "peerDependencies": {
+    "esbuild": "0.25.9",
+    "rollup": "4.50.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "28.0.6",
+    "@rollup/plugin-json": "6.1.0",
+    "@rollup/plugin-node-resolve": "16.0.1",
+    "rollup-plugin-dts": "6.2.3",
+    "rollup-plugin-esbuild": "6.2.1",
+    "rollup-plugin-postcss": "4.0.2"
+  }
+}
