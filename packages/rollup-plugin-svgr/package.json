@@ -1,5 +1,5 @@
 {
-  "name": "rollup-plugin-svgr",
+  "name": "@ui-library-architecture/rollup-plugin-svgr",
   "version": "1.0.0",
   "main": "dist/main.common.js",
   "types": "dist/main.d.ts",
