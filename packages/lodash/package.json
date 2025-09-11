@@ -1,0 +1,13 @@
+{
+  "name": "@ui-library-architecture/lodash",
+  "version": "0.0.1",
+  "main": "index.common.js",
+  "module": "index.esm.js",
+  "types": "index.d.ts",
+  "dependencies": {
+    "@types/lodash": "4.17.20",
+    "@types/lodash-es": "4.17.12",
+    "lodash": "4.17.21",
+    "lodash-es": "4.17.21"
+  }
+}
