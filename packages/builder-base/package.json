@@ -1,0 +1,21 @@
+{
+  "name": "@ui-library-architecture/builder-base",
+  "version": "1.0.0",
+  "main": "dist/main.common.js",
+  "types": "dist/main.d.ts",
+  "module": "dist/main.esm.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "28.0.6",
+    "@rollup/plugin-node-resolve": "16.0.1",
+    "esbuild": "0.25.9",
+    "rollup": "4.50.1",
+    "rollup-plugin-dts": "6.2.3",
+    "rollup-plugin-esbuild": "6.2.1"
+  }
+}
