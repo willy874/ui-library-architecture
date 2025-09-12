@@ -6,7 +6,10 @@
   "packageManager": "pnpm@10.12.1",
   "scripts": {
     "setup:dev": "bash scripts/setup.dev.sh",
-    "setup:prod": "bash scripts/setup.prod.sh"
+    "setup:prod": "bash scripts/setup.prod.sh",
+    "pkg:build": "bash scripts/build.pkg.sh",
+    "pkg:watch": "bash scripts/watch.pkg.sh",
+    "reinstall": "bash scripts/reinstall.sh"
   },
   "engines": {
     "node": ">=22.0.0"

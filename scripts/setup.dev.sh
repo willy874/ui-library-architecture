@@ -1,2 +1,2 @@
 pnpm install
-pnpm --filter rollup-plugin-svgr build
+bash scripts/build.pkg.sh
