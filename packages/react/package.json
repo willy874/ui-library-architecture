@@ -1,0 +1,26 @@
+{
+  "name": "react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
+    "@vitejs/plugin-react": "npm:@vitejs/plugin-react-oxc@0.4.1",
+    "@ui-library-architecture/eslint-config": "workspace:*",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "typescript": "5.9.2",
+    "vite": "npm:rolldown-vite@7.1.8"
+  }
+}
