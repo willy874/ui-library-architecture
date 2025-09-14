@@ -31,7 +31,8 @@
 
     /* Path alias */
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "styled-system/*": ["src/styled-system/*"]
     }
   },
 
