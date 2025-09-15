@@ -16,6 +16,7 @@ coverage
 # production
 build
 dist
+storybook-static
 
 # misc
 .DS_Store
@@ -39,3 +40,7 @@ pnpm-lock.yaml
 # IDEs and editors
 .vscode
 !*.example
+
+# logs
+*storybook.log
+*.log
