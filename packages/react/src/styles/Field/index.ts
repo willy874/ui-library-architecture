@@ -10,34 +10,30 @@ const recipe = defineSlotRecipe({
       'flexDirection': 'column',
       'color': '{colors.input.text}',
       '& svg': {
-        fontSize: '1.5rem',
+        fontSize: '{lineHeights.md}',
       },
     },
     label: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '2',
-      mb: '3',
-      fontSize: 'md',
-      minWidth: '30%',
+      mb: '{spacing.3}',
+      fontSize: '{fontSizes.md}'
     },
     prefix: {
       display: 'flex',
       alignItems: 'center',
-      marginRight: '2',
+      marginRight: '{spacing.2}',
       flexShrink: 0,
     },
     suffix: {
       display: 'flex',
       alignItems: 'center',
-      marginLeft: '2',
+      marginLeft: '{spacing.2}',
       flexShrink: 0,
     },
     helper: {
       display: 'flex',
-      fontSize: 'sm',
-      padding: '1',
-      color: '{colors.slate.500}',
+      fontSize: '{fontSizes.sm}',
+      padding: '{spacing.1}',
+      color: '{slate.500}',
     },
     errorText: {
       color: '{colors.input.invalid}',
@@ -49,9 +45,9 @@ const recipe = defineSlotRecipe({
       my: '-2px',
       flexShrink: 0,
       cursor: 'pointer',
-      color: '{colors.slate.500}',
+      color: 'slate.500',
       _hover: {
-        color: '{colors.slate.700}',
+        color: 'slate.700',
       },
     },
     wrapper: {
@@ -59,12 +55,12 @@ const recipe = defineSlotRecipe({
       borderStyle: 'solid',
       display: 'flex',
       backgroundColor: 'white',
-      borderColor: '{colors.slate.300}',
-      borderRadius: 'xl',
+      borderColor: 'slate.300',
+      borderRadius: '{radii.xl}',
       minHeight: '{spacing.12}',
       _focusWithin: {
         outline: 'none',
-        borderColor: '{colors.sky.400}',
+        borderColor: 'sky.400',
         boxShadow: 'none',
       },
     },
@@ -92,8 +88,8 @@ const recipe = defineSlotRecipe({
       outlined: {
         wrapper: {
           'borderWidth': '1px',
-          'py': '3',
-          'px': '4',
+          'py': '{spacing.3}',
+          'px': '{spacing.4}',
           '&[data-invalid]': {
             borderColor: '{colors.input.invalid}',
             _focusWithin: {
