@@ -52,6 +52,6 @@ export function mergeProps(
       }
     });
   }
-  delete merged.children
+  Reflect.deleteProperty(merged, 'children')
   return merged;
 };
