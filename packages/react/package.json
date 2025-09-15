@@ -38,5 +38,14 @@
   },
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
-  "types": "dist/main.d.ts"
+  "types": "dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "require": "./dist/main.common.js",
+      "import": "./dist/main.esm.js"
+    },
+    "./styles": "./dist/styles.css",
+    "./package.json": "./package.json"
+  }
 }

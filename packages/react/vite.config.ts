@@ -32,6 +32,13 @@ const renderBanner = (fileName: string) => {
 
 const isSpecialFile = (file: ParsedPath) => ['index', 'styles', 'assets'].includes(file.name);
 
+const assetFileNames = (assetInfo: { name?: string }) => {
+  if (assetInfo.name?.endsWith('.css')) {
+    return 'styles.css';
+  }
+  return assetInfo.name || 'assets/[name].[ext]';
+};
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -69,6 +76,8 @@ export default defineConfig({
           exports: 'named',
           entryFileNames: '[name].cjs.js',
           banner: (x) => renderBanner(x.fileName),
+          assetFileNames,
+          inlineDynamicImports: true,
         },
         {
           format: 'es',
@@ -77,8 +86,17 @@ export default defineConfig({
           exports: 'named',
           entryFileNames: '[name].esm.js',
           banner: (x) => renderBanner(x.fileName),
+          assetFileNames,
+          inlineDynamicImports: true,
         },
       ],
+    },
+    cssCodeSplit: false,
+  },
+  resolve: {
+    alias: {
+      '@': resolve(rootPath, 'src'),
+      'styled-system': resolve(rootPath, 'src/styled-system'),
     },
   },
 });
