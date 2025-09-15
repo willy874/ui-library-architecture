@@ -3,9 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@chromatic-com/storybook": "4.1.1",
+    "@ui-library-architecture/eslint-config": "workspace:*",
+    "@storybook/addon-a11y": "9.1.5",
+    "@storybook/addon-docs": "9.1.5",
+    "@storybook/addon-vitest": "9.1.5",
+    "@storybook/react-vite": "9.1.5",
+    "storybook": "9.1.5",
+    "vitest": "3.2.4",
+    "@vitest/browser": "3.2.4",
+    "playwright": "1.55.0",
+    "@vitest/coverage-v8": "3.2.4"
+  }
 }
