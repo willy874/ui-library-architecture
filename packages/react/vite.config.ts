@@ -1,11 +1,11 @@
-import { resolve, parse } from 'node:path'
-import type { ParsedPath } from 'node:path'
-import { copyFileSync, readFileSync } from 'node:fs'
-import { defineConfig, withFilter } from 'vite'
-import { globbySync } from 'globby'
-import react from '@vitejs/plugin-react'
-import dts from 'vite-plugin-dts'
-import { NODEJS_EXTERNALS } from '@ui-library-architecture/builder-base'
+import { resolve, parse } from 'node:path';
+import type { ParsedPath } from 'node:path';
+import { copyFileSync, readFileSync } from 'node:fs';
+import { defineConfig, withFilter } from 'vite';
+import { globbySync } from 'globby';
+import react from '@vitejs/plugin-react';
+import dts from 'vite-plugin-dts';
+import { NODEJS_EXTERNALS } from '@ui-library-architecture/builder-base';
 
 const rootPath = process.cwd();
 
@@ -20,18 +20,17 @@ const external = [
 ];
 
 const renderBanner = (fileName: string) => {
-  const file = parse(fileName)
+  const file = parse(fileName);
   if (/\.(server|action)\.tsx?/.test(file.name)) {
-    return `'use server';`
+    return `'use server';`;
   }
   if (isSpecialFile(file)) {
-    return ''
+    return '';
   }
-  return `'use client';`
-}
+  return `'use client';`;
+};
 
-const isSpecialFile = (file: ParsedPath) =>  ['index', 'styles', 'assets'].includes(file.name)
-
+const isSpecialFile = (file: ParsedPath) => ['index', 'styles', 'assets'].includes(file.name);
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -44,19 +43,19 @@ export default defineConfig({
         afterBuild: () => {
           globbySync(['dist/**/*.d.ts', 'dist/**.d.ts']).map((file) => {
             // support nodejs commonjs modules consumers
-            copyFileSync(file, file.replace(/\.d\.ts$/, '.d.cts'))
-          })
+            copyFileSync(file, file.replace(/\.d\.ts$/, '.d.cts'));
+          });
         },
       }),
-      { load: { id:  /\.(d\.)?[cm]?tsx?$/ } }
+      { load: { id: /\.(d\.)?[cm]?tsx?$/ } },
     ),
     react(),
   ],
   build: {
-    target: "ES2017",
+    target: 'ES2017',
     minify: false,
     lib: {
-      entry: globbySync(['src/**/index.ts']),
+      entry: globbySync(['src/main.ts', 'src/**/index.tsx?']),
       fileName: (format) => (format === 'es' ? 'index.esm.js' : 'index.cjs.js'),
     },
     rollupOptions: {
@@ -81,5 +80,5 @@ export default defineConfig({
         },
       ],
     },
-  }
-})
+  },
+});
