@@ -28,6 +28,7 @@
     "@types/react-dom": "19.1.7",
     "@ui-library-architecture/builder-base": "workspace:*",
     "@ui-library-architecture/eslint-config": "workspace:*",
+    "@ui-library-architecture/rollup-plugin-svgr": "workspace:*",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react-oxc@0.4.1",
     "globby": "14.1.0",
     "react": "18.3.1",

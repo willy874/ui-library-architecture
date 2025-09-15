@@ -6,6 +6,7 @@ import { globbySync } from 'globby';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { NODEJS_EXTERNALS } from '@ui-library-architecture/builder-base';
+import svgr from '@ui-library-architecture/rollup-plugin-svgr';
 
 const rootPath = process.cwd();
 
@@ -56,13 +57,19 @@ export default defineConfig({
       }),
       { load: { id: /\.(d\.)?[cm]?tsx?$/ } },
     ),
+    withFilter(
+      svgr({
+        esbuildOptions: { jsx: 'automatic' },
+      }),
+      { load: { id: /\.svg\?react$/ } },
+    ),
     react(),
   ],
   build: {
     target: 'ES2017',
     minify: false,
     lib: {
-      entry: globbySync(['src/main.ts', 'src/**/index.tsx?']),
+      entry: globbySync(['src/main.ts', 'src/**/index.ts']),
       fileName: (format) => (format === 'es' ? 'index.esm.js' : 'index.cjs.js'),
     },
     rollupOptions: {
