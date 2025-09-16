@@ -5,7 +5,7 @@ export const CustomInput: StoryObj = {
   render: () => {
     return (
       <Field.Root invalid>
-        <Field.Label>
+        <Field.Label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div>Label</div>
           <div style={{ flex: 1, textAlign: 'right' }}>
             <Field.ErrorText>Error Info</Field.ErrorText>
@@ -25,7 +25,7 @@ export const CustomInputLongMessage: StoryObj = {
     return (
       <div style={{ maxWidth: '300px' }}>
         <Field.Root invalid>
-          <Field.Label>
+          <Field.Label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <div>Label</div>
             <div style={{ flexGrow: 1, width: 0, textAlign: 'right' }}>
               <Field.ErrorText style={{ display: 'block' }}>
