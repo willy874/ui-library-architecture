@@ -1,5 +1,5 @@
-import { defineConfig } from '@pandacss/dev'
-import { createUIPreset } from './src/createPreset'
+import { defineConfig } from '@pandacss/dev';
+import { createUIPreset } from './src/createPreset';
 
 export default defineConfig({
   // Whether to use css reset
@@ -24,4 +24,8 @@ export default defineConfig({
 
   // The output directory for your css system
   outdir: 'src/styled-system',
-})
+
+  staticCss: {
+    recipes: '*',
+  },
+});

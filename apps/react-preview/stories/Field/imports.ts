@@ -1,2 +1,4 @@
-import '@ui-library-architecture/react/styles';
+import { setupStyles } from '@ui-library-architecture/react';
 export { Field } from '@ui-library-architecture/react';
+
+setupStyles();

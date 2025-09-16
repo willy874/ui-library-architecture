@@ -35,8 +35,28 @@ export const InputState: StoryObj = {
           </Field.Helper>
         </Field.Root>
 
+        <Field.Root valid>
+          <Field.Label>Valid</Field.Label>
+          <Field.Wrapper>
+            <Field.Input />
+          </Field.Wrapper>
+          <Field.Helper>
+            <Field.ErrorText>Error Info</Field.ErrorText>
+          </Field.Helper>
+        </Field.Root>
+
         <Field.Root invalid disabled>
           <Field.Label>Invalid Disabled</Field.Label>
+          <Field.Wrapper>
+            <Field.Input />
+          </Field.Wrapper>
+          <Field.Helper>
+            <Field.ErrorText>Error Info</Field.ErrorText>
+          </Field.Helper>
+        </Field.Root>
+
+        <Field.Root valid disabled>
+          <Field.Label>Valid Disabled</Field.Label>
           <Field.Wrapper>
             <Field.Input />
           </Field.Wrapper>

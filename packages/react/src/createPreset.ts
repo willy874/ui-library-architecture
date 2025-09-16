@@ -1,31 +1,25 @@
 import { definePreset, defineTokens, defineSemanticTokens } from '@pandacss/dev';
-import atomicTokens from './styles/tokens/atomic.json';
-import seedTokens from './styles/tokens/seed.json';
-import { createInputPreset } from './styles/Input';
-import { createFieldPreset } from './styles/Field';
+import atomicTokens from './ui/tokens/atomic.json';
+import colorsTokens from './ui/tokens/colors.json';
+import seedTokens from './ui/tokens/seed.json';
+import { createInputPreset } from './ui/Input';
+import { createFieldPreset } from './ui/Field';
 
 const createTokenPreset = () => {
   return definePreset({
     name: 'tokens',
     theme: {
       extend: {
-        tokens: defineTokens(atomicTokens),
+        tokens: defineTokens({ ...atomicTokens, ...colorsTokens }),
         semanticTokens: defineSemanticTokens(seedTokens),
       },
     },
   });
 };
 
-function createComponentPreset() {
-  return definePreset({
-    name: 'components',
-    presets: [createTokenPreset(), createInputPreset(), createFieldPreset()],
-  });
-}
-
 export function createUIPreset() {
   return definePreset({
     name: 'ui-preset',
-    presets: [createComponentPreset()],
+    presets: [createTokenPreset(), createInputPreset(), createFieldPreset()],
   });
 }
