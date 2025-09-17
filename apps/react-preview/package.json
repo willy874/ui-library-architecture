@@ -23,6 +23,7 @@
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "@ui-library-architecture/eslint-config": "workspace:*",
+    "@ui-library-architecture/rollup-plugin-svgr": "workspace:*",
     "@vitest/browser": "3.2.4",
     "@vitest/coverage-v8": "3.2.4",
     "playwright": "1.55.0",
