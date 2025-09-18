@@ -36,6 +36,6 @@
     }
   },
 
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "src/styled-system/**/*"],
   "exclude": ["node_modules"]
 }

@@ -4,6 +4,7 @@ import colorsTokens from './ui/tokens/colors.json';
 import seedTokens from './ui/tokens/seed.json';
 import { createInputPreset } from './ui/Input';
 import { createFieldPreset } from './ui/Field';
+import { createButtonPreset } from './ui/Button';
 
 const createTokenPreset = () => {
   return definePreset({
@@ -20,6 +21,6 @@ const createTokenPreset = () => {
 export function createUIPreset() {
   return definePreset({
     name: 'ui-preset',
-    presets: [createTokenPreset(), createInputPreset(), createFieldPreset()],
+    presets: [createTokenPreset(), createInputPreset(), createFieldPreset(), createButtonPreset()],
   });
 }
