@@ -31,11 +31,10 @@
 
     /* Path alias */
     "paths": {
-      "@/*": ["src/*"],
-      "@stories/*": ["stories/*"]
+      "@/*": ["src/*"]
     }
   },
 
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mdx"],
   "exclude": ["node_modules"]
 }
