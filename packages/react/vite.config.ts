@@ -43,20 +43,17 @@ const assetFileNames = (assetInfo: { name?: string }) => {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    withFilter(
-      dts({
-        tsconfigPath: resolve(rootPath, 'tsconfig.app.json'),
-        entryRoot: 'src',
-        staticImport: true,
-        afterBuild: () => {
-          globbySync(['dist/**/*.d.ts', 'dist/**.d.ts']).map((file) => {
-            // support nodejs commonjs modules consumers
-            copyFileSync(file, file.replace(/\.d\.ts$/, '.d.cts'));
-          });
-        },
-      }),
-      { load: { id: /\.(d\.)?[cm]?tsx?$/ } },
-    ),
+    dts({
+      tsconfigPath: resolve(rootPath, 'tsconfig.app.json'),
+      entryRoot: 'src',
+      staticImport: true,
+      afterBuild: () => {
+        globbySync(['dist/**/*.d.ts', 'dist/**.d.ts']).map((file) => {
+          // support nodejs commonjs modules consumers
+          copyFileSync(file, file.replace(/\.d\.ts$/, '.d.cts'));
+        });
+      },
+    }),
     withFilter(
       svgr({
         esbuildOptions: { jsx: 'automatic' },
