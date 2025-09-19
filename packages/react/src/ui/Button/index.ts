@@ -1,61 +1,40 @@
 import { defineTokens, defineRecipe, definePreset } from '@pandacss/dev';
+import { compoundVariants } from './theme';
 
 export const token = defineTokens({
   colors: {
     button: {
       primary: {
-        default: { value: '{colors.slate.800}' },
+        default: { value: '{colors.primary}' },
         inverse: { value: '{colors.white}' },
-        hover: { value: '{colors.slate.950}' },
-        active: { value: '{colors.slate.700}' },
-        disabled: { value: '{colors.slate.300}' },
-        disabledInverse: { value: '{colors.white}' },
-        outline: {
-          default: { value: '{colors.slate.800}' },
-          hover: { value: '{colors.slate.950}' },
-        },
-        link: {
-          default: { value: '{colors.sky.500}' },
-          hover: { value: '{colors.sky.600}' },
-          active: { value: '{colors.sky.400}' },
-          disabled: { value: '{colors.sky.200}' },
-        },
       },
       secondary: {
-        default: { value: '{colors.slate.100}' },
-        inverse: { value: '{colors.slate.800}' },
-        hover: { value: '{colors.slate.200}' },
-        active: { value: '{colors.slate.300}' },
-        disabled: { value: '{colors.slate.200}' },
-        disabledInverse: { value: '{colors.slate.300}' },
-        outline: {
-          default: { value: '{colors.slate.600}' },
-          hover: { value: '{colors.slate.100}' },
-        },
-      },
-      primaryBlue: {
-        default: { value: '{colors.sky.500}' },
+        default: { value: '{colors.secondary}' },
         inverse: { value: '{colors.white}' },
-        hover: { value: '{colors.sky.600}' },
-        active: { value: '{colors.sky.400}' },
-        disabled: { value: '{colors.sky.200}' },
-        disabledInverse: { value: '{colors.white}' },
-        outline: {
-          default: { value: '{colors.sky.300}' },
-          hover: { value: '{colors.sky.500}' },
-        },
       },
-      inverse: {
-        default: { value: '{colors.white}' },
-        inverse: { value: '{colors.slate.950}' },
-        hover: { value: '{colors.slate.50}' },
-        active: { value: '{colors.slate.100}' },
-        disabled: { value: '{colors.slate.300}' },
-        disabledInverse: { value: '{colors.slate.600}' },
-        outline: {
-          default: { value: '{colors.white}' },
-          hover: { value: '{colors.slate.50}' },
-        },
+      tertiary: {
+        default: { value: '{colors.tertiary}' },
+        inverse: { value: '{colors.black}' },
+      },
+      neutral: {
+        default: { value: '{colors.neutral.normal}' },
+        inverse: { value: '{colors.white}' },
+      },
+      info: {
+        default: { value: '{colors.info}' },
+        inverse: { value: '{colors.black}' },
+      },
+      success: {
+        default: { value: '{colors.success}' },
+        inverse: { value: '{colors.white}' },
+      },
+      warning: {
+        default: { value: '{colors.warning}' },
+        inverse: { value: '{colors.black}' },
+      },
+      danger: {
+        default: { value: '{colors.danger}' },
+        inverse: { value: '{colors.white}' },
       },
     },
   },
@@ -66,137 +45,64 @@ export const recipe = defineRecipe({
   jsx: ['Button'],
   base: {
     display: 'inline-flex',
+    lineHeight: '{lineHeights.base}',
+    fontWeight: '{fontWeights.regular}',
     cursor: 'pointer',
+    borderStyle: 'solid',
+    borderWidth: '{borderWidths.1}',
+    borderColor: 'var(--colors-button-border)',
+    backgroundColor: 'var(--colors-button-bg)',
+    color: 'var(--colors-button-text)',
+    outline: 'none',
+    transition: 'background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s',
+    '&:focus&:not(:disabled)': {
+      boxShadow: '0 0 0 3px var(--colors-button-outline-focus)',
+    },
+    '&:hover&:not(:disabled)': {
+      backgroundColor: 'var(--colors-button-bg-hover)',
+      borderColor: 'var(--colors-button-border-hover)',
+      color: 'var(--colors-button-text-hover)',
+    },
+    '&:active&:not(:disabled)': {
+      transform: 'scale(1.02)',
+    },
     _disabled: {
       cursor: 'not-allowed',
+      backgroundColor: 'var(--colors-button-bg-disabled)',
+      borderColor: 'var(--colors-button-border-disabled)',
+      color: 'var(--colors-button-text-disabled)',
     },
-    '--colors-button-link-default': '{colors.button.primary.link.default}',
-    '--colors-button-link-hover': '{colors.button.primary.link.hover}',
-    '--colors-button-link-active': '{colors.button.primary.link.active}',
-    '--colors-button-link-disabled': '{colors.button.primary.link.disabled}',
   },
   variants: {
     theme: {
-      primary: {
-        '--colors-button-default': '{colors.button.primary.default}',
-        '--colors-button-inverse': '{colors.button.primary.inverse}',
-        '--colors-button-hover': '{colors.button.primary.hover}',
-        '--colors-button-active': '{colors.button.primary.active}',
-        '--colors-button-disabled': '{colors.button.primary.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.primary.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.primary.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.primary.outline.hover}',
-      },
-      secondary: {
-        '--colors-button-default': '{colors.button.secondary.default}',
-        '--colors-button-inverse': '{colors.button.secondary.inverse}',
-        '--colors-button-hover': '{colors.button.secondary.hover}',
-        '--colors-button-active': '{colors.button.secondary.active}',
-        '--colors-button-disabled': '{colors.button.secondary.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.secondary.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.secondary.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.secondary.outline.hover}',
-      },
-      primaryBlue: {
-        '--colors-button-default': '{colors.button.primaryBlue.default}',
-        '--colors-button-inverse': '{colors.button.primaryBlue.inverse}',
-        '--colors-button-hover': '{colors.button.primaryBlue.hover}',
-        '--colors-button-active': '{colors.button.primaryBlue.active}',
-        '--colors-button-disabled': '{colors.button.primaryBlue.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.primaryBlue.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.primaryBlue.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.primaryBlue.outline.hover}',
-      },
-      inverse: {
-        '--colors-button-default': '{colors.button.inverse.default}',
-        '--colors-button-inverse': '{colors.button.inverse.inverse}',
-        '--colors-button-hover': '{colors.button.inverse.hover}',
-        '--colors-button-active': '{colors.button.inverse.active}',
-        '--colors-button-disabled': '{colors.button.inverse.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.inverse.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.inverse.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.inverse.outline.hover}',
-      },
+      primary: {},
+      secondary: {},
+      tertiary: {},
+      neutral: {},
+      info: {},
+      success: {},
+      warning: {},
+      danger: {},
     },
     variant: {
       filled: {
-        transition: 'background-color 0.2s, color 0.2s, border-color 0.2s',
-        fontWeight: '{fontWeights.bold}',
         minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
-        border: 'none',
-        backgroundColor: 'var(--colors-button-default)',
-        color: 'var(--colors-button-inverse)',
-        '&:hover:not(:disabled)': {
-          backgroundColor: 'var(--colors-button-hover)',
-        },
-        '&:active&:not(:disabled)': {
-          backgroundColor: 'var(--colors-button-active)',
-        },
-        '&:disabled': {
-          color: 'var(--colors-button-disabled-inverse)',
-          backgroundColor: 'var(--colors-button-disabled)',
-        },
       },
       outlined: {
-        transition: 'background-color 0.2s, color 0.2s, border-color 0.2s',
-        fontWeight: '{fontWeights.bold}',
         minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: '0.0625rem',
-        borderStyle: 'solid',
-        borderColor: 'var(--colors-button-outline-default)',
-        backgroundColor: 'transparent',
-        color: 'var(--colors-button-outline-default)',
-        '&:hover&:not(:disabled)': {
-          backgroundColor: 'var(--colors-button-outline-hover)',
-          borderColor: 'var(--colors-button-outline-hover)',
-          color: 'var(--colors-button-inverse)',
-        },
-        '&:active&:not(:disabled)': {
-          borderColor: 'var(--colors-button-active)',
-          color: 'var(--colors-button-active)',
-        },
-        '&:disabled': {
-          backgroundColor: 'transparent',
-          borderColor: 'var(--colors-button-disabled)',
-          color: 'var(--colors-button-disabled)',
-        },
       },
       text: {
-        transition: 'color 0.2s',
-        fontWeight: '{fontWeights.regular}',
+        backgroundColor: '{colors.transparent}',
         border: 'none',
-        backgroundColor: 'transparent',
-        color: 'var(--colors-button-default)',
-        '&:hover&:not(:disabled)': {
-          color: 'var(--colors-button-hover)',
-        },
-        '&:active&:not(:disabled)': {
-          color: 'var(--colors-button-active)',
-        },
-        '&:disabled': {
-          color: 'var(--colors-button-disabled)',
-        },
       },
       link: {
-        transition: 'color 0.2s',
-        fontWeight: '{fontWeights.regular}',
-        textDecoration: 'underline',
+        backgroundColor: '{colors.transparent}',
         border: 'none',
-        backgroundColor: 'transparent',
-        color: 'var(--colors-button-link-default)',
-        '&:hover&:not(:disabled)': {
-          color: 'var(--colors-button-link-hover)',
-        },
-        '&:active&:not(:disabled)': {
-          color: 'var(--colors-button-link-active)',
-        },
-        '&:disabled': {
-          color: 'var(--colors-button-link-disabled)',
-        },
+        textDecoration: 'underline',
       },
     },
     size: {
@@ -232,6 +138,7 @@ export const recipe = defineRecipe({
     space: 'text',
   },
   compoundVariants: [
+    ...compoundVariants,
     {
       variant: 'filled',
       space: 'text',
@@ -320,24 +227,21 @@ export const recipe = defineRecipe({
       size: 'small',
       space: 'text',
       css: {
-        fontSize: 'sm',
-        lineHeight: 'xs',
+        fontSize: '{fontSizes.xs}',
       },
     },
     {
       size: 'medium',
       space: 'text',
       css: {
-        fontSize: 'md',
-        lineHeight: 'sm',
+        fontSize: '{fontSizes.md}',
       },
     },
     {
       size: 'large',
       space: 'text',
       css: {
-        fontSize: 'lg',
-        lineHeight: 'md',
+        fontSize: '{fontSizes.lg}',
       },
     },
     {
@@ -345,7 +249,7 @@ export const recipe = defineRecipe({
       space: 'icon',
       css: {
         padding: '{spacing.2}',
-        fontSize: 'lg',
+        fontSize: '{fontSizes.lg}',
       },
     },
     {
@@ -353,7 +257,7 @@ export const recipe = defineRecipe({
       space: 'icon',
       css: {
         padding: '{spacing.3}',
-        fontSize: 'xl',
+        fontSize: '{fontSizes.xl}',
       },
     },
     {
@@ -361,7 +265,7 @@ export const recipe = defineRecipe({
       space: 'icon',
       css: {
         padding: '{spacing.4}',
-        fontSize: '2xl',
+        fontSize: '{fontSizes.xl}',
       },
     },
   ],
