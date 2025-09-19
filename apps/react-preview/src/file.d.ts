@@ -5,3 +5,8 @@ declare module '*.svg?react' {
   const SvgComponent: React.FC<SvgProps>;
   export default SvgComponent;
 }
+
+declare module '*.css' {
+  const content: string;
+  export default content;
+}
