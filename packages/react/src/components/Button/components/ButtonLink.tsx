@@ -12,6 +12,7 @@ const useComponents = defineComponents({
 });
 
 export interface ButtonLinkProps extends React.ComponentProps<'a'> {
+  as?: React.FC<React.ComponentProps<'a'>>;
   disabled?: boolean;
   icon?: boolean;
   loading?: boolean;
@@ -20,7 +21,16 @@ export interface ButtonLinkProps extends React.ComponentProps<'a'> {
 }
 
 const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (props, ref) {
-  const { children, loading, disabled, components, icon, type, ...rest } = props;
+  const {
+    children,
+    loading,
+    disabled,
+    components,
+    icon,
+    type,
+    as: Component = ui.a,
+    ...rest
+  } = props;
   const { isShowSpin, ref: loadingRef } = useLoadingWidth<HTMLAnchorElement>(loading);
   const rootRef = useRef<HTMLAnchorElement>(null);
   const refCallback = useForkRef<HTMLAnchorElement>(rootRef, ref, loadingRef);
@@ -43,7 +53,7 @@ const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (prop
   };
 
   return (
-    <ui.a
+    <Component
       ref={refCallback}
       {...mergeProps<ButtonLinkProps>(rest, {
         ...attrs,
@@ -52,7 +62,7 @@ const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (prop
       })}
     >
       {node}
-    </ui.a>
+    </Component>
   );
 });
 
