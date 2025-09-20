@@ -5,6 +5,7 @@ import { useForkRef } from '@/utils/hooks/composeRefs';
 import { defineComponents } from '@/utils/hooks/defineComponents';
 import { Spin as _Spin } from '../imports';
 import { dataAttr } from '@zag-js/dom-query';
+import { useLoadingWidth } from '../hooks/useLoadingWidth';
 
 const useComponents = defineComponents({
   Spin: _Spin,
@@ -18,12 +19,11 @@ export interface ButtonLinkProps extends React.ComponentProps<'a'> {
   children?: React.ReactNode;
 }
 
-const ButtonLink = forwardRef(function (
-  { children, loading, disabled, components, type, icon, ...props }: ButtonLinkProps,
-  propRef: React.Ref<HTMLAnchorElement>,
-) {
+const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (props, ref) {
+  const { children, loading, disabled, components, icon, type, ...rest } = props;
+  const { isShowSpin, ref: loadingRef } = useLoadingWidth<HTMLAnchorElement>(loading);
   const rootRef = useRef<HTMLAnchorElement>(null);
-  const refCallback = useForkRef<HTMLAnchorElement>(rootRef, propRef);
+  const refCallback = useForkRef<HTMLAnchorElement>(rootRef, ref, loadingRef);
 
   const componentNodes = useComponents({
     Spin: [_Spin, {}],
@@ -31,12 +31,12 @@ const ButtonLink = forwardRef(function (
   });
 
   const node = (() => {
-    if (loading) {
+    if (isShowSpin) {
       return componentNodes.Spin;
     }
     return children;
   })();
-  const $disabled = loading || disabled;
+  const $disabled = isShowSpin || disabled;
 
   const attrs = {
     'data-icon': dataAttr(!!icon),
@@ -45,9 +45,9 @@ const ButtonLink = forwardRef(function (
   return (
     <ui.a
       ref={refCallback}
-      {...mergeProps<ButtonLinkProps>(props, {
+      {...mergeProps<ButtonLinkProps>(rest, {
         ...attrs,
-        type: type || 'button',
+        role: 'button',
         disabled: $disabled,
       })}
     >

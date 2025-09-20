@@ -172,7 +172,7 @@ export const recipe = defineRecipe({
       },
       circle: {
         borderRadius: '{radii.circle}',
-        minWidth: '0',
+        minWidth: 'auto',
       },
     },
   },
