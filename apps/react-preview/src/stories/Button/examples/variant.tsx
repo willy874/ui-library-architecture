@@ -379,7 +379,7 @@ export const VariantDisabled: StoryObj = {
           </Button>
         </div>
         <div>
-          <Button variant="link" theme="success">
+          <Button disabled variant="link" theme="success">
             Button
           </Button>
         </div>

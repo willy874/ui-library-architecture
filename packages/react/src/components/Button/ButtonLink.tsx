@@ -2,21 +2,29 @@ import { forwardRef } from 'react';
 import { mergeProps } from '@zag-js/react';
 import { button } from '@/styled-system/recipes';
 import type { ButtonVariantProps } from '@/styled-system/recipes';
-import CoreButton from './components/Button';
-import type { ButtonProps as CoreButtonProps } from './components/Button';
+import CoreButtonLink from './components/ButtonLink';
+import type { ButtonLinkProps as CoreButtonLinkProps } from './components/ButtonLink';
 
 type ButtonRecipeVariants = ButtonVariantProps;
 
-export interface ButtonLinkProps extends CoreButtonProps, ButtonRecipeVariants {}
+export interface ButtonLinkProps extends CoreButtonLinkProps, ButtonRecipeVariants {}
 
-const ButtonLink = forwardRef<HTMLButtonElement, ButtonLinkProps>(function (
-  { theme, variant, size, shape, space, ...props }: ButtonLinkProps,
-  ref,
-) {
+const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (props, ref) {
+  const [variantProps] = button.splitVariantProps(props);
+  const variants = button.getVariantProps(variantProps);
+  const attrs = (() => {
+    const result: Record<string, string> = {};
+    for (const key in variants) {
+      result[`data-${key}`] = Reflect.get(variants, key) as string;
+    }
+    return result;
+  })();
   return (
-    <CoreButton
+    <CoreButtonLink
       {...mergeProps<ButtonLinkProps>(props, {
-        className: button({ theme, variant, size, shape, space }),
+        role: 'button',
+        ...attrs,
+        className: button(variantProps),
       })}
       ref={ref}
     />

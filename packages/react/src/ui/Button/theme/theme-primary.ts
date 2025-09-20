@@ -36,11 +36,41 @@ export const outlined: SystemStyleObject = {
 
 export const text: SystemStyleObject = {
   '--colors-button-text': '{colors.button.primary.default}',
-  '--colors-button-text-hover': 'color-mix(in oklch, {colors.button.primary.default} 30%, #000)',
-  '--colors-button-text-active': 'color-mix(in oklch, {colors.button.primary.default} 60%,  #000)',
-  '--colors-button-text-visited': 'color-mix(in oklch, {colors.button.primary.default} 60%,  #000)',
+  '--colors-button-text-hover': 'color-mix(in oklch, {colors.button.primary.default} 70%, #000)',
+  '--colors-button-text-active': 'color-mix(in oklch, {colors.button.primary.default} 70%,  #fff)',
   '--colors-button-text-disabled':
     'color-mix(in oklch, {colors.button.primary.default} 60%, transparent)',
   '--colors-button-outline-focus':
     'color-mix(in oklch, {colors.button.primary.default} 30%, transparent)',
+  '--colors-button-link': '{colors.button.info.default}',
+  '--colors-button-link-visited': 'color-mix(in oklch, {colors.button.info.default} 70%,  #f00)',
+  '--colors-button-link-active': 'color-mix(in oklch, {colors.button.info.default} 70%,  #fff)',
+  '--colors-button-link-disabled':
+    'color-mix(in oklch, {colors.button.info.default} 60%, transparent)',
+  '--colors-button-link-outline-focus':
+    'color-mix(in oklch, {colors.button.info.default} 30%, transparent)',
+};
+
+export const link: SystemStyleObject = {
+  '--colors-button-text': '{colors.button.info.default}',
+  '--colors-button-text-hover': 'color-mix(in oklch, {colors.button.info.default} 70%, #000)',
+  '--colors-button-text-active': 'color-mix(in oklch, {colors.button.info.default} 70%,  #fff)',
+  '--colors-button-text-disabled':
+    'color-mix(in oklch, {colors.button.info.default} 60%, transparent)',
+  '--colors-button-outline-focus':
+    'color-mix(in oklch, {colors.button.info.default} 30%, transparent)',
+  '--colors-button-link': '{colors.button.info.default}',
+  '--colors-button-link-visited': 'color-mix(in oklch, {colors.button.info.default} 70%,  #f00)',
+  '--colors-button-link-active': 'color-mix(in oklch, {colors.button.info.default} 70%,  #fff)',
+  '--colors-button-link-disabled':
+    'color-mix(in oklch, {colors.button.info.default} 60%, transparent)',
+  '--colors-button-link-outline-focus':
+    'color-mix(in oklch, {colors.button.info.default} 30%, transparent)',
+};
+
+export const theme: SystemStyleObject = {
+  '&[data-variant="filled"]': filled,
+  '&[data-variant="outlined"]': outlined,
+  '&[data-variant="text"]': text,
+  '&[data-variant="link"]': link,
 };

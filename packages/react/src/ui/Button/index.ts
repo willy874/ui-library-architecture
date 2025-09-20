@@ -1,5 +1,5 @@
 import { defineTokens, defineRecipe, definePreset } from '@pandacss/dev';
-import { compoundVariants } from './theme';
+import { theme } from './theme';
 
 export const token = defineTokens({
   colors: {
@@ -22,7 +22,7 @@ export const token = defineTokens({
       },
       info: {
         default: { value: '{colors.info}' },
-        inverse: { value: '{colors.black}' },
+        inverse: { value: '{colors.white}' },
       },
       success: {
         default: { value: '{colors.success}' },
@@ -30,7 +30,7 @@ export const token = defineTokens({
       },
       warning: {
         default: { value: '{colors.warning}' },
-        inverse: { value: '{colors.black}' },
+        inverse: { value: '{colors.white}' },
       },
       danger: {
         default: { value: '{colors.danger}' },
@@ -53,10 +53,12 @@ export const recipe = defineRecipe({
     borderColor: 'var(--colors-button-border)',
     backgroundColor: 'var(--colors-button-bg)',
     color: 'var(--colors-button-text)',
-    outline: 'none',
     transition: 'background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s',
     '&:focus&:not(:disabled)': {
       boxShadow: '0 0 0 3px var(--colors-button-outline-focus)',
+      outlineStyle: 'solid',
+      outlineWidth: '{borderWidths.1}',
+      outlineColor: 'var(--colors-button-outline-focus)',
     },
     '&:hover&:not(:disabled)': {
       backgroundColor: 'var(--colors-button-bg-hover)',
@@ -72,43 +74,91 @@ export const recipe = defineRecipe({
       borderColor: 'var(--colors-button-border-disabled)',
       color: 'var(--colors-button-text-disabled)',
     },
+    '&:link': {
+      color: 'var(--colors-button-link)',
+      '&:visited:not(:disabled)': {
+        color: 'var(--colors-button-link-visited)',
+      },
+      '&:hover&:not(:disabled)': {
+        color: 'var(--colors-button-link-hover)',
+      },
+      '&:active&:not(:disabled)': {
+        color: 'var(--colors-button-link-active)',
+      },
+      '&:focus&:not(:disabled)': {
+        boxShadow: '0 0 0 3px var(--colors-button-link-outline-focus)',
+        outlineStyle: 'solid',
+        outlineWidth: '{borderWidths.2}',
+        outlineColor: 'var(--colors-button-link-outline-focus)',
+      },
+      '&:disabled': {
+        color: 'var(--colors-button-link-disabled)',
+      },
+    },
   },
   variants: {
-    theme: {
-      primary: {},
-      secondary: {},
-      tertiary: {},
-      neutral: {},
-      info: {},
-      success: {},
-      warning: {},
-      danger: {},
-    },
+    theme,
     variant: {
       filled: {
         minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
+        outline: 'none',
+        '&[data-icon]': {
+          minWidth: 'auto',
+        },
       },
       outlined: {
         minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
+        outline: 'none',
+        '&[data-icon]': {
+          minWidth: 'auto',
+        },
       },
       text: {
         backgroundColor: '{colors.transparent}',
         border: 'none',
+        padding: '0',
+        boxShadow: 'none',
       },
       link: {
+        textDecoration: 'underline',
         backgroundColor: '{colors.transparent}',
         border: 'none',
-        textDecoration: 'underline',
+        padding: '0',
+        boxShadow: 'none',
       },
     },
     size: {
-      small: {},
-      medium: {},
-      large: {},
+      small: {
+        fontSize: '{fontSizes.xs}',
+        py: '{spacing.1}',
+        px: '{spacing.2}',
+        gap: '0.625rem',
+        '&[data-icon]': {
+          padding: '{spacing.1}',
+        },
+      },
+      medium: {
+        fontSize: '{fontSizes.md}',
+        py: '{spacing.2}',
+        px: '{spacing.3}',
+        gap: '0.625rem',
+        '&[data-icon]': {
+          padding: '{spacing.2}',
+        },
+      },
+      large: {
+        fontSize: '{fontSizes.lg}',
+        py: '{spacing.3}',
+        px: '{spacing.4}',
+        gap: '0.625rem',
+        '&[data-icon]': {
+          padding: '{spacing.3}',
+        },
+      },
     },
     shape: {
       rounded: {
@@ -125,150 +175,13 @@ export const recipe = defineRecipe({
         minWidth: '0',
       },
     },
-    space: {
-      icon: {},
-      text: {},
-    },
   },
   defaultVariants: {
     variant: 'filled',
-    theme: 'primary',
+    theme: 'neutral',
     size: 'medium',
     shape: 'rounded',
-    space: 'text',
   },
-  compoundVariants: [
-    ...compoundVariants,
-    {
-      variant: 'filled',
-      space: 'text',
-      css: {
-        minWidth: '0',
-      },
-    },
-    {
-      variant: 'outlined',
-      space: 'text',
-      css: {
-        minWidth: '0',
-      },
-    },
-    {
-      variant: 'filled',
-      size: 'small',
-      space: 'text',
-      css: {
-        py: '{spacing.2}',
-        px: '{spacing.3}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'filled',
-      size: 'medium',
-      space: 'text',
-      css: {
-        py: '{spacing.3}',
-        px: '{spacing.4}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'filled',
-      size: 'large',
-      space: 'text',
-      css: {
-        py: '{spacing.4}',
-        px: '{spacing.5}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'outlined',
-      size: 'small',
-      space: 'text',
-      css: {
-        py: '{spacing.2}',
-        px: '{spacing.3}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'outlined',
-      size: 'medium',
-      space: 'text',
-      css: {
-        py: '{spacing.3}',
-        px: '{spacing.4}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'outlined',
-      size: 'large',
-      space: 'text',
-      css: {
-        py: '{spacing.4}',
-        px: '{spacing.5}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'text',
-      theme: 'secondary',
-      css: {
-        color: 'var(--colors-button-secondary-inverse)',
-        '&:disabled': {
-          color: 'var(--colors-button-secondary-disabled)',
-        },
-      },
-    },
-    {
-      size: 'small',
-      space: 'text',
-      css: {
-        fontSize: '{fontSizes.xs}',
-      },
-    },
-    {
-      size: 'medium',
-      space: 'text',
-      css: {
-        fontSize: '{fontSizes.md}',
-      },
-    },
-    {
-      size: 'large',
-      space: 'text',
-      css: {
-        fontSize: '{fontSizes.lg}',
-      },
-    },
-    {
-      size: 'small',
-      space: 'icon',
-      css: {
-        padding: '{spacing.2}',
-        fontSize: '{fontSizes.lg}',
-      },
-    },
-    {
-      size: 'medium',
-      space: 'icon',
-      css: {
-        padding: '{spacing.3}',
-        fontSize: '{fontSizes.xl}',
-      },
-    },
-    {
-      size: 'large',
-      space: 'icon',
-      css: {
-        padding: '{spacing.4}',
-        fontSize: '{fontSizes.xl}',
-      },
-    },
-  ],
 });
 
 export function createButtonPreset() {

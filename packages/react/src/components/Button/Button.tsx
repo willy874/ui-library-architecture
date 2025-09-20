@@ -9,14 +9,21 @@ type ButtonRecipeVariants = ButtonVariantProps;
 
 export interface ButtonProps extends CoreButtonProps, ButtonRecipeVariants {}
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(function (
-  { theme, variant, size, shape, space, ...props }: ButtonProps,
-  ref,
-) {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(function (props, ref) {
+  const [variantProps] = button.splitVariantProps(props);
+  const variants = button.getVariantProps(variantProps);
+  const attrs = (() => {
+    const result: Record<string, string> = {};
+    for (const key in variants) {
+      result[`data-${key}`] = Reflect.get(variants, key) as string;
+    }
+    return result;
+  })();
   return (
     <CoreButton
       {...mergeProps<ButtonProps>(props, {
-        className: button({ theme, variant, size, shape, space }),
+        ...attrs,
+        className: button(variantProps),
       })}
       ref={ref}
     />
