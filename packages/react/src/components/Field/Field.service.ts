@@ -201,7 +201,7 @@ export const useFieldService = (props: UseFieldServiceProps) => {
     [getControlProps, helperId],
   );
 
-  const getPrefixProps = useMemo(
+  const getPrefixProps = useCallback(
     (overrides?: HTMLProps<'div'>) => ({
       ...getControlProps(),
       ...parts.prefix.attrs,

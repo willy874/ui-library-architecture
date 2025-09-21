@@ -100,22 +100,14 @@ export const recipe = defineRecipe({
     theme,
     variant: {
       filled: {
-        minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
         outline: 'none',
-        '&[data-icon]': {
-          minWidth: 'auto',
-        },
       },
       outlined: {
-        minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
         outline: 'none',
-        '&[data-icon]': {
-          minWidth: 'auto',
-        },
       },
       text: {
         backgroundColor: '{colors.transparent}',
@@ -138,25 +130,52 @@ export const recipe = defineRecipe({
         px: '{spacing.2}',
         gap: '0.625rem',
         '&[data-icon]': {
-          padding: '{spacing.1}',
+          fontSize: '{fontSizes.md}',
+          '&:not([data-variant=text],[data-variant=link])': {
+            padding: '{spacing.1}',
+          },
+        },
+        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '4rem',
+        },
+        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '4rem',
         },
       },
       medium: {
         fontSize: '{fontSizes.md}',
         py: '{spacing.2}',
-        px: '{spacing.3}',
+        px: '{spacing.4}',
         gap: '0.625rem',
         '&[data-icon]': {
-          padding: '{spacing.2}',
+          fontSize: '{fontSizes.2xl}',
+          '&:not([data-variant=text],[data-variant=link])': {
+            padding: '{spacing.2}',
+          },
+        },
+        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '6rem',
+        },
+        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '6rem',
         },
       },
       large: {
         fontSize: '{fontSizes.lg}',
         py: '{spacing.3}',
-        px: '{spacing.4}',
+        px: '{spacing.6}',
         gap: '0.625rem',
         '&[data-icon]': {
-          padding: '{spacing.3}',
+          fontSize: '{fontSizes.3xl}',
+          '&:not([data-variant=text],[data-variant=link])': {
+            padding: '{spacing.3}',
+          },
+        },
+        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '8rem',
+        },
+        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '8rem',
         },
       },
     },
