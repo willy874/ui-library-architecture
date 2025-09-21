@@ -1,56 +1,69 @@
-import { forwardRef, useRef } from 'react'
-import { mergeProps } from '@zag-js/react'
-import { ui } from '@/utils/factory'
-import { useForkRef } from '@/utils/hooks/composeRefs'
-import { defineComponents } from '@/utils/hooks/defineComponents'
-import { Spin as _Spin } from '../imports'
+import { forwardRef, useRef } from 'react';
+import { mergeProps } from '@zag-js/react';
+import { ui } from '@/utils/factory';
+import { useForkRef } from '@/utils/hooks/composeRefs';
+import { defineComponents } from '@/utils/hooks/defineComponents';
+import { Spin as _Spin } from '../imports';
+import { dataAttr } from '@zag-js/dom-query';
+import { useLoadingWidth } from '../hooks/useLoadingWidth';
 
 const useComponents = defineComponents({
   Spin: _Spin,
-})
+});
 
 export interface ButtonLinkProps extends React.ComponentProps<'a'> {
-  disabled?: boolean
-  loading?: boolean
-  components?: Parameters<typeof useComponents>[0]
-  children?: React.ReactNode
+  as?: React.FC<React.ComponentProps<'a'>>;
+  disabled?: boolean;
+  icon?: boolean;
+  loading?: boolean;
+  components?: Parameters<typeof useComponents>[0];
+  children?: React.ReactNode;
 }
 
-const ButtonLink = forwardRef(function ({
-  children,
-  loading,
-  disabled,
-  components,
-  type,
-  ...props
-}: ButtonLinkProps, propRef: React.Ref<HTMLAnchorElement>) {
-  const rootRef = useRef<HTMLAnchorElement>(null)
-  const refCallback = useForkRef<HTMLAnchorElement>(rootRef, propRef)
+const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (props, ref) {
+  const {
+    children,
+    loading,
+    disabled,
+    components,
+    icon,
+    type,
+    as: Component = ui.a,
+    ...rest
+  } = props;
+  const { isShowSpin, ref: loadingRef } = useLoadingWidth<HTMLAnchorElement>(loading);
+  const rootRef = useRef<HTMLAnchorElement>(null);
+  const refCallback = useForkRef<HTMLAnchorElement>(rootRef, ref, loadingRef);
 
   const componentNodes = useComponents({
     Spin: [_Spin, {}],
     ...components,
-  })
+  });
 
   const node = (() => {
-    if (loading) {
-      return componentNodes.Spin
+    if (isShowSpin) {
+      return componentNodes.Spin;
     }
-    return children
-  })()
-  const $disabled = loading || disabled
+    return children;
+  })();
+  const $disabled = isShowSpin || disabled;
+
+  const attrs = {
+    'data-icon': dataAttr(!!icon),
+  };
 
   return (
-    <ui.a
+    <Component
       ref={refCallback}
-      {...mergeProps<ButtonLinkProps>(props, {
-        type: type || 'button',
+      {...mergeProps<ButtonLinkProps>(rest, {
+        ...attrs,
+        role: 'button',
         disabled: $disabled,
       })}
     >
       {node}
-    </ui.a>
-  )
-})
+    </Component>
+  );
+});
 
-export default ButtonLink
+export default ButtonLink;

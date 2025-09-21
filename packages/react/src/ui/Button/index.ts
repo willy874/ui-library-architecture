@@ -1,61 +1,40 @@
 import { defineTokens, defineRecipe, definePreset } from '@pandacss/dev';
+import { theme } from './theme';
 
 export const token = defineTokens({
   colors: {
     button: {
       primary: {
-        default: { value: '{colors.slate.800}' },
+        default: { value: '{colors.primary}' },
         inverse: { value: '{colors.white}' },
-        hover: { value: '{colors.slate.950}' },
-        active: { value: '{colors.slate.700}' },
-        disabled: { value: '{colors.slate.300}' },
-        disabledInverse: { value: '{colors.white}' },
-        outline: {
-          default: { value: '{colors.slate.800}' },
-          hover: { value: '{colors.slate.950}' },
-        },
-        link: {
-          default: { value: '{colors.sky.500}' },
-          hover: { value: '{colors.sky.600}' },
-          active: { value: '{colors.sky.400}' },
-          disabled: { value: '{colors.sky.200}' },
-        },
       },
       secondary: {
-        default: { value: '{colors.slate.100}' },
-        inverse: { value: '{colors.slate.800}' },
-        hover: { value: '{colors.slate.200}' },
-        active: { value: '{colors.slate.300}' },
-        disabled: { value: '{colors.slate.200}' },
-        disabledInverse: { value: '{colors.slate.300}' },
-        outline: {
-          default: { value: '{colors.slate.600}' },
-          hover: { value: '{colors.slate.100}' },
-        },
-      },
-      primaryBlue: {
-        default: { value: '{colors.sky.500}' },
+        default: { value: '{colors.secondary}' },
         inverse: { value: '{colors.white}' },
-        hover: { value: '{colors.sky.600}' },
-        active: { value: '{colors.sky.400}' },
-        disabled: { value: '{colors.sky.200}' },
-        disabledInverse: { value: '{colors.white}' },
-        outline: {
-          default: { value: '{colors.sky.300}' },
-          hover: { value: '{colors.sky.500}' },
-        },
       },
-      inverse: {
-        default: { value: '{colors.white}' },
-        inverse: { value: '{colors.slate.950}' },
-        hover: { value: '{colors.slate.50}' },
-        active: { value: '{colors.slate.100}' },
-        disabled: { value: '{colors.slate.300}' },
-        disabledInverse: { value: '{colors.slate.600}' },
-        outline: {
-          default: { value: '{colors.white}' },
-          hover: { value: '{colors.slate.50}' },
-        },
+      tertiary: {
+        default: { value: '{colors.tertiary}' },
+        inverse: { value: '{colors.black}' },
+      },
+      neutral: {
+        default: { value: '{colors.neutral.normal}' },
+        inverse: { value: '{colors.white}' },
+      },
+      info: {
+        default: { value: '{colors.info}' },
+        inverse: { value: '{colors.white}' },
+      },
+      success: {
+        default: { value: '{colors.success}' },
+        inverse: { value: '{colors.white}' },
+      },
+      warning: {
+        default: { value: '{colors.warning}' },
+        inverse: { value: '{colors.white}' },
+      },
+      danger: {
+        default: { value: '{colors.danger}' },
+        inverse: { value: '{colors.white}' },
       },
     },
   },
@@ -66,143 +45,139 @@ export const recipe = defineRecipe({
   jsx: ['Button'],
   base: {
     display: 'inline-flex',
+    lineHeight: '{lineHeights.base}',
+    fontWeight: '{fontWeights.regular}',
     cursor: 'pointer',
+    borderStyle: 'solid',
+    borderWidth: '{borderWidths.1}',
+    borderColor: 'var(--colors-button-border)',
+    backgroundColor: 'var(--colors-button-bg)',
+    color: 'var(--colors-button-text)',
+    transition: 'background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s',
+    '&:focus&:not(:disabled)': {
+      boxShadow: '0 0 0 3px var(--colors-button-outline-focus)',
+      outlineStyle: 'solid',
+      outlineWidth: '{borderWidths.1}',
+      outlineColor: 'var(--colors-button-outline-focus)',
+    },
+    '&:hover&:not(:disabled)': {
+      backgroundColor: 'var(--colors-button-bg-hover)',
+      borderColor: 'var(--colors-button-border-hover)',
+      color: 'var(--colors-button-text-hover)',
+    },
+    '&:active&:not(:disabled)': {
+      transform: 'scale(1.02)',
+    },
     _disabled: {
       cursor: 'not-allowed',
+      backgroundColor: 'var(--colors-button-bg-disabled)',
+      borderColor: 'var(--colors-button-border-disabled)',
+      color: 'var(--colors-button-text-disabled)',
     },
-    '--colors-button-link-default': '{colors.button.primary.link.default}',
-    '--colors-button-link-hover': '{colors.button.primary.link.hover}',
-    '--colors-button-link-active': '{colors.button.primary.link.active}',
-    '--colors-button-link-disabled': '{colors.button.primary.link.disabled}',
+    '&:link': {
+      color: 'var(--colors-button-link)',
+      '&:visited:not(:disabled)': {
+        color: 'var(--colors-button-link-visited)',
+      },
+      '&:hover&:not(:disabled)': {
+        color: 'var(--colors-button-link-hover)',
+      },
+      '&:active&:not(:disabled)': {
+        color: 'var(--colors-button-link-active)',
+      },
+      '&:focus&:not(:disabled)': {
+        boxShadow: '0 0 0 3px var(--colors-button-link-outline-focus)',
+        outlineStyle: 'solid',
+        outlineWidth: '{borderWidths.2}',
+        outlineColor: 'var(--colors-button-link-outline-focus)',
+      },
+      '&:disabled': {
+        color: 'var(--colors-button-link-disabled)',
+      },
+    },
   },
   variants: {
-    theme: {
-      primary: {
-        '--colors-button-default': '{colors.button.primary.default}',
-        '--colors-button-inverse': '{colors.button.primary.inverse}',
-        '--colors-button-hover': '{colors.button.primary.hover}',
-        '--colors-button-active': '{colors.button.primary.active}',
-        '--colors-button-disabled': '{colors.button.primary.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.primary.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.primary.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.primary.outline.hover}',
-      },
-      secondary: {
-        '--colors-button-default': '{colors.button.secondary.default}',
-        '--colors-button-inverse': '{colors.button.secondary.inverse}',
-        '--colors-button-hover': '{colors.button.secondary.hover}',
-        '--colors-button-active': '{colors.button.secondary.active}',
-        '--colors-button-disabled': '{colors.button.secondary.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.secondary.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.secondary.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.secondary.outline.hover}',
-      },
-      primaryBlue: {
-        '--colors-button-default': '{colors.button.primaryBlue.default}',
-        '--colors-button-inverse': '{colors.button.primaryBlue.inverse}',
-        '--colors-button-hover': '{colors.button.primaryBlue.hover}',
-        '--colors-button-active': '{colors.button.primaryBlue.active}',
-        '--colors-button-disabled': '{colors.button.primaryBlue.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.primaryBlue.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.primaryBlue.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.primaryBlue.outline.hover}',
-      },
-      inverse: {
-        '--colors-button-default': '{colors.button.inverse.default}',
-        '--colors-button-inverse': '{colors.button.inverse.inverse}',
-        '--colors-button-hover': '{colors.button.inverse.hover}',
-        '--colors-button-active': '{colors.button.inverse.active}',
-        '--colors-button-disabled': '{colors.button.inverse.disabled}',
-        '--colors-button-disabled-inverse': '{colors.button.inverse.disabledInverse}',
-        '--colors-button-outline-default': '{colors.button.inverse.outline.default}',
-        '--colors-button-outline-hover': '{colors.button.inverse.outline.hover}',
-      },
-    },
+    theme,
     variant: {
       filled: {
-        transition: 'background-color 0.2s, color 0.2s, border-color 0.2s',
-        fontWeight: '{fontWeights.bold}',
-        minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
-        border: 'none',
-        backgroundColor: 'var(--colors-button-default)',
-        color: 'var(--colors-button-inverse)',
-        '&:hover:not(:disabled)': {
-          backgroundColor: 'var(--colors-button-hover)',
-        },
-        '&:active&:not(:disabled)': {
-          backgroundColor: 'var(--colors-button-active)',
-        },
-        '&:disabled': {
-          color: 'var(--colors-button-disabled-inverse)',
-          backgroundColor: 'var(--colors-button-disabled)',
-        },
+        outline: 'none',
       },
       outlined: {
-        transition: 'background-color 0.2s, color 0.2s, border-color 0.2s',
-        fontWeight: '{fontWeights.bold}',
-        minWidth: '5.375rem',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: '0.0625rem',
-        borderStyle: 'solid',
-        borderColor: 'var(--colors-button-outline-default)',
-        backgroundColor: 'transparent',
-        color: 'var(--colors-button-outline-default)',
-        '&:hover&:not(:disabled)': {
-          backgroundColor: 'var(--colors-button-outline-hover)',
-          borderColor: 'var(--colors-button-outline-hover)',
-          color: 'var(--colors-button-inverse)',
-        },
-        '&:active&:not(:disabled)': {
-          borderColor: 'var(--colors-button-active)',
-          color: 'var(--colors-button-active)',
-        },
-        '&:disabled': {
-          backgroundColor: 'transparent',
-          borderColor: 'var(--colors-button-disabled)',
-          color: 'var(--colors-button-disabled)',
-        },
+        outline: 'none',
       },
       text: {
-        transition: 'color 0.2s',
-        fontWeight: '{fontWeights.regular}',
+        backgroundColor: '{colors.transparent}',
         border: 'none',
-        backgroundColor: 'transparent',
-        color: 'var(--colors-button-default)',
-        '&:hover&:not(:disabled)': {
-          color: 'var(--colors-button-hover)',
-        },
-        '&:active&:not(:disabled)': {
-          color: 'var(--colors-button-active)',
-        },
-        '&:disabled': {
-          color: 'var(--colors-button-disabled)',
-        },
+        padding: '0',
+        boxShadow: 'none',
       },
       link: {
-        transition: 'color 0.2s',
-        fontWeight: '{fontWeights.regular}',
         textDecoration: 'underline',
+        backgroundColor: '{colors.transparent}',
         border: 'none',
-        backgroundColor: 'transparent',
-        color: 'var(--colors-button-link-default)',
-        '&:hover&:not(:disabled)': {
-          color: 'var(--colors-button-link-hover)',
-        },
-        '&:active&:not(:disabled)': {
-          color: 'var(--colors-button-link-active)',
-        },
-        '&:disabled': {
-          color: 'var(--colors-button-link-disabled)',
-        },
+        padding: '0',
+        boxShadow: 'none',
       },
     },
     size: {
-      small: {},
-      medium: {},
-      large: {},
+      small: {
+        fontSize: '{fontSizes.xs}',
+        py: '{spacing.1}',
+        px: '{spacing.2}',
+        gap: '0.625rem',
+        '&[data-icon]': {
+          fontSize: '{fontSizes.md}',
+          '&:not([data-variant=text],[data-variant=link])': {
+            padding: '{spacing.1}',
+          },
+        },
+        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '4rem',
+        },
+        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '4rem',
+        },
+      },
+      medium: {
+        fontSize: '{fontSizes.md}',
+        py: '{spacing.2}',
+        px: '{spacing.4}',
+        gap: '0.625rem',
+        '&[data-icon]': {
+          fontSize: '{fontSizes.2xl}',
+          '&:not([data-variant=text],[data-variant=link])': {
+            padding: '{spacing.2}',
+          },
+        },
+        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '6rem',
+        },
+        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '6rem',
+        },
+      },
+      large: {
+        fontSize: '{fontSizes.lg}',
+        py: '{spacing.3}',
+        px: '{spacing.6}',
+        gap: '0.625rem',
+        '&[data-icon]': {
+          fontSize: '{fontSizes.3xl}',
+          '&:not([data-variant=text],[data-variant=link])': {
+            padding: '{spacing.3}',
+          },
+        },
+        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '8rem',
+        },
+        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+          minWidth: '8rem',
+        },
+      },
     },
     shape: {
       rounded: {
@@ -216,155 +191,16 @@ export const recipe = defineRecipe({
       },
       circle: {
         borderRadius: '{radii.circle}',
-        minWidth: '0',
+        minWidth: 'auto',
       },
-    },
-    space: {
-      icon: {},
-      text: {},
     },
   },
   defaultVariants: {
     variant: 'filled',
-    theme: 'primary',
+    theme: 'neutral',
     size: 'medium',
     shape: 'rounded',
-    space: 'text',
   },
-  compoundVariants: [
-    {
-      variant: 'filled',
-      space: 'text',
-      css: {
-        minWidth: '0',
-      },
-    },
-    {
-      variant: 'outlined',
-      space: 'text',
-      css: {
-        minWidth: '0',
-      },
-    },
-    {
-      variant: 'filled',
-      size: 'small',
-      space: 'text',
-      css: {
-        py: '{spacing.2}',
-        px: '{spacing.3}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'filled',
-      size: 'medium',
-      space: 'text',
-      css: {
-        py: '{spacing.3}',
-        px: '{spacing.4}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'filled',
-      size: 'large',
-      space: 'text',
-      css: {
-        py: '{spacing.4}',
-        px: '{spacing.5}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'outlined',
-      size: 'small',
-      space: 'text',
-      css: {
-        py: '{spacing.2}',
-        px: '{spacing.3}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'outlined',
-      size: 'medium',
-      space: 'text',
-      css: {
-        py: '{spacing.3}',
-        px: '{spacing.4}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'outlined',
-      size: 'large',
-      space: 'text',
-      css: {
-        py: '{spacing.4}',
-        px: '{spacing.5}',
-        gap: '0.625rem',
-      },
-    },
-    {
-      variant: 'text',
-      theme: 'secondary',
-      css: {
-        color: 'var(--colors-button-secondary-inverse)',
-        '&:disabled': {
-          color: 'var(--colors-button-secondary-disabled)',
-        },
-      },
-    },
-    {
-      size: 'small',
-      space: 'text',
-      css: {
-        fontSize: 'sm',
-        lineHeight: 'xs',
-      },
-    },
-    {
-      size: 'medium',
-      space: 'text',
-      css: {
-        fontSize: 'md',
-        lineHeight: 'sm',
-      },
-    },
-    {
-      size: 'large',
-      space: 'text',
-      css: {
-        fontSize: 'lg',
-        lineHeight: 'md',
-      },
-    },
-    {
-      size: 'small',
-      space: 'icon',
-      css: {
-        padding: '{spacing.2}',
-        fontSize: 'lg',
-      },
-    },
-    {
-      size: 'medium',
-      space: 'icon',
-      css: {
-        padding: '{spacing.3}',
-        fontSize: 'xl',
-      },
-    },
-    {
-      size: 'large',
-      space: 'icon',
-      css: {
-        padding: '{spacing.4}',
-        fontSize: '2xl',
-      },
-    },
-  ],
 });
 
 export function createButtonPreset() {

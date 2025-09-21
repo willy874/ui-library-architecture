@@ -49,29 +49,6 @@ export const Variant: StoryObj = {
           </Button>
         </div>
         <div>
-          <Button variant="text">Primary Blue</Button>
-        </div>
-        <div>
-          <Button variant="filled" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
-          <Button variant="outlined" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
-          <Button variant="text" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
-          <Button variant="link" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
           <Button variant="text">Secondary</Button>
         </div>
         <div>
@@ -94,6 +71,121 @@ export const Variant: StoryObj = {
             Button
           </Button>
         </div>
+        <div>
+          <Button variant="text">neutral</Button>
+        </div>
+        <div>
+          <Button variant="filled" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="outlined" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="link" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text">info</Button>
+        </div>
+        <div>
+          <Button variant="filled" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="outlined" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="link" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text">success</Button>
+        </div>
+        <div>
+          <Button variant="filled" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="outlined" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="link" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text">warning</Button>
+        </div>
+        <div>
+          <Button variant="filled" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="outlined" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="link" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text">danger</Button>
+        </div>
+        <div>
+          <Button variant="filled" theme="danger">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="outlined" theme="danger">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="text" theme="danger">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button variant="link" theme="danger">
+            Button
+          </Button>
+        </div>
       </div>
       <div
         style={{
@@ -106,26 +198,26 @@ export const Variant: StoryObj = {
       >
         <div>
           <Button variant="text" style={{ color: '#fff' }}>
-            Inverse
+            tertiary
           </Button>
         </div>
         <div>
-          <Button variant="filled" theme="inverse">
+          <Button variant="filled" theme="tertiary">
             Button
           </Button>
         </div>
         <div>
-          <Button variant="outlined" theme="inverse">
+          <Button variant="outlined" theme="tertiary">
             Button
           </Button>
         </div>
         <div>
-          <Button variant="text" theme="inverse">
+          <Button variant="text" theme="tertiary">
             Button
           </Button>
         </div>
         <div>
-          <Button variant="link" theme="inverse">
+          <Button variant="link" theme="tertiary">
             Button
           </Button>
         </div>
@@ -147,19 +239,29 @@ export const VariantDisabled: StoryObj = {
       >
         <div></div>
         <div>
-          <Button variant="text">Filled</Button>
+          <Button disabled variant="text">
+            Filled
+          </Button>
         </div>
         <div>
-          <Button variant="text">Outlined</Button>
+          <Button disabled variant="text">
+            Outlined
+          </Button>
         </div>
         <div>
-          <Button variant="text">Text</Button>
+          <Button disabled variant="text">
+            Text
+          </Button>
         </div>
         <div>
-          <Button variant="text">Link</Button>
+          <Button disabled variant="text">
+            Link
+          </Button>
         </div>
         <div>
-          <Button variant="text">Primary</Button>
+          <Button disabled variant="text">
+            Primary
+          </Button>
         </div>
         <div>
           <Button disabled variant="filled" theme="primary">
@@ -182,30 +284,9 @@ export const VariantDisabled: StoryObj = {
           </Button>
         </div>
         <div>
-          <Button variant="text">Primary Blue</Button>
-        </div>
-        <div>
-          <Button disabled variant="filled" theme="primaryBlue">
-            Button
+          <Button disabled variant="text">
+            Secondary
           </Button>
-        </div>
-        <div>
-          <Button disabled variant="outlined" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
-          <Button disabled variant="text" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
-          <Button disabled variant="link" theme="primaryBlue">
-            Button
-          </Button>
-        </div>
-        <div>
-          <Button variant="text">Secondary</Button>
         </div>
         <div>
           <Button disabled variant="filled" theme="secondary">
@@ -227,6 +308,131 @@ export const VariantDisabled: StoryObj = {
             Button
           </Button>
         </div>
+        <div>
+          <Button disabled variant="text">
+            neutral
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="filled" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="outlined" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="link" theme="neutral">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text">
+            info
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="filled" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="outlined" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="link" theme="info">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text">
+            success
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="filled" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="outlined" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="link" theme="success">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text">
+            warning
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="filled" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="outlined" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="link" theme="warning">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text">
+            danger
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="filled" theme="danger">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="outlined" theme="danger">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="text" theme="danger">
+            Button
+          </Button>
+        </div>
+        <div>
+          <Button disabled variant="link" theme="danger">
+            Button
+          </Button>
+        </div>
       </div>
       <div
         style={{
@@ -239,26 +445,26 @@ export const VariantDisabled: StoryObj = {
       >
         <div>
           <Button disabled variant="text" style={{ color: '#fff' }}>
-            Inverse
+            tertiary
           </Button>
         </div>
         <div>
-          <Button disabled variant="filled" theme="inverse">
+          <Button disabled variant="filled" theme="tertiary">
             Button
           </Button>
         </div>
         <div>
-          <Button disabled variant="outlined" theme="inverse">
+          <Button disabled variant="outlined" theme="tertiary">
             Button
           </Button>
         </div>
         <div>
-          <Button disabled variant="text" theme="inverse">
+          <Button disabled variant="text" theme="tertiary">
             Button
           </Button>
         </div>
         <div>
-          <Button disabled variant="link" theme="inverse">
+          <Button disabled variant="link" theme="tertiary">
             Button
           </Button>
         </div>

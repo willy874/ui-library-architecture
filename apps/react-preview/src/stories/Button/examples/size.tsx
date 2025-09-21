@@ -30,17 +30,17 @@ export const Size: StoryObj = {
         <Button variant="text">Icon</Button>
       </div>
       <div>
-        <Button size="small" content="icon">
+        <Button size="small" icon>
           <SendIcon />
         </Button>
       </div>
       <div>
-        <Button size="medium" content="icon">
+        <Button size="medium" icon>
           <SendIcon />
         </Button>
       </div>
       <div>
-        <Button size="large" content="icon">
+        <Button size="large" icon>
           <SendIcon />
         </Button>
       </div>

@@ -45,8 +45,8 @@
     "lg": { "value": "1.125rem" },
     "xl": { "value": "1.25rem" },
     "2xl": { "value": "1.5rem" },
-    "3xl": { "value": "1.875rem" },
-    "4xl": { "value": "2.25rem" },
+    "3xl": { "value": "2rem" },
+    "4xl": { "value": "2.5rem" },
     "5xl": { "value": "3rem" },
     "6xl": { "value": "4rem" }
   },

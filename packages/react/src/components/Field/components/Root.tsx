@@ -9,15 +9,15 @@ export interface FieldRootProps extends FieldContextProps, HTMLProps<'div'> {
   children?: React.ReactNode;
 }
 
-const Root = forwardRef<HTMLDivElement, FieldRootProps>(
-  ({ children, ...props }: FieldRootProps) => {
-    const [providerProps, divProps] = splitProps(props, ...propKeys);
-    return (
-      <FieldProvider value={providerProps}>
-        <ui.div {...divProps}>{children}</ui.div>
-      </FieldProvider>
-    );
-  },
-);
+const Root = forwardRef<HTMLDivElement, FieldRootProps>(({ children, ...props }, ref) => {
+  const [providerProps, divProps] = splitProps(props, ...propKeys);
+  return (
+    <FieldProvider value={providerProps}>
+      <ui.div {...divProps} ref={ref}>
+        {children}
+      </ui.div>
+    </FieldProvider>
+  );
+});
 
 export default Root;
