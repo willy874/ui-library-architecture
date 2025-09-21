@@ -17,7 +17,8 @@
     "@zag-js/dom-query": "^1.23.0",
     "@zag-js/react": "^1.23.0",
     "clsx": "2.1.1",
-    "eventemitter3": "5.0.1"
+    "eventemitter3": "5.0.1",
+    "react-is": "19.1.1"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
+    "@types/react-is": "19.0.0",
     "@ui-library-architecture/builder-base": "workspace:*",
     "@ui-library-architecture/eslint-config": "workspace:*",
     "@ui-library-architecture/rollup-plugin-svgr": "workspace:*",
