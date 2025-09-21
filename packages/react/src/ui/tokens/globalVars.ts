@@ -2,11 +2,15 @@ import type { Config } from '@pandacss/dev';
 
 export const dynamicCss = {
   shadow:
-    'var(--shadows-inset),var(--shadows-inset-ring),var(--shadows-ring-offset),var(--shadows-ring),var(--shadows)',
+    'var(--shadow-offset-x) var(--shadow-offset-y) var(--shadow-blur) var(--shadow-spread) var(--shadow-color), var(--shadows-extends)',
+  shadows:
+    'var(--shadows-inset),var(--shadows-inset-ring),var(--shadows-ring-offset),var(--shadows-ring), var(--shadows-base)',
   transform:
     'var(--transforms-rotate-x) var(--transforms-rotate-y) var(--transforms-rotate-z) var(--transforms-skew-x) var(--transforms-skew-y) var(--transforms-translate-x) var(--transforms-translate-y) var(--transforms-translate-z)  var(--transforms-scale-x) var(--transforms-scale-y) var(--transforms-scale-z)',
   filter:
     'var(--filters-blur) var(--filters-brightness) var(--filters-contrast) var(--filters-grayscale) var(--filters-hue-rotate) var(--filters-invert) var(--filters-saturate) var(--filters-sepia) var(--filters-drop-shadow)',
+  transition:
+    'var(--transition-property) var(--transition-duration) var(--transition-timing-function) var(--transition-delay) var(--transition-behavior), var(--transitions-base), var(--transitions-extends)',
 };
 
 export const createGlobalVars = (): Config['globalVars'] => {
@@ -15,7 +19,38 @@ export const createGlobalVars = (): Config['globalVars'] => {
     inherits: false,
     initialValue: '',
   } as const;
+  const colors = {
+    '--colors-opacity': {
+      ...DEFAULT_VALUES,
+      initialValue: '1',
+    },
+  };
   const shadows = {
+    '--shadow-offset-x': {
+      ...DEFAULT_VALUES,
+      initialValue: '0px',
+    },
+    '--shadow-offset-y': {
+      ...DEFAULT_VALUES,
+      initialValue: '0px',
+    },
+    '--shadow-blur': {
+      ...DEFAULT_VALUES,
+      initialValue: '0px',
+    },
+    '--shadow-spread': {
+      ...DEFAULT_VALUES,
+      initialValue: '0px',
+    },
+    '--shadow-color': {
+      ...DEFAULT_VALUES,
+      syntax: 'color',
+      initialValue: 'transparent',
+    },
+    '--shadows-extends': {
+      ...DEFAULT_VALUES,
+      initialValue: '0 0 #0000',
+    },
     '--shadows-inset': {
       ...DEFAULT_VALUES,
       initialValue: '0 0 #0000',
@@ -32,7 +67,7 @@ export const createGlobalVars = (): Config['globalVars'] => {
       ...DEFAULT_VALUES,
       initialValue: '0 0 #0000',
     },
-    '--shadows': {
+    '--shadows-base': {
       ...DEFAULT_VALUES,
       initialValue: '0 0 #0000',
     },
@@ -121,9 +156,43 @@ export const createGlobalVars = (): Config['globalVars'] => {
       initialValue: 'drop-shadow(0 0 0 #0000)',
     },
   };
+  const transitions = {
+    '--transition-property': {
+      ...DEFAULT_VALUES,
+      initialValue: 'all',
+    },
+    '--transition-duration': {
+      ...DEFAULT_VALUES,
+      syntax: '<time>',
+      initialValue: '0.2s',
+    },
+    '--transition-timing-function': {
+      ...DEFAULT_VALUES,
+      initialValue: 'ease',
+    },
+    '--transition-delay': {
+      ...DEFAULT_VALUES,
+      syntax: '<time>',
+      initialValue: '0s',
+    },
+    '--transition-behavior': {
+      ...DEFAULT_VALUES,
+      initialValue: 'normal',
+    },
+    '--transitions-transitions': {
+      ...DEFAULT_VALUES,
+      initialValue: 'all 0s ease 0s',
+    },
+    '--transitions-extends': {
+      ...DEFAULT_VALUES,
+      initialValue: 'all 0s ease 0s',
+    },
+  };
   return {
+    ...colors,
     ...shadows,
     ...transforms,
     ...filters,
+    ...transitions,
   };
 };

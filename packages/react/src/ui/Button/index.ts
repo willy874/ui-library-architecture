@@ -55,9 +55,11 @@ export const recipe = defineRecipe({
     backgroundColor: 'var(--colors-button-bg)',
     color: 'var(--colors-button-text)',
     transform: dynamicCss.transform,
-    transition: 'background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s',
+    boxShadow: dynamicCss.shadows,
+    transition: dynamicCss.transition,
+    '--transitions-base': 'transform 0.2s',
     '&:focus&:not(:disabled)': {
-      boxShadow: '0 0 0 3px var(--colors-button-outline-focus)',
+      '--shadows-base': '0 0 0 3px var(--colors-button-outline-focus)',
       outlineStyle: 'solid',
       outlineWidth: '{borderWidths.1}',
       outlineColor: 'var(--colors-button-outline-focus)',
@@ -89,7 +91,7 @@ export const recipe = defineRecipe({
         color: 'var(--colors-button-link-active)',
       },
       '&:focus&:not(:disabled)': {
-        boxShadow: '0 0 0 3px var(--colors-button-link-outline-focus)',
+        '--shadows-base': '0 0 0 3px var(--colors-button-link-outline-focus)',
         outlineStyle: 'solid',
         outlineWidth: '{borderWidths.2}',
         outlineColor: 'var(--colors-button-link-outline-focus)',
