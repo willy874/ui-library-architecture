@@ -1,5 +1,6 @@
 import { defineTokens, defineRecipe, definePreset } from '@pandacss/dev';
 import { theme } from './theme';
+import { dynamicCss } from '../tokens/globalVars';
 
 export const token = defineTokens({
   colors: {
@@ -53,9 +54,12 @@ export const recipe = defineRecipe({
     borderColor: 'var(--colors-button-border)',
     backgroundColor: 'var(--colors-button-bg)',
     color: 'var(--colors-button-text)',
-    transition: 'background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s',
+    transform: dynamicCss.transform,
+    boxShadow: dynamicCss.shadows,
+    transition: dynamicCss.transition,
+    '--transitions-base': 'transform 0.2s',
     '&:focus&:not(:disabled)': {
-      boxShadow: '0 0 0 3px var(--colors-button-outline-focus)',
+      '--shadows-base': '0 0 0 3px var(--colors-button-outline-focus)',
       outlineStyle: 'solid',
       outlineWidth: '{borderWidths.1}',
       outlineColor: 'var(--colors-button-outline-focus)',
@@ -66,7 +70,8 @@ export const recipe = defineRecipe({
       color: 'var(--colors-button-text-hover)',
     },
     '&:active&:not(:disabled)': {
-      transform: 'scale(1.02)',
+      '--transforms-scale-x': 'scaleX(1.02)',
+      '--transforms-scale-y': 'scaleY(1.02)',
     },
     _disabled: {
       cursor: 'not-allowed',
@@ -86,7 +91,7 @@ export const recipe = defineRecipe({
         color: 'var(--colors-button-link-active)',
       },
       '&:focus&:not(:disabled)': {
-        boxShadow: '0 0 0 3px var(--colors-button-link-outline-focus)',
+        '--shadows-base': '0 0 0 3px var(--colors-button-link-outline-focus)',
         outlineStyle: 'solid',
         outlineWidth: '{borderWidths.2}',
         outlineColor: 'var(--colors-button-link-outline-focus)',

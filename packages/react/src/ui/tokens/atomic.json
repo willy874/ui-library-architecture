@@ -53,11 +53,13 @@
 
   "fontWeights": {
     "thin": { "value": "100" },
+    "extralight": { "value": "200" },
     "light": { "value": "300" },
     "regular": { "value": "400" },
     "medium": { "value": "500" },
     "semibold": { "value": "600" },
     "bold": { "value": "700" },
+    "extrabold": { "value": "800" },
     "black": { "value": "900" }
   },
 
@@ -105,10 +107,49 @@
   },
 
   "shadows": {
-    "sm": { "value": "0 1px 2px rgba(0, 0, 0, 0.05)" },
-    "md": { "value": "0 4px 8px rgba(0, 0, 0, 0.1)" },
-    "lg": { "value": "0 8px 16px rgba(0, 0, 0, 0.2)" },
-    "xl": { "value": "0 16px 32px rgba(0, 0, 0, 0.3)" },
-    "2xl": { "value": "0 32px 64px rgba(0, 0, 0, 0.4)" }
+    "box": {
+      "2xs": { "value": "0 1px rgba(0, 0, 0, 0.05)" },
+      "sm": { "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
+      "md": { "value": "0 4px 8px 0 rgb(0 0 0 / 0.1)" },
+      "lg": { "value": "0 8px 16px 0 rgb(0 0 0 / 0.2)" },
+      "xl": { "value": "0 16px 32px 0 rgb(0 0 0 / 0.3)" },
+      "2xl": { "value": "0 32px 64px 0 rgb(0 0 0 / 0.4)" }
+    },
+    "inset": {
+      "2xs": { "value": "inset 0 1px rgb(0 0 0 / 0.05)" },
+      "xs": { "value": "inset 0 1px 1px rgb(0 0 0 / 0.05)" },
+      "sm": { "value": "inset 0 2px 4px rgb(0 0 0 / 0.05)" }
+    },
+    "text": {
+      "2xs": { "value": "0px 1px 0px rgb(0 0 0 / 0.15)" },
+      "xs": { "value": "0px 1px 1px rgb(0 0 0 / 0.2)" },
+      "sm": {
+        "value": "0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075)"
+      },
+      "md": {
+        "value": "0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1)"
+      },
+      "lg": {
+        "value": "0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0, 0, 0, 0.1)"
+      }
+    },
+    "drop": {
+      "xs": { "value": "0 1px 1px rgb(0 0 0 / 0.05)" },
+      "sm": { "value": "0 1px 2px rgb(0 0 0 / 0.15)" },
+      "md": { "value": "0 3px 3px rgb(0 0 0 / 0.12)" },
+      "lg": { "value": "0 4px 4px rgb(0 0 0 / 0.15)" },
+      "xl": { "value": "0 9px 7px rgb(0 0 0 / 0.1)" },
+      "2xl": { "value": "0 25px 25px rgb(0 0 0 / 0.15)" }
+    }
+  },
+
+  "blur": {
+    "xs": { "value": "4px" },
+    "sm": { "value": "8px" },
+    "md": { "value": "12px" },
+    "lg": { "value": "16px" },
+    "xl": { "value": "24px" },
+    "2xl": { "value": "40px" },
+    "3xl": { "value": "64px" }
   }
 }
