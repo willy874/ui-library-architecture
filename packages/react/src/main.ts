@@ -2,6 +2,7 @@ import './global.css';
 export * from './components/Input';
 export * from './components/Field';
 export * from './components/Button';
+export * from './components/Dialog';
 
 const UI_TAG = 'data-ui-library-architecture';
 

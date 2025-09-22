@@ -1,3 +1,8 @@
+declare module '*.png' {
+  const content: string;
+  export default content;
+}
+
 declare module '*.svg?react' {
   import React from 'react';
 
