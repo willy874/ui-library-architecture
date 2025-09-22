@@ -5,6 +5,7 @@ import seedTokens from './ui/tokens/seed.json';
 import { createInputPreset } from './ui/Input';
 import { createFieldPreset } from './ui/Field';
 import { createButtonPreset } from './ui/Button';
+import { createDialogPreset } from './ui/Dialog';
 import { createGlobalVars } from './ui/tokens/globalVars';
 
 const createTokenPreset = () => {
@@ -23,6 +24,12 @@ const createTokenPreset = () => {
 export function createUIPreset() {
   return definePreset({
     name: 'ui-preset',
-    presets: [createTokenPreset(), createInputPreset(), createFieldPreset(), createButtonPreset()],
+    presets: [
+      createTokenPreset(),
+      createInputPreset(),
+      createFieldPreset(),
+      createButtonPreset(),
+      createDialogPreset(),
+    ],
   });
 }
