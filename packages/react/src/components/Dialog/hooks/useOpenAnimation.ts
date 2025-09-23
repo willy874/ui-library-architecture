@@ -3,8 +3,7 @@ import type { DialogState, LifeCycleParams } from '../Dialog.type';
 import { EventEmitter } from '@/utils/events';
 import { useRefEffect } from './useRefEffect';
 import { useEvents } from './useEvents';
-
-export const NOOP = () => {};
+import { LifecycleStates, LifecycleStatesCollection, NOOP } from '../Dialog.constant';
 
 export interface AnimationLifeCycleParams {
   element: LifeCycleParams['element'];
@@ -18,7 +17,7 @@ export interface AnimationLifeCycles {
   onAfterClose?: (params: AnimationLifeCycleParams) => void;
 }
 
-export interface UseOpenAnimationParams {
+export interface UseDialogLifecycleParams {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (params: { open: boolean }) => void;
@@ -29,7 +28,7 @@ export interface UseOpenAnimationParams {
   onAfterClose?: AnimationLifeCycles['onAfterClose'];
 }
 
-export const useOpenAnimation = ({
+export function useDialogLifecycle({
   defaultOpen,
   open: propOpen,
   onOpenChange = NOOP,
@@ -37,7 +36,7 @@ export const useOpenAnimation = ({
   onAfterOpen = NOOP,
   onBeforeClose = NOOP,
   onAfterClose = NOOP,
-}: UseOpenAnimationParams) => {
+}: UseDialogLifecycleParams) {
   const initOpenState = () => {
     if (typeof defaultOpen !== 'undefined') {
       return defaultOpen;
@@ -58,39 +57,34 @@ export const useOpenAnimation = ({
   }));
 
   const [state, nextState] = useReducer(
-    (state: DialogState, to?: DialogState) => {
+    (state: number, to?: number) => {
       if (to) return to;
-      if (state === 'pre-open') return 'open-animating';
-      if (state === 'open-animating') return 'open';
-      if (state === 'open') return 'close-animating';
-      if (state === 'close-animating') return 'pre-close';
-      if (state === 'pre-close') return 'close';
-      if (state === 'close') return 'pre-open';
-      return state;
+      return state + 1;
     },
-    initOpenState() ? 'open' : 'close',
+    initOpenState() ? LifecycleStates.OPEN : LifecycleStates.CLOSE,
   );
 
   const open = useMemo(() => {
-    return ['pre-open', 'open-animating', 'open', 'close-animating', 'pre-close'].includes(state);
+    return LifecycleStates.PRE_OPEN >= state && state <= LifecycleStates.PRE_CLOSE;
   }, [state]);
 
   const refCallback = useRefEffect(
     (node) => {
-      emitterRef.current.emit(state, node);
+      const currentState: DialogState = Reflect.get(LifecycleStatesCollection.name, state);
+      emitterRef.current.emit(currentState, node);
     },
     [state],
   );
 
   const emitOpen = useCallback(() => {
-    if (state === 'close') {
+    if (state === LifecycleStates.CLOSE) {
       onOpenChange({ open: true });
       nextState();
     }
   }, [nextState, onOpenChange, state]);
 
   const emitClose = useCallback(() => {
-    if (state === 'open') {
+    if (state === LifecycleStates.OPEN) {
       onOpenChange({ open: false });
       nextState();
     }
@@ -125,10 +119,10 @@ export const useOpenAnimation = ({
     if (typeof propOpen === 'undefined') {
       return;
     }
-    if (!propOpen && open && state === 'open') {
+    if (!propOpen && open && LifecycleStates.OPEN) {
       emitClose();
     }
-    if (propOpen && !open && state === 'close') {
+    if (propOpen && !open && LifecycleStates.CLOSE) {
       emitOpen();
     }
   }, [emitClose, emitOpen, open, propOpen, state]);
@@ -150,4 +144,4 @@ export const useOpenAnimation = ({
     emitOpenChange,
     ref: refCallback,
   };
-};
+}

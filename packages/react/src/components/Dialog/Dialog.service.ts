@@ -4,17 +4,21 @@ import * as dialog from '@zag-js/dialog';
 import type { HTMLProps } from '@/utils/factory';
 import { EventEmitter } from '@/utils/events';
 import type { PortalProps } from '@/components/Portal';
-import { useOpenAnimation } from './hooks/useOpenAnimation';
+import { useDialogLifecycle } from './hooks/useOpenAnimation';
 import { fadeInPlugin } from './plugins/fadeInAnimate';
 import { positionPlugin } from './plugins/position';
-import { parts } from './Dialog.type';
+import { dialogAnatomy } from '@ui-library-architecture/anatomy';
 import type {
   DialogPlugin,
   DialogPluginFactory,
   DialogPosition,
+  DialogState,
   LifeCycleParams,
   Part,
 } from './Dialog.type';
+import { LifecycleStatesCollection } from './Dialog.constant';
+
+const parts = dialogAnatomy.build();
 
 interface DialogEvents {
   openChange: (params: { open: boolean }) => void;
@@ -110,10 +114,10 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
 
   const {
     open: $open,
-    state: animationState,
+    state: lifecycleState,
     ref: animationRef,
     emitOpenChange,
-  } = useOpenAnimation({
+  } = useDialogLifecycle({
     open: propOpen,
     defaultOpen: props.defaultOpen,
     context: dialogContext,
@@ -142,6 +146,8 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
       setDialogContext({});
     },
   });
+
+  const animationState: DialogState = Reflect.get(LifecycleStatesCollection.name, lifecycleState);
 
   useEffect(() => {
     hookRef.current.onStateUpdate({ type: 'position', value: position });

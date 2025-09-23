@@ -2,7 +2,7 @@ import { EventEmitter } from '@/utils/events';
 
 import { dialogAnatomy } from '@ui-library-architecture/anatomy';
 
-export const parts = dialogAnatomy.build();
+const parts = dialogAnatomy.build();
 
 export type Part = keyof typeof parts;
 
