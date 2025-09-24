@@ -1,14 +1,14 @@
 import { forwardRef } from 'react';
 import { mergeProps } from '@zag-js/react';
-import { button, type ButtonVariantProps } from '@/styled-system/recipes';
+import type { ButtonVariantProps } from '@/styled-system/recipes';
+import { useButtonVariants } from './hooks/useButtonVariants';
 import CoreButtonLink from './components/ButtonLink';
-import { useVariants } from '@/utils/hooks/useVariants';
 import type { ButtonLinkProps as CoreButtonLinkProps } from './components/ButtonLink';
 
 export interface ButtonLinkProps extends CoreButtonLinkProps, ButtonVariantProps {}
 
 const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (props, ref) {
-  const attrs = useVariants<ButtonVariantProps>(props, button);
+  const attrs = useButtonVariants(props);
   return <CoreButtonLink {...mergeProps<ButtonLinkProps>(props, attrs)} ref={ref} />;
 });
 

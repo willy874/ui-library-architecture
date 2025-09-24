@@ -1,23 +1,20 @@
 import { createContext, forwardRef, useContext } from 'react';
 import { cx } from './mergeProps';
+import type { Props, StyleAttributes } from './types';
 
-type Props = Record<string, unknown>;
-type Recipe = {
-  (props?: Props): Props;
-  splitVariantProps: (props: Props) => [Props, Props];
+export type DefineInjectContextRecipe<K extends string> = {
+  (props: Props): Record<K, StyleAttributes>;
 };
-type Slot<R extends Recipe> = keyof ReturnType<R>;
 
-export const createStyleContext = <R extends Recipe>(recipe: R) => {
-  const StyleContext = createContext<Record<Slot<R>, string> | null>(null);
+export const defineInjectContext = <K extends string>(recipe: DefineInjectContextRecipe<K>) => {
+  const StyleContext = createContext<Record<K, StyleAttributes> | null>(null);
 
   const withProvider = <P extends {}>(Component: React.ComponentType<P>): React.FC<P> => {
     const StyledComponent = (props: P) => {
-      const [variantProps, otherProps] = recipe.splitVariantProps(props);
-      const slotStyles = recipe(variantProps) as Record<Slot<R>, string>;
+      const slotStyles = recipe(props);
       return (
         <StyleContext.Provider value={slotStyles}>
-          <Component {...(otherProps as P)} />
+          <Component {...(props as P)} />
         </StyleContext.Provider>
       );
     };
@@ -26,18 +23,18 @@ export const createStyleContext = <R extends Recipe>(recipe: R) => {
 
   const withRootProvider = <T, P extends { className?: string | undefined }>(
     Component: React.ComponentType<P>,
-    slot: Slot<R>,
+    slot: K,
   ): React.ForwardRefExoticComponent<React.PropsWithoutRef<P> & React.RefAttributes<T>> => {
     const StyledSlotProvider = forwardRef<T, P>((props, ref) => {
-      const [variantProps, otherProps] = recipe.splitVariantProps(props);
-      const slotStyles = recipe(variantProps) as Record<Slot<R>, string>;
+      const slotStyles = recipe(props);
+      const { className, ...attrs } = slotStyles?.[slot] || ({} as StyleAttributes);
 
       return (
         <StyleContext.Provider value={slotStyles}>
           <Component
-            {...(otherProps as P)}
+            {...({ ...attrs, ...props } as P)}
             ref={ref}
-            className={cx(slotStyles?.[slot], props.className)}
+            className={cx(className, props.className)}
           />
         </StyleContext.Provider>
       );
@@ -49,11 +46,12 @@ export const createStyleContext = <R extends Recipe>(recipe: R) => {
 
   const withContext = <T, P extends { className?: string | undefined }>(
     Component: React.ForwardRefExoticComponent<React.PropsWithoutRef<P> & React.RefAttributes<T>>,
-    slot: Slot<R>,
+    slot: K,
   ): React.ForwardRefExoticComponent<React.PropsWithoutRef<P> & React.RefAttributes<T>> => {
     const StyledSlotComponent = forwardRef<T, P>((props, ref) => {
       const slotStyles = useContext(StyleContext);
-      return <Component {...props} ref={ref} className={cx(slotStyles?.[slot], props.className)} />;
+      const attrs = slotStyles?.[slot] || ({} as StyleAttributes);
+      return <Component {...props} ref={ref} className={cx(attrs.className, props.className)} />;
     });
     StyledSlotComponent.displayName = Component.displayName || Component.name;
 

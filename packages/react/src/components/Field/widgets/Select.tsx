@@ -3,18 +3,21 @@ import { ui, type HTMLProps } from '@/utils/factory';
 import { mergeProps } from '@/utils/mergeProps';
 import { useFieldContext } from '../core/context';
 
-export interface SelectProps extends HTMLProps<'select'> {
+export interface FieldSelectProps extends HTMLProps<'select'> {
+  as?: (props: HTMLProps<'select'>) => React.ReactElement;
   children?: React.ReactNode;
 }
 
-const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { children, ...rest } = props;
+const FieldSelect = forwardRef<HTMLSelectElement, FieldSelectProps>((props, ref) => {
+  const { as: Component = ui.select, children, ...rest } = props;
   const { getSelectProps } = useFieldContext();
   return (
-    <ui.select {...mergeProps(getSelectProps(), rest)} ref={ref}>
+    <Component {...mergeProps(getSelectProps(), rest)} ref={ref}>
       {children}
-    </ui.select>
+    </Component>
   );
 });
 
-export default Select;
+FieldSelect.displayName = 'FieldSelect';
+
+export default FieldSelect;

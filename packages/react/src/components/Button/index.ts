@@ -9,5 +9,3 @@ export type { ButtonProps } from './Button';
 
 export { default as ButtonLink } from './ButtonLink';
 export type { ButtonLinkProps } from './ButtonLink';
-
-export { useButtonVariants } from './hooks/useButtonVariants';

@@ -1,4 +1,5 @@
-import { createStyleContext, type Recipe } from '@/utils/create-style-context';
+import { defineInjectContext } from '@/utils/define-inject-context';
+import type { DefineInjectContextRecipe } from '@/utils/define-inject-context';
 import Root from './widgets/Root';
 import Label from './widgets/Label';
 import Helper from './widgets/Helper';
@@ -10,9 +11,10 @@ import PasswordControl from './widgets/PasswordControl';
 import Input from './widgets/Input';
 import Select from './widgets/Select';
 import Textarea from './widgets/Textarea';
+import type { Parts } from './core/anatomy';
 
-function Field(recipe: Recipe) {
-  const { withRootProvider, withContext } = createStyleContext(recipe);
+function Field(recipe: DefineInjectContextRecipe<Parts>) {
+  const { withRootProvider, withContext } = defineInjectContext(recipe);
   return {
     Root: withRootProvider(Root, 'root'),
     Label: withContext(Label, 'label'),

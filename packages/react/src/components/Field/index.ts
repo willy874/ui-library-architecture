@@ -10,13 +10,13 @@ export { default as FieldWrapper } from './widgets/Wrapper';
 export type { FieldWrapperProps } from './widgets/Wrapper';
 
 export { default as FieldInput } from './widgets/Input';
-export type { InputProps as FieldInputProps } from './widgets/Input';
+export type { FieldInputProps } from './widgets/Input';
 
 export { default as FieldSelect } from './widgets/Select';
-export type { SelectProps as FieldSelectProps } from './widgets/Select';
+export type { FieldSelectProps } from './widgets/Select';
 
 export { default as FieldTextarea } from './widgets/Textarea';
-export type { TextareaProps as FieldTextareaProps } from './widgets/Textarea';
+export type { FieldTextareaProps } from './widgets/Textarea';
 
 export { default as FieldPasswordControl } from './widgets/PasswordControl';
 export type {

@@ -6,7 +6,7 @@ import { parts } from './anatomy';
 import type { Parts } from './anatomy';
 
 type ElementIds = {
-  [K in keyof Parts]?: string;
+  [K in Parts]?: string;
 } & {
   control?: string;
 };

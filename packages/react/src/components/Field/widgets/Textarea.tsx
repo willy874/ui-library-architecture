@@ -3,16 +3,21 @@ import { ui, type HTMLProps } from '@/utils/factory';
 import { mergeProps } from '@/utils/mergeProps';
 import { useFieldContext } from '../core/context';
 
-export interface TextareaProps extends HTMLProps<'textarea'> {}
+export interface FieldTextareaProps extends HTMLProps<'textarea'> {
+  as?: (props: HTMLProps<'textarea'>) => React.ReactElement;
+  children?: React.ReactNode;
+}
 
-const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
-  const { children, ...rest } = props;
+const FieldTextarea = forwardRef<HTMLTextAreaElement, FieldTextareaProps>((props, ref) => {
+  const { as: Component = ui.textarea, children, ...rest } = props;
   const { getTextareaProps } = useFieldContext();
   return (
-    <ui.textarea {...mergeProps(getTextareaProps(), rest)} ref={ref}>
+    <Component {...mergeProps(getTextareaProps(), rest)} ref={ref}>
       {children}
-    </ui.textarea>
+    </Component>
   );
 });
 
-export default Textarea;
+FieldTextarea.displayName = 'FieldTextarea';
+
+export default FieldTextarea;
