@@ -2,7 +2,7 @@ import { createContext, forwardRef, useContext } from 'react';
 import { cx } from './mergeProps';
 
 type Props = Record<string, unknown>;
-type Recipe = {
+export type Recipe = {
   (props?: Props): Props;
   splitVariantProps: (props: Props) => [Props, Props];
 };

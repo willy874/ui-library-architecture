@@ -1,9 +1,9 @@
-import { createHookContext } from '@/utils/create-context'
-import { useFieldService } from './Field.service'
-import type { UseFieldServiceProps, UseFieldServiceReturn } from './Field.service'
+import { createHookContext } from '@/utils/create-context';
+import { useFieldService } from './service';
+import type { UseFieldServiceProps, UseFieldServiceReturn } from './service';
 
 export interface FieldContextProps extends UseFieldServiceProps {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 export interface FieldContextValue extends UseFieldServiceReturn {}
 
@@ -12,4 +12,4 @@ export const [FieldProvider, useFieldContext] = createHookContext(useFieldServic
   hookName: 'useFieldContext',
   providerName: '<FieldProvider />',
   strict: false,
-})
+});

@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ariaAttr, dataAttr } from '@zag-js/dom-query';
-import { fieldAnatomy } from '@ui-library-architecture/anatomy';
 import { useEnvironmentContext } from '@/utils/hooks/useEnvironmentContext';
 import type { HTMLProps } from '@/utils/factory';
-
-const parts = fieldAnatomy.build();
+import { parts } from './anatomy';
+import type { Parts } from './anatomy';
 
 type ElementIds = {
-  [K in keyof typeof parts]?: string;
+  [K in keyof Parts]?: string;
 } & {
   control?: string;
 };

@@ -1,15 +1,15 @@
 import { forwardRef } from 'react';
 import { ui } from '@/utils/factory';
 import type { HTMLProps } from '@/utils/factory';
-import { FieldProvider, type FieldContextProps } from '../Field.context';
+import { FieldProvider, type FieldContextProps } from '../core/context';
 import { splitProps } from '@/utils/splitProps';
-import { propKeys } from '../Field.service';
+import { propKeys } from '../core/service';
 
 export interface FieldRootProps extends FieldContextProps, HTMLProps<'div'> {
   children?: React.ReactNode;
 }
 
-const Root = forwardRef<HTMLDivElement, FieldRootProps>(({ children, ...props }, ref) => {
+const FieldRoot = forwardRef<HTMLDivElement, FieldRootProps>(({ children, ...props }, ref) => {
   const [providerProps, divProps] = splitProps(props, ...propKeys);
   return (
     <FieldProvider value={providerProps}>
@@ -20,4 +20,6 @@ const Root = forwardRef<HTMLDivElement, FieldRootProps>(({ children, ...props },
   );
 });
 
-export default Root;
+FieldRoot.displayName = 'FieldRoot';
+
+export default FieldRoot;
