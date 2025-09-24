@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import Dialog from './Dialog';
-import { Button } from './components/imports';
+import Dialog from './Dialog.container';
+import { Button } from './widgets/imports';
 
 const NOOP = () => {};
 

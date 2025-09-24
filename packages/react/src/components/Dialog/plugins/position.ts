@@ -1,5 +1,5 @@
 import { isBrowser } from '@/utils/is';
-import type { DialogPluginFactory } from '../Dialog.type';
+import type { DialogPluginFactory } from '../core/type';
 
 const DEFAULT_POSITION_SPACE = 20;
 
