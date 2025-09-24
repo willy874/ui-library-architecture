@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { normalizeProps, useMachine } from '@zag-js/react';
 import * as dialog from '@zag-js/dialog';
+import { dialogAnatomy } from '@ui-library-architecture/anatomy';
 import type { HTMLProps } from '@/utils/factory';
 import { EventEmitter } from '@/utils/events';
 import type { PortalProps } from '@/components/Portal';
-import { useDialogLifecycle } from './hooks/useOpenAnimation';
-import { fadeInPlugin } from './plugins/fadeInAnimate';
-import { positionPlugin } from './plugins/position';
-import { dialogAnatomy } from '@ui-library-architecture/anatomy';
+import { useDialogLifecycle } from '../hooks/useDialogLifecycle';
+import { fadeInPlugin } from '../plugins/fadeInAnimate';
+import { positionPlugin } from '../plugins/position';
 import type {
   DialogPlugin,
   DialogPluginFactory,
   DialogPosition,
   DialogState,
   LifeCycleParams,
-  Part,
-} from './Dialog.type';
-import { LifecycleStatesCollection } from './Dialog.constant';
+} from './type';
+import { LifecycleStatesCollection } from './constant';
+import type { Parts } from './anatomy';
 
 const parts = dialogAnatomy.build();
 
@@ -67,7 +67,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   const uid = useId();
   const id = propId || uid;
 
-  const ids = useMemo<Record<Part, string>>(
+  const ids = useMemo<Record<Parts, string>>(
     () => ({
       action: propIds?.action ?? `dialog::${id}::action`,
       backdrop: propIds?.backdrop ?? `dialog::${id}::backdrop`,
@@ -86,7 +86,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   const getHookInstance = useCallback(() => {
     const pluginContext = {
       getInstance: () => instance,
-      getPart: (part: Part) => {
+      getPart: (part: Parts) => {
         const id = ids[part];
         if (!id) return null;
         return document.getElementById(id);

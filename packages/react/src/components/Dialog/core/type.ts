@@ -1,10 +1,5 @@
+import type { Parts } from './anatomy';
 import { EventEmitter } from '@/utils/events';
-
-import { dialogAnatomy } from '@ui-library-architecture/anatomy';
-
-const parts = dialogAnatomy.build();
-
-export type Part = keyof typeof parts;
 
 export type DialogState =
   | 'open'
@@ -31,7 +26,7 @@ interface DialogPluginState {
 
 interface DialogPluginContext<T = unknown> {
   getInstance: () => T;
-  getPart: (part: Part) => HTMLElement | null;
+  getPart: (part: Parts) => HTMLElement | null;
   emitter: EventEmitter;
   state: DialogPluginState;
 }

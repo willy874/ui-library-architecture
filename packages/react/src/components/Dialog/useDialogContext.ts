@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useDialogContext as useDialog } from '../Dialog.context';
+import { useDialogContext as useDialog } from './core/context';
 
 type DialogOptions<T = unknown> = {
   context?: T;

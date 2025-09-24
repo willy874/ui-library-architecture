@@ -1,6 +1,6 @@
 import { createHookContext } from '@/utils/create-context';
-import { useDialogService } from './Dialog.service';
-import type { UseDialogServiceProps, UseDialogServiceReturn } from './Dialog.service';
+import { useDialogService } from './service';
+import type { UseDialogServiceProps, UseDialogServiceReturn } from './service';
 
 export interface DialogContextProps extends UseDialogServiceProps {
   children?: React.ReactNode;

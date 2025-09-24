@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
-import type { DialogState, LifeCycleParams } from '../Dialog.type';
 import { EventEmitter } from '@/utils/events';
-import { useRefEffect } from './useRefEffect';
-import { useEvents } from './useEvents';
-import { LifecycleStates, LifecycleStatesCollection, NOOP } from '../Dialog.constant';
+import { LifecycleStates, LifecycleStatesCollection, NOOP } from '../core/constant';
+import type { DialogState, LifeCycleParams } from '../core/type';
+import { useRefEffect } from '../../../utils/hooks/useRefEffect';
+import { useEvents } from '../../../utils/hooks/useEvents';
 
 export interface AnimationLifeCycleParams {
   element: LifeCycleParams['element'];

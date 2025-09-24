@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
-import { useDialogContext } from '../Dialog.context';
+import { useDialogContext } from '../core/context';
 import { Button, CloseIcon, type ButtonProps } from './imports';
 
-export interface CloseTriggerProps extends ButtonProps {}
+export interface DialogCloseTriggerProps extends ButtonProps {}
 
-const CloseTrigger = forwardRef<HTMLButtonElement, CloseTriggerProps>(
+const DialogCloseTrigger = forwardRef<HTMLButtonElement, DialogCloseTriggerProps>(
   ({ children, ...props }, ref) => {
     const { getCloseTriggerProps } = useDialogContext();
     return (
@@ -15,4 +15,6 @@ const CloseTrigger = forwardRef<HTMLButtonElement, CloseTriggerProps>(
   },
 );
 
-export default CloseTrigger;
+DialogCloseTrigger.displayName = 'DialogCloseTrigger';
+
+export default DialogCloseTrigger;

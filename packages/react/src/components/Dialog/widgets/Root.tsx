@@ -1,11 +1,11 @@
-import { DialogProvider, type DialogContextProps } from '../Dialog.context';
+import { DialogProvider, type DialogContextProps } from '../core/context';
 
 export interface DialogRootProps extends DialogContextProps {
   children?: React.ReactNode;
 }
 
-function Root({ children, ...props }: DialogRootProps) {
+function DialogRoot({ children, ...props }: DialogRootProps) {
   return <DialogProvider value={props}>{children}</DialogProvider>;
 }
 
-export default Root;
+export default DialogRoot;

@@ -1,4 +1,4 @@
-import type { DialogPluginFactory } from '../Dialog.type';
+import type { DialogPluginFactory } from '../core/type';
 
 const reflow = (node: HTMLElement) => node.getBoundingClientRect();
 
