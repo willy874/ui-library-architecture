@@ -1,8 +1,8 @@
-export { default as CoreButton } from './components/Button';
-export type { ButtonProps as CoreButtonProps } from './components/Button';
+export { default as CoreButton } from './widgets/Button';
+export type { ButtonProps as CoreButtonProps } from './widgets/Button';
 
-export { default as CoreLink } from './components/ButtonLink';
-export type { ButtonLinkProps as CoreButtonLinkProps } from './components/ButtonLink';
+export { default as CoreLink } from './widgets/ButtonLink';
+export type { ButtonLinkProps as CoreButtonLinkProps } from './widgets/ButtonLink';
 
 export { default as Button } from './Button';
 export type { ButtonProps } from './Button';
