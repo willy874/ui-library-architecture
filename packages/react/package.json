@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b & pnpm prepare & vite build",
-    "lint": "eslint .",
+    "build": "bash ./build.sh",
+    "lint": "eslint . & tsc -b",
     "preview": "vite preview",
-    "prepare": "panda codegen"
+    "build:vite": "vite build",
+    "build:panda": "panda codegen"
   },
   "dependencies": {
     "@pandacss/dev": "1.3.0",
