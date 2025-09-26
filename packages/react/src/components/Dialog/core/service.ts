@@ -4,6 +4,7 @@ import * as dialog from '@zag-js/dialog';
 import { dialogAnatomy } from '@ui-library-architecture/anatomy';
 import type { HTMLProps } from '@/utils/factory';
 import { EventEmitter } from '@/utils/events';
+import { proxy, watch } from '@/utils/proxy';
 import type { PortalProps } from '@/components/Portal';
 import { useDialogLifecycle } from '../hooks/useDialogLifecycle';
 import { fadeInPlugin } from '../plugins/fadeInAnimate';
@@ -11,6 +12,7 @@ import { positionPlugin } from '../plugins/position';
 import type {
   DialogPlugin,
   DialogPluginFactory,
+  DialogPluginState,
   DialogPosition,
   DialogState,
   LifeCycleParams,
@@ -47,9 +49,9 @@ export interface UseDialogServiceProps {
   closeOnInteractOutside?: dialog.Props['closeOnInteractOutside'];
   closeOnEscape?: dialog.Props['closeOnEscape'];
   position?: DialogPosition;
+  edgeOffset?: number;
+  plugins?: DialogPluginFactory[];
 }
-
-const pluginFactories: DialogPluginFactory[] = [fadeInPlugin, positionPlugin];
 
 export const useDialogService = (props: UseDialogServiceProps = {}) => {
   const {
@@ -63,6 +65,8 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
     onBeforeClose,
     onAfterClose,
     position = 'center',
+    edgeOffset = 20,
+    plugins = [fadeInPlugin, positionPlugin],
   } = props;
   const uid = useId();
   const id = propId || uid;
@@ -82,7 +86,18 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   );
 
   const emitterRef = useRef(new EventEmitter());
-  const pluginStateRef = useRef({ position });
+  const pluginStateRef = useRef(
+    proxy({
+      position,
+      edgeOffset,
+    } as DialogPluginState),
+  );
+  useEffect(() => {
+    const stateProxy = pluginStateRef.current;
+    return watch(stateProxy, (newValue) => {
+      hookRef.current.onStateUpdate(newValue);
+    });
+  }, []);
   const getHookInstance = useCallback(() => {
     const pluginContext = {
       getInstance: () => instance,
@@ -94,17 +109,17 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
       emitter: emitterRef.current,
       state: pluginStateRef.current,
     };
-    const plugins = pluginFactories.map((factory) => factory(pluginContext));
+    const pluginInstances = plugins.map((factory) => factory(pluginContext));
     const instance: DialogPlugin = {
-      name: plugins.map((p) => p.name || '').join(','),
-      onStateUpdate: (params) => plugins.forEach((p) => p.onStateUpdate?.(params)),
-      onBeforeOpen: (params) => plugins.forEach((p) => p.onBeforeOpen?.(params)),
-      onAfterOpen: (params) => plugins.forEach((p) => p.onAfterOpen?.(params)),
-      onBeforeClose: (params) => plugins.forEach((p) => p.onBeforeClose?.(params)),
-      onAfterClose: (params) => plugins.forEach((p) => p.onAfterClose?.(params)),
+      name: pluginInstances.map((p) => p.name || '').join(','),
+      onStateUpdate: (params) => pluginInstances.forEach((p) => p.onStateUpdate?.(params)),
+      onBeforeOpen: (params) => pluginInstances.forEach((p) => p.onBeforeOpen?.(params)),
+      onAfterOpen: (params) => pluginInstances.forEach((p) => p.onAfterOpen?.(params)),
+      onBeforeClose: (params) => pluginInstances.forEach((p) => p.onBeforeClose?.(params)),
+      onAfterClose: (params) => pluginInstances.forEach((p) => p.onAfterClose?.(params)),
     };
     return instance;
-  }, [ids]);
+  }, [ids, ...plugins]);
   const hookRef = useRef(getHookInstance());
   useEffect(() => {
     hookRef.current = getHookInstance();
@@ -148,10 +163,6 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   });
 
   const animationState: DialogState = Reflect.get(LifecycleStatesCollection.name, lifecycleState);
-
-  useEffect(() => {
-    hookRef.current.onStateUpdate({ type: 'position', value: position });
-  }, [position]);
 
   const service = useMachine(dialog.machine, {
     id,

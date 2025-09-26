@@ -11,8 +11,8 @@ export type DialogState =
 
 export type DialogPosition =
   | 'center'
-  | 'top'
-  | 'bottom'
+  | 'top-center'
+  | 'bottom-center'
   | 'left-center'
   | 'right-center'
   | 'top-left'
@@ -20,8 +20,9 @@ export type DialogPosition =
   | 'bottom-left'
   | 'bottom-right';
 
-interface DialogPluginState {
+export interface DialogPluginState {
   position: DialogPosition;
+  edgeOffset: number;
 }
 
 interface DialogPluginContext<T = unknown> {
@@ -46,10 +47,7 @@ interface DialogPluginHooks {
   onAfterOpen: (params: LifeCycleParams) => void;
   onBeforeClose: (params: LifeCycleParams) => void;
   onAfterClose: (params: LifeCycleParams) => void;
-  onStateUpdate: <T extends keyof DialogPluginState>(state: {
-    type: T;
-    value: DialogPluginState[T];
-  }) => void;
+  onStateUpdate: (state: DialogPluginState) => void;
 }
 
 export interface DialogPlugin extends DialogPluginHooks, DialogPluginProperties {}

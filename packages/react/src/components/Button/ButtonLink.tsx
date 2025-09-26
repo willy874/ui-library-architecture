@@ -1,15 +1,21 @@
-import { forwardRef } from 'react';
-import { mergeProps } from '@zag-js/react';
-import type { ButtonVariantProps } from '@/styled-system/recipes';
-import { useButtonVariants } from './hooks/useButtonVariants';
-import CoreButtonLink from './components/ButtonLink';
-import type { ButtonLinkProps as CoreButtonLinkProps } from './components/ButtonLink';
+import { withVariants } from '@/utils/define-inject-context';
+import { injectDataset } from '@/utils/injectDataset';
+import { button, type ButtonVariant } from '@/styled-system/recipes';
+import CoreButtonLink from './widgets/ButtonLink';
+import type { ButtonLinkProps as CoreButtonLinkProps } from './widgets/ButtonLink';
 
-export interface ButtonLinkProps extends CoreButtonLinkProps, ButtonVariantProps {}
+export interface ButtonLinkProps extends CoreButtonLinkProps, Partial<ButtonVariant> {}
 
-const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function (props, ref) {
-  const attrs = useButtonVariants(props);
-  return <CoreButtonLink {...mergeProps<ButtonLinkProps>(props, attrs)} ref={ref} />;
-});
+const ButtonLink = withVariants((props: ButtonLinkProps) => {
+  const variants = button.getVariantProps(button.splitVariantProps(props)[0]) as ButtonVariant;
+  const slotStyles = button(variants);
+  const dataset = injectDataset({
+    variant: variants.variant,
+    theme: variants.theme,
+    size: variants.size,
+    shape: variants.shape,
+  });
+  return { className: slotStyles, ...dataset };
+}, CoreButtonLink);
 
 export default ButtonLink;

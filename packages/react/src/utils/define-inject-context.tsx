@@ -1,5 +1,5 @@
 import { createContext, forwardRef, useContext } from 'react';
-import { cx } from './mergeProps';
+import { cx, mergeProps } from './mergeProps';
 import type { Props, StyleAttributes } from './types';
 
 export type DefineInjectContextRecipe<K extends string> = {
@@ -64,3 +64,17 @@ export const defineInjectContext = <K extends string>(recipe: DefineInjectContex
     withContext,
   };
 };
+
+export type DefineInjectRecipe<P extends Props> = {
+  (props: P): StyleAttributes;
+};
+
+export function withVariants<T, Props extends { className?: string | undefined }>(
+  recipe: DefineInjectRecipe<Props>,
+  Component: React.ComponentType<Props>,
+): React.ForwardRefExoticComponent<React.PropsWithoutRef<Props> & React.RefAttributes<T>> {
+  const FC = forwardRef<T, Props>(function (props, ref) {
+    return <Component {...mergeProps<any>(props, recipe(props as any))} ref={ref} />;
+  });
+  return FC;
+}

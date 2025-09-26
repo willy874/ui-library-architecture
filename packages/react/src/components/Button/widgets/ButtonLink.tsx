@@ -1,11 +1,11 @@
 import { forwardRef, useRef } from 'react';
 import { mergeProps } from '@zag-js/react';
+import { dataAttr } from '@zag-js/dom-query';
 import { ui } from '@/utils/factory';
 import { useForkRef } from '@/utils/hooks/composeRefs';
 import { defineComponents } from '@/utils/hooks/defineComponents';
-import { Spin as _Spin } from '../imports';
-import { dataAttr } from '@zag-js/dom-query';
 import { useLoadingWidth } from '../hooks/useLoadingWidth';
+import { Spin as _Spin } from './imports';
 
 const useComponents = defineComponents({
   Spin: _Spin,

@@ -33,7 +33,7 @@ const { Root, Trigger, Backdrop, Positioner, Content, Title, Description, CloseT
     };
   });
 
-export interface DialogProps extends DialogRootProps {
+export interface DialogProps extends DialogRootProps, DialogVariant {
   attrs?: {
     trigger?: DialogTriggerProps;
     content?: DialogContentProps;

@@ -1,7 +1,6 @@
 import { isBrowser } from '@/utils/is';
+import { watch } from '@/utils/proxy';
 import type { DialogPluginFactory } from '../core/type';
-
-const DEFAULT_POSITION_SPACE = 20;
 
 export const positionPlugin: DialogPluginFactory = ({ state, getPart }) => {
   let target: HTMLElement | null = null;
@@ -14,39 +13,39 @@ export const positionPlugin: DialogPluginFactory = ({ state, getPart }) => {
     const currentHeight = current.clientHeight;
     const parentWidth = el.clientWidth;
     const parentHeight = el.clientHeight;
-    const centerX = Math.max(DEFAULT_POSITION_SPACE, (parentWidth - currentWidth) / 2);
-    const centerY = Math.max(DEFAULT_POSITION_SPACE, (parentHeight - currentHeight) / 2);
-    const bottomY = parentHeight - currentHeight - DEFAULT_POSITION_SPACE;
-    const rightX = parentWidth - currentWidth - DEFAULT_POSITION_SPACE;
+    const centerX = Math.max(state.edgeOffset, (parentWidth - currentWidth) / 2);
+    const centerY = Math.max(state.edgeOffset, (parentHeight - currentHeight) / 2);
+    const bottomY = parentHeight - currentHeight - state.edgeOffset;
+    const rightX = parentWidth - currentWidth - state.edgeOffset;
     let x = centerX;
     let y = centerY;
     if (state.position === 'center') {
       x = centerX;
       y = centerY;
     }
-    if (state.position === 'top') {
+    if (state.position === 'top-center') {
       x = centerX;
-      y = DEFAULT_POSITION_SPACE;
+      y = state.edgeOffset;
     }
-    if (state.position === 'bottom') {
+    if (state.position === 'bottom-center') {
       x = centerX;
       y = bottomY;
     }
     if (state.position === 'top-left') {
-      x = DEFAULT_POSITION_SPACE;
-      y = DEFAULT_POSITION_SPACE;
+      x = state.edgeOffset;
+      y = state.edgeOffset;
     }
     if (state.position === 'left-center') {
-      x = DEFAULT_POSITION_SPACE;
+      x = state.edgeOffset;
       y = centerY;
     }
     if (state.position === 'bottom-left') {
-      x = DEFAULT_POSITION_SPACE;
+      x = state.edgeOffset;
       y = bottomY;
     }
     if (state.position === 'top-right') {
       x = rightX;
-      y = DEFAULT_POSITION_SPACE;
+      y = state.edgeOffset;
     }
     if (state.position === 'right-center') {
       x = rightX;
@@ -70,15 +69,23 @@ export const positionPlugin: DialogPluginFactory = ({ state, getPart }) => {
   if (!isBrowser()) {
     return {};
   }
+  const stateWatchers = [
+    watch(
+      () => state.position,
+      () => {
+        if (!target) return;
+        setPosition(target);
+      },
+    ),
+    watch(
+      () => state.edgeOffset,
+      () => {
+        if (!target) return;
+        setPosition(target);
+      },
+    ),
+  ];
   return {
-    onStateUpdate: ({ type, value }) => {
-      if (type === 'position' && !Object.is(value, state.position)) {
-        state.position = value;
-        if (target) {
-          setPosition(target);
-        }
-      }
-    },
     onBeforeOpen: ({ element }) => {
       target = element;
       if (!target) return;
@@ -88,6 +95,7 @@ export const positionPlugin: DialogPluginFactory = ({ state, getPart }) => {
     onAfterClose: () => {
       target = null;
       window.removeEventListener('resize', onResize);
+      stateWatchers.forEach((clearup) => clearup());
     },
   };
 };
