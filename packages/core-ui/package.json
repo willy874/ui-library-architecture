@@ -1,0 +1,28 @@
+{
+  "name": "@ui-library-architecture/core-ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "bash ./build.sh",
+    "build:vite": "rollup -c",
+    "build:panda": "panda codegen"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@pandacss/dev": "1.3.0",
+    "@ui-library-architecture/anatomy": "workspace:*"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "28.0.6",
+    "@rollup/plugin-json": "6.1.0",
+    "@rollup/plugin-node-resolve": "16.0.1",
+    "@ui-library-architecture/builder-base": "workspace:*",
+    "@ui-library-architecture/eslint-config": "workspace:*",
+    "rollup": "4.50.1",
+    "rollup-plugin-dts": "6.2.3",
+    "rollup-plugin-esbuild": "6.2.1",
+    "rollup-plugin-postcss": "4.0.2"
+  }
+}
