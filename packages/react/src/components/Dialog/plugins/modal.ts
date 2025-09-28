@@ -2,7 +2,7 @@ import { isBrowser } from '@/utils/is';
 import { watch } from '@/utils/proxy';
 import type { DialogPluginFactory } from '../core/type';
 
-export const positionPlugin: DialogPluginFactory = ({ state, getPart }) => {
+export const modalPlugin: DialogPluginFactory = ({ state, getPart }) => {
   let target: HTMLElement | null = null;
   const setPosition = (el: HTMLElement) => {
     const current = getPart('content');

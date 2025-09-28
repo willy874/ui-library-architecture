@@ -7,14 +7,31 @@ export const slotRecipe = defineSlotRecipe({
   className: 'ui-dialog',
   slots: dialogAnatomy.keys(),
   base: {
+    backdrop: {
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0, 0, 0, .48)',
+      zIndex: 1399,
+    },
+    positioner: {
+      position: 'fixed',
+      zIndex: 1400,
+      inset: 0,
+    },
     content: {
       width: '100%',
-      maxWidth: 'calc(100vw - 32px)',
       borderRadius: 'md',
       background: 'white',
       padding: '{spacing.6}',
       position: 'relative',
       pointerEvents: 'auto',
+    },
+    trigger: {},
+    closeTrigger: {
+      position: 'absolute',
+      top: '0',
+      right: '0',
+      zIndex: 1500,
     },
     title: {
       fontSize: 'xl',
@@ -37,24 +54,6 @@ export const slotRecipe = defineSlotRecipe({
       '& > button': {
         flexGrow: 1,
       },
-    },
-    trigger: {},
-    closeTrigger: {
-      position: 'absolute',
-      top: '0',
-      right: '0',
-      zIndex: 1500,
-    },
-    backdrop: {
-      position: 'fixed',
-      inset: 0,
-      background: 'rgba(0, 0, 0, .48)',
-      zIndex: 1399,
-    },
-    positioner: {
-      position: 'fixed',
-      zIndex: 1400,
-      inset: 0,
     },
   },
   variants: {

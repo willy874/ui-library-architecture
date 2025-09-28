@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import Dialog from './Dialog.container';
+import Dialog from './Modal.container';
 import { Button } from './widgets/imports';
 
 const NOOP = () => {};

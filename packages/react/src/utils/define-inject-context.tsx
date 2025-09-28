@@ -78,3 +78,20 @@ export function withVariants<T, Props extends { className?: string | undefined }
   });
   return FC;
 }
+
+export function injectBaseProps<T, P extends {}, D extends Partial<P>>(
+  Component: React.ComponentType<P>,
+  baseProps: D,
+): React.FC<Omit<P, keyof D>>;
+export function injectBaseProps<T, P extends {}, D extends Partial<P>>(
+  Component: React.ForwardRefExoticComponent<P>,
+  baseProps: D,
+): React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<Omit<P, keyof D>> & React.RefAttributes<T>
+>;
+export function injectBaseProps(Component: React.ComponentType, baseProps: any): React.FC {
+  const FC = forwardRef(function (props, ref) {
+    return <Component {...mergeProps<any>(props, baseProps)} ref={ref} />;
+  });
+  return FC as any;
+}

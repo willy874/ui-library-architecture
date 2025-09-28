@@ -7,8 +7,6 @@ import { EventEmitter } from '@/utils/events';
 import { proxy, watch } from '@/utils/proxy';
 import type { PortalProps } from '@/components/Portal';
 import { useDialogLifecycle } from '../hooks/useDialogLifecycle';
-import { fadeInPlugin } from '../plugins/fadeInAnimate';
-import { positionPlugin } from '../plugins/position';
 import type {
   DialogPlugin,
   DialogPluginFactory,
@@ -66,7 +64,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
     onAfterClose,
     position = 'center',
     edgeOffset = 20,
-    plugins = [fadeInPlugin, positionPlugin],
+    plugins = [],
   } = props;
   const uid = useId();
   const id = propId || uid;

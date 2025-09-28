@@ -32,5 +32,5 @@ export { useDialogContext } from './useDialogContext';
 export type { DialogContext } from './useDialogContext';
 export { useConfirm } from './useConfirm';
 export type { UseConfirmParams } from './useConfirm';
-export { default as Dialog } from './Dialog.container';
-export type { DialogProps } from './Dialog.container';
+export { default as Modal } from './Modal.container';
+export type { ModalProps } from './Modal.container';
