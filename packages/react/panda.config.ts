@@ -1,5 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
-import { createUIPreset } from './src/createPreset';
+import { createUIPreset } from '@ui-library-architecture/core-ui';
 
 export default defineConfig({
   // Whether to use css reset
