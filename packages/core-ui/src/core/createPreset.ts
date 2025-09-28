@@ -1,4 +1,5 @@
 import { definePreset, defineTokens, defineSemanticTokens } from '@pandacss/dev';
+import type { Preset } from '@pandacss/dev';
 import { atomicTokens } from './theme/atomic';
 import { colorTokens } from './theme/colors';
 import { seedTokens } from './theme/seed';
@@ -21,7 +22,7 @@ const createTokenPreset = () => {
   });
 };
 
-export function createUIPreset() {
+export function createUIPreset(): Preset {
   return definePreset({
     name: 'ui-preset',
     presets: [
