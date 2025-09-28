@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Dialog, AskingQuestionImage } from './imports';
+import { defineDialog, AskingQuestionImage } from './imports';
 
 const meta = {
   title: 'Example/Dialog',
-  component: Dialog,
   parameters: {
     layout: 'centered',
     docs: {
@@ -15,24 +14,29 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof Dialog>;
+} satisfies Meta;
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-export const Base: Story = {
+const Dialog = defineDialog;
+export const Base: StoryObj = {
   render: () => {
     return (
-      <Dialog
-        triggerNode="Open Dialog"
-        descriptionNode="This is a description of the dialog."
-        titleNode="Dialog Title"
-      >
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-          <img width="160" height="160" src={AskingQuestionImage} alt="" />
-        </div>
-      </Dialog>
+      <Dialog.Root>
+        <Dialog.Trigger>Open Dialog</Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Backdrop />
+          <Dialog.Positioner>
+            <Dialog.Content>
+              <Dialog.Title>Dialog Title</Dialog.Title>
+              <Dialog.Description>This is a description of the dialog.</Dialog.Description>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                <img width="160" height="160" src={AskingQuestionImage} alt="" />
+              </div>
+            </Dialog.Content>
+          </Dialog.Positioner>
+        </Dialog.Portal>
+      </Dialog.Root>
     );
   },
 };

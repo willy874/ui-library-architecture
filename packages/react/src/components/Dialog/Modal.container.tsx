@@ -40,7 +40,7 @@ const ModalRoot = injectBaseProps(Root, {
 });
 
 type BaseModalProps = React.ComponentProps<typeof ModalRoot>;
-export interface ModalProps extends BaseModalProps, DialogVariant {
+export interface ModalProps extends BaseModalProps, Partial<DialogVariant> {
   attrs?: {
     trigger?: DialogTriggerProps;
     content?: DialogContentProps;

@@ -1,6 +1,7 @@
 import { setupStyles } from '@ui-library-architecture/react';
 export {
-  Dialog,
+  defineDialog,
+  Modal,
   Field,
   Button,
   useDialogContext,

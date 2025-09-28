@@ -1,6 +1,7 @@
 import { defineInjectContext } from '@/utils/define-inject-context';
 import type { DefineInjectContextRecipe } from '@/utils/define-inject-context';
 import Root from './widgets/Root';
+import DialogPortal from './widgets/Portal';
 import Trigger from './widgets/Trigger';
 import Backdrop from './widgets/Backdrop';
 import Positioner from './widgets/Positioner';
@@ -27,6 +28,7 @@ function Dialog(recipe: DefineInjectContextRecipe<Parts>) {
 }
 
 Dialog.Root = Root;
+Dialog.Portal = DialogPortal;
 Dialog.Trigger = Trigger;
 Dialog.Backdrop = Backdrop;
 Dialog.Positioner = Positioner;

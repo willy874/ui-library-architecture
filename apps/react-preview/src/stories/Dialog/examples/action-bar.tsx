@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react-vite';
-import { Dialog, useDialogContext, Button, AskingQuestionImage } from '../imports';
+import { Modal, useDialogContext, Button, AskingQuestionImage } from '../imports';
 
 const ActionBarComponent = () => {
   const { emitClose } = useDialogContext();
@@ -27,11 +27,11 @@ export const ActionBar: StoryObj = {
       actionNode: <ActionBarComponent />,
     };
     return (
-      <Dialog {...args}>
+      <Modal {...args}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
           <img width="160" height="160" src={AskingQuestionImage} alt="" />
         </div>
-      </Dialog>
+      </Modal>
     );
   },
 };

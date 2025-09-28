@@ -1,4 +1,4 @@
-import { Dialog, AskingQuestionImage } from '../imports';
+import { Modal, AskingQuestionImage } from '../imports';
 
 const Content = () => (
   <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
@@ -16,33 +16,33 @@ export const Position = () => {
         padding: '20px',
       }}
     >
-      <Dialog position="top-left" titleNode="Top Left" triggerNode="Top Left">
+      <Modal position="top-left" titleNode="Top Left" triggerNode="Top Left">
         <Content />
-      </Dialog>
-      <Dialog position="top" titleNode="Top" triggerNode="Top">
+      </Modal>
+      <Modal position="top-right" titleNode="Top Right" triggerNode="Top Right">
         <Content />
-      </Dialog>
-      <Dialog position="top-right" titleNode="Top Right" triggerNode="Top Right">
+      </Modal>
+      <Modal position="left-center" titleNode="Left Center" triggerNode="Left Center">
         <Content />
-      </Dialog>
-      <Dialog position="left-center" titleNode="Left Center" triggerNode="Left Center">
+      </Modal>
+      <Modal position="center" titleNode="Center" triggerNode="Center">
         <Content />
-      </Dialog>
-      <Dialog position="center" titleNode="Center" triggerNode="Center">
+      </Modal>
+      <Modal position="right-center" titleNode="Right Center" triggerNode="Right Center">
         <Content />
-      </Dialog>
-      <Dialog position="right-center" titleNode="Right Center" triggerNode="Right Center">
+      </Modal>
+      <Modal position="bottom-left" titleNode="Bottom Left" triggerNode="Bottom Left">
         <Content />
-      </Dialog>
-      <Dialog position="bottom-left" titleNode="Bottom Left" triggerNode="Bottom Left">
+      </Modal>
+      <Modal position="bottom-center" titleNode="Bottom" triggerNode="Bottom">
         <Content />
-      </Dialog>
-      <Dialog position="bottom" titleNode="Bottom" triggerNode="Bottom">
+      </Modal>
+      <Modal position="bottom-center" titleNode="Bottom" triggerNode="Bottom">
         <Content />
-      </Dialog>
-      <Dialog position="bottom-right" titleNode="Bottom Right" triggerNode="Bottom Right">
+      </Modal>
+      <Modal position="bottom-right" titleNode="Bottom Right" triggerNode="Bottom Right">
         <Content />
-      </Dialog>
+      </Modal>
     </div>
   );
 };

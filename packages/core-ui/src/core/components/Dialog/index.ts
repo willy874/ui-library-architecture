@@ -19,7 +19,6 @@ export const slotRecipe = defineSlotRecipe({
       inset: 0,
     },
     content: {
-      width: '100%',
       borderRadius: 'md',
       background: 'white',
       padding: '{spacing.6}',
