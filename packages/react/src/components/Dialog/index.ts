@@ -28,9 +28,10 @@ export type { DialogTitleProps } from './widgets/Title';
 export { default as DialogTrigger } from './widgets/Trigger';
 export type { DialogTriggerProps } from './widgets/Trigger';
 
+export { default as defineDialog } from './Dialog.atomic';
 export { useDialogContext } from './useDialogContext';
 export type { DialogContext } from './useDialogContext';
 export { useConfirm } from './useConfirm';
 export type { UseConfirmParams } from './useConfirm';
-export { default as Dialog } from './Dialog.container';
-export type { DialogProps } from './Dialog.container';
+export { default as Modal } from './Modal.container';
+export type { ModalProps } from './Modal.container';

@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { mergeProps } from '@/utils/mergeProps';
 import { useDialogContext } from '../core/context';
 import { Button, CloseIcon, type ButtonProps } from './imports';
 
@@ -8,7 +9,13 @@ const DialogCloseTrigger = forwardRef<HTMLButtonElement, DialogCloseTriggerProps
   ({ children, ...props }, ref) => {
     const { getCloseTriggerProps } = useDialogContext();
     return (
-      <Button variant="text" size="large" icon {...getCloseTriggerProps()} {...props} ref={ref}>
+      <Button
+        variant="text"
+        size="large"
+        icon
+        {...mergeProps(getCloseTriggerProps(), props)}
+        ref={ref}
+      >
         {children ?? <CloseIcon />}
       </Button>
     );

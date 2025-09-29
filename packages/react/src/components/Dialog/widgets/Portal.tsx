@@ -1,3 +1,4 @@
+import { mergeProps } from '@/utils/mergeProps';
 import { Portal, type PortalProps } from './imports';
 import { useDialogContext } from '../core/context';
 
@@ -7,11 +8,7 @@ export interface DialogPortalProps extends PortalProps {
 
 const DialogPortal = ({ children, ...props }: DialogPortalProps) => {
   const { getPortalProps } = useDialogContext();
-  return (
-    <Portal {...getPortalProps()} {...props}>
-      {children}
-    </Portal>
-  );
+  return <Portal {...mergeProps(getPortalProps(), props)}>{children}</Portal>;
 };
 
 DialogPortal.displayName = 'DialogPortal';

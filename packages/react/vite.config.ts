@@ -77,6 +77,7 @@ export default defineConfig({
           format: 'cjs',
           preserveModules: true,
           preserveModulesRoot: 'src',
+          intro: 'auto',
           exports: 'named',
           entryFileNames: '[name].cjs.js',
           banner: (x) => renderBanner(x.fileName),

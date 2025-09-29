@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { EventEmitter } from '@/utils/events';
+import { useRefEffect } from '@/utils/hooks/useRefEffect';
+import { useEvents } from '@/utils/hooks/useEvents';
 import { LifecycleStates, LifecycleStatesCollection, NOOP } from '../core/constant';
 import type { DialogState, LifeCycleParams } from '../core/type';
-import { useRefEffect } from '../../../utils/hooks/useRefEffect';
-import { useEvents } from '../../../utils/hooks/useEvents';
 
 export interface AnimationLifeCycleParams {
   element: LifeCycleParams['element'];
@@ -59,13 +59,14 @@ export function useDialogLifecycle({
   const [state, nextState] = useReducer(
     (state: number, to?: number) => {
       if (to) return to;
+      if (state >= LifecycleStates.PRE_CLOSE) return LifecycleStates.CLOSE;
       return state + 1;
     },
     initOpenState() ? LifecycleStates.OPEN : LifecycleStates.CLOSE,
   );
 
   const open = useMemo(() => {
-    return LifecycleStates.PRE_OPEN >= state && state <= LifecycleStates.PRE_CLOSE;
+    return !!state;
   }, [state]);
 
   const refCallback = useRefEffect(
@@ -119,10 +120,10 @@ export function useDialogLifecycle({
     if (typeof propOpen === 'undefined') {
       return;
     }
-    if (!propOpen && open && LifecycleStates.OPEN) {
+    if (!propOpen && open && state === LifecycleStates.OPEN) {
       emitClose();
     }
-    if (propOpen && !open && LifecycleStates.CLOSE) {
+    if (propOpen && !open && state === LifecycleStates.CLOSE) {
       emitOpen();
     }
   }, [emitClose, emitOpen, open, propOpen, state]);

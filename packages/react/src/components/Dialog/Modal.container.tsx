@@ -1,7 +1,7 @@
 import { splitProps } from '@/utils/splitProps';
 import { injectDataset } from '@/utils/injectDataset';
+import { injectBaseProps } from '@/utils/define-inject-context';
 import { dialog, type DialogVariant } from '@/styled-system/recipes';
-import type { DialogRootProps } from './widgets/Root';
 import DialogPortal from './widgets/Portal';
 import type { DialogPortalProps } from './widgets/Portal';
 import type { DialogPositionerProps } from './widgets/Positioner';
@@ -13,6 +13,8 @@ import type { DialogContentProps } from './widgets/Content';
 import type { DialogDescriptionProps } from './widgets/Description';
 import type { DialogActionProps } from './widgets/Action';
 import defineDialog from './Dialog.atomic';
+import { fadeInPlugin } from './plugins/fadeInAnimate';
+import { modalPlugin } from './plugins/modal';
 
 const { Root, Trigger, Backdrop, Positioner, Content, Title, Description, CloseTrigger, Action } =
   defineDialog((props) => {
@@ -33,7 +35,12 @@ const { Root, Trigger, Backdrop, Positioner, Content, Title, Description, CloseT
     };
   });
 
-export interface DialogProps extends DialogRootProps, DialogVariant {
+const ModalRoot = injectBaseProps(Root, {
+  plugins: [fadeInPlugin, modalPlugin],
+});
+
+type BaseModalProps = React.ComponentProps<typeof ModalRoot>;
+export interface ModalProps extends BaseModalProps, Partial<DialogVariant> {
   attrs?: {
     trigger?: DialogTriggerProps;
     content?: DialogContentProps;
@@ -61,11 +68,11 @@ const propKeys = [
   'triggerNode',
 ] as const;
 
-function Dialog(props: DialogProps) {
+function Modal(props: ModalProps) {
   const [{ attrs, children, titleNode, descriptionNode, actionNode, triggerNode }, rootProps] =
     splitProps(props, ...propKeys);
   return (
-    <Root {...rootProps}>
+    <ModalRoot {...rootProps}>
       {triggerNode && <Trigger {...attrs?.trigger}>{triggerNode}</Trigger>}
       <DialogPortal {...attrs?.portal}>
         <Backdrop {...attrs?.backdrop} />
@@ -81,20 +88,20 @@ function Dialog(props: DialogProps) {
           </Content>
         </Positioner>
       </DialogPortal>
-    </Root>
+    </ModalRoot>
   );
 }
 
-Dialog.displayName = 'Dialog';
-Dialog.Root = Root;
-Dialog.Portal = DialogPortal;
-Dialog.Trigger = Trigger;
-Dialog.Backdrop = Backdrop;
-Dialog.Positioner = Positioner;
-Dialog.Content = Content;
-Dialog.Title = Title;
-Dialog.Description = Description;
-Dialog.CloseTrigger = CloseTrigger;
-Dialog.Action = Action;
+Modal.displayName = 'Modal';
+Modal.Root = ModalRoot;
+Modal.Portal = DialogPortal;
+Modal.Trigger = Trigger;
+Modal.Backdrop = Backdrop;
+Modal.Positioner = Positioner;
+Modal.Content = Content;
+Modal.Title = Title;
+Modal.Description = Description;
+Modal.CloseTrigger = CloseTrigger;
+Modal.Action = Action;
 
-export default Dialog;
+export default Modal;
