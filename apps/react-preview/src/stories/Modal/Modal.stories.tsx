@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { defineDialog, AskingQuestionImage } from './imports';
+import { Modal, AskingQuestionImage } from './imports';
 
 const meta = {
-  title: 'Example/Dialog',
+  title: 'Example/Modal',
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A dialog component that can be used to display content in a modal overlay. It supports various features such as trapping focus, preventing scroll, and more.',
+          'A modal component that can be used to display content in a modal overlay. It supports various features such as trapping focus, preventing scroll, and more.',
       },
     },
   },
@@ -18,25 +18,24 @@ const meta = {
 
 export default meta;
 
-const Dialog = defineDialog;
 export const Base: StoryObj = {
   render: () => {
     return (
-      <Dialog.Root>
-        <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Backdrop />
-          <Dialog.Positioner>
-            <Dialog.Content>
-              <Dialog.Title>Dialog Title</Dialog.Title>
-              <Dialog.Description>This is a description of the dialog.</Dialog.Description>
+      <Modal.Root>
+        <Modal.Trigger>Open Dialog</Modal.Trigger>
+        <Modal.Portal>
+          <Modal.Backdrop />
+          <Modal.Positioner>
+            <Modal.Content>
+              <Modal.Title>Dialog Title</Modal.Title>
+              <Modal.Description>This is a description of the dialog.</Modal.Description>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 <img width="160" height="160" src={AskingQuestionImage} alt="" />
               </div>
-            </Dialog.Content>
-          </Dialog.Positioner>
-        </Dialog.Portal>
-      </Dialog.Root>
+            </Modal.Content>
+          </Modal.Positioner>
+        </Modal.Portal>
+      </Modal.Root>
     );
   },
 };

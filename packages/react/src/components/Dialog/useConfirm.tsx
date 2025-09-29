@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import Dialog from './Modal.container';
+import Modal from './Modal.container';
 import { Button } from './widgets/imports';
 
 const NOOP = () => {};
@@ -45,19 +45,19 @@ export function useConfirm(
     });
   }, []);
   const node = (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Portal>
-        <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content role="alertdialog">
-            <Dialog.CloseTrigger
+    <Modal.Root open={open} onOpenChange={onOpenChange}>
+      <Modal.Portal>
+        <Modal.Backdrop />
+        <Modal.Positioner>
+          <Modal.Content role="alertdialog">
+            <Modal.CloseTrigger
               onClick={() => {
                 callbackRef.current.resolve();
               }}
             />
-            <Dialog.Title>{params.title}</Dialog.Title>
-            {params.description && <Dialog.Description>{params.description}</Dialog.Description>}
-            <Dialog.Action>
+            <Modal.Title>{params.title}</Modal.Title>
+            {params.description && <Modal.Description>{params.description}</Modal.Description>}
+            <Modal.Action>
               {params.cancelText && (
                 <Button
                   variant="outlined"
@@ -79,11 +79,11 @@ export function useConfirm(
               >
                 {params.confirmText}
               </Button>
-            </Dialog.Action>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Dialog.Portal>
-    </Dialog.Root>
+            </Modal.Action>
+          </Modal.Content>
+        </Modal.Positioner>
+      </Modal.Portal>
+    </Modal.Root>
   );
   return [node, onOpen] as const;
 }
