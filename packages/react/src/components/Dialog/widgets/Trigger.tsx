@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { mergeProps } from '@/utils/mergeProps';
 import { useDialogContext } from '../core/context';
 import { Button, type ButtonProps } from './imports';
 
@@ -8,7 +9,7 @@ const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
   ({ children, ...props }, ref) => {
     const { getOpenTriggerProps } = useDialogContext();
     return (
-      <Button {...getOpenTriggerProps()} {...props} ref={ref}>
+      <Button {...mergeProps(getOpenTriggerProps(), props)} ref={ref}>
         {children}
       </Button>
     );
