@@ -19,6 +19,9 @@ export const Position = () => {
       <Modal position="top-left" titleNode="Top Left" triggerNode="Top Left">
         <Content />
       </Modal>
+      <Modal position="top-center" titleNode="Top Center" triggerNode="Top Center">
+        <Content />
+      </Modal>
       <Modal position="top-right" titleNode="Top Right" triggerNode="Top Right">
         <Content />
       </Modal>
@@ -34,10 +37,7 @@ export const Position = () => {
       <Modal position="bottom-left" titleNode="Bottom Left" triggerNode="Bottom Left">
         <Content />
       </Modal>
-      <Modal position="bottom-center" titleNode="Bottom" triggerNode="Bottom">
-        <Content />
-      </Modal>
-      <Modal position="bottom-center" titleNode="Bottom" triggerNode="Bottom">
+      <Modal position="bottom-center" titleNode="Bottom Center" triggerNode="Bottom Center">
         <Content />
       </Modal>
       <Modal position="bottom-right" titleNode="Bottom Right" triggerNode="Bottom Right">
