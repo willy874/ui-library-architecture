@@ -86,8 +86,8 @@ export const modalPlugin: DialogPluginFactory = ({ state, getPart }) => {
     ),
   ];
   return {
-    onBeforeOpen: ({ element }) => {
-      target = element;
+    onBeforeOpen: () => {
+      target = getPart('positioner');
       if (!target) return;
       window.addEventListener('resize', onResize);
       setPosition(target);
