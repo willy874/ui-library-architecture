@@ -38,8 +38,8 @@ interface DialogPluginProperties {
 
 export interface LifeCycleParams {
   context: unknown;
-  element: HTMLElement | null;
   next: () => void;
+  preNext: () => void;
 }
 
 interface DialogPluginHooks {

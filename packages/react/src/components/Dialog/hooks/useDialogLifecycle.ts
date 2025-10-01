@@ -6,8 +6,8 @@ import { LifecycleStates, LifecycleStatesCollection, NOOP } from '../core/consta
 import type { DialogState, LifeCycleParams } from '../core/type';
 
 export interface AnimationLifeCycleParams {
-  element: LifeCycleParams['element'];
   next: LifeCycleParams['next'];
+  preNext: LifeCycleParams['preNext'];
 }
 
 export interface AnimationLifeCycles {
@@ -64,6 +64,7 @@ export function useDialogLifecycle({
     },
     initOpenState() ? LifecycleStates.OPEN : LifecycleStates.CLOSE,
   );
+  const preNextRef = useRef(false);
 
   const open = useMemo(() => {
     return !!state;
@@ -93,24 +94,34 @@ export function useDialogLifecycle({
 
   useEffect(() => {
     const next = () => nextState();
+    const resetPreNext = () => (preNextRef.current = false);
+    const preNext = () => (preNextRef.current = true);
     const listeners = [
       emitterRef.current.on('pre-open', () => {
         nextState();
       }),
-      emitterRef.current.on('open-animating', (node) => {
-        events.onBeforeOpen({ element: node, next });
+      emitterRef.current.on('open-animating', () => {
+        resetPreNext();
+        events.onBeforeOpen({ next, preNext });
+        Promise.resolve().then(() => {
+          if (!preNextRef.current) nextState();
+        });
       }),
-      emitterRef.current.on('open', (node) => {
-        events.onAfterOpen({ element: node, next });
+      emitterRef.current.on('open', () => {
+        events.onAfterOpen({ next, preNext });
       }),
-      emitterRef.current.on('close-animating', (node) => {
-        events.onBeforeClose({ element: node, next });
+      emitterRef.current.on('close-animating', () => {
+        resetPreNext();
+        events.onBeforeClose({ next, preNext });
+        Promise.resolve().then(() => {
+          if (!preNextRef.current) nextState();
+        });
       }),
       emitterRef.current.on('pre-close', () => {
         nextState();
       }),
-      emitterRef.current.on('close', (node) => {
-        events.onAfterClose({ element: node, next });
+      emitterRef.current.on('close', () => {
+        events.onAfterClose({ next, preNext });
       }),
     ];
     return () => listeners.forEach((l) => l());

@@ -2,14 +2,16 @@ import type { DialogPluginFactory } from '../core/type';
 
 const reflow = (node: HTMLElement) => node.getBoundingClientRect();
 
-export const fadeInPlugin: DialogPluginFactory = () => ({
-  onBeforeOpen: ({ element, next }) => {
-    if (!element) return;
-    element.style.opacity = '0';
-    element.style.transition = 'opacity 200ms';
-    reflow(element);
-    element.style.opacity = '1';
-    element.addEventListener(
+export const fadeInPlugin: DialogPluginFactory = ({ getPart }) => ({
+  onBeforeOpen: ({ next, preNext }) => {
+    const target = getPart('positioner');
+    if (!target) return;
+    preNext();
+    target.style.opacity = '0';
+    target.style.transition = 'opacity 200ms';
+    reflow(target);
+    target.style.opacity = '1';
+    target.addEventListener(
       'transitionend',
       () => {
         next();
@@ -17,18 +19,21 @@ export const fadeInPlugin: DialogPluginFactory = () => ({
       { once: true },
     );
   },
-  onAfterOpen: ({ element }) => {
-    if (!element) return;
-    element.style.opacity = '';
-    element.style.transition = '';
+  onAfterOpen: () => {
+    const target = getPart('positioner');
+    if (!target) return;
+    target.style.opacity = '';
+    target.style.transition = '';
   },
-  onBeforeClose: ({ element, next }) => {
-    if (!element) return;
-    element.style.opacity = '1';
-    element.style.transition = 'opacity 200ms';
-    reflow(element);
-    element.style.opacity = '0';
-    element.addEventListener(
+  onBeforeClose: ({ next, preNext }) => {
+    const target = getPart('positioner');
+    if (!target) return;
+    preNext();
+    target.style.opacity = '1';
+    target.style.transition = 'opacity 200ms';
+    reflow(target);
+    target.style.opacity = '0';
+    target.addEventListener(
       'transitionend',
       () => {
         next();
@@ -36,9 +41,10 @@ export const fadeInPlugin: DialogPluginFactory = () => ({
       { once: true },
     );
   },
-  onAfterClose: ({ element }) => {
-    if (!element) return;
-    element.style.opacity = '';
-    element.style.transition = '';
+  onAfterClose: () => {
+    const target = getPart('positioner');
+    if (!target) return;
+    target.style.opacity = '';
+    target.style.transition = '';
   },
 });
