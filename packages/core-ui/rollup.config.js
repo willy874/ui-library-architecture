@@ -5,6 +5,7 @@ const resolve = require('@rollup/plugin-node-resolve');
 const esbuild = require('rollup-plugin-esbuild');
 const json = require('@rollup/plugin-json');
 const dts = require('rollup-plugin-dts');
+const alias = require('@rollup/plugin-alias');
 const { NODEJS_EXTERNALS } = require('@ui-library-architecture/builder-base');
 
 const rootPath = process.cwd();
@@ -27,6 +28,17 @@ const plugins = [
     sourceMap: true,
     target: 'es2015',
     tsconfig: path.resolve(rootPath, 'tsconfig.json'),
+  }),
+  alias.default({
+    entries: [
+      {
+        find: /^@\/(.*)$/,
+        replacement: path.resolve(rootPath, 'src/$1'),
+        customResolver: resolve({
+          extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
+        }),
+      },
+    ],
   }),
 ].filter(Boolean);
 
