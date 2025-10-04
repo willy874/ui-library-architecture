@@ -71,20 +71,27 @@ const propKeys = [
 function Modal(props: ModalProps) {
   const [{ attrs, children, titleNode, descriptionNode, actionNode, triggerNode }, rootProps] =
     splitProps(props, ...propKeys);
+  const triggerProps = attrs?.trigger || {};
+  const contentProps = attrs?.content || {};
+  const closeTriggerProps = attrs?.closeTrigger || {};
+  const backdropProps = attrs?.backdrop || {};
+  const positionerProps = attrs?.positioner || {};
+  const titleProps = attrs?.title || {};
+  const descriptionProps = attrs?.description || {};
+  const actionProps = attrs?.action || {};
+  const portalProps = attrs?.portal || {};
   return (
     <ModalRoot {...rootProps}>
-      {triggerNode && <Trigger {...attrs?.trigger}>{triggerNode}</Trigger>}
-      <DialogPortal {...attrs?.portal}>
-        <Backdrop {...attrs?.backdrop} />
-        <Positioner {...attrs?.positioner}>
-          <Content {...attrs?.content}>
-            <CloseTrigger {...attrs?.closeTrigger} />
-            {titleNode && <Title {...attrs?.title}>{titleNode}</Title>}
-            {descriptionNode && (
-              <Description {...attrs?.description}>{descriptionNode}</Description>
-            )}
+      {triggerNode && <Trigger {...triggerProps}>{triggerNode}</Trigger>}
+      <DialogPortal {...portalProps}>
+        <Backdrop {...backdropProps} />
+        <Positioner {...positionerProps}>
+          <Content {...contentProps}>
+            <CloseTrigger {...closeTriggerProps} />
+            {titleNode && <Title {...titleProps}>{titleNode}</Title>}
+            {descriptionNode && <Description {...descriptionProps}>{descriptionNode}</Description>}
             {children}
-            {actionNode && <Action {...attrs?.action}>{actionNode}</Action>}
+            {actionNode && <Action {...actionProps}>{actionNode}</Action>}
           </Content>
         </Positioner>
       </DialogPortal>
