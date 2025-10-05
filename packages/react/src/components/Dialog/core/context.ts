@@ -7,9 +7,12 @@ export interface DialogContextProps extends UseDialogServiceProps {
 }
 export interface DialogContextValue extends UseDialogServiceReturn {}
 
-export const [DialogProvider, useDialogContext] = createHookContext(useDialogService, {
-  name: 'DialogContext',
-  hookName: 'useDialogContext',
-  providerName: '<DialogProvider />',
-  strict: false,
-});
+export const [DialogProvider, useDialogContext, DialogConsumer] = createHookContext(
+  useDialogService,
+  {
+    name: 'DialogContext',
+    hookName: 'useDialogContext',
+    providerName: '<DialogProvider />',
+    strict: false,
+  },
+);

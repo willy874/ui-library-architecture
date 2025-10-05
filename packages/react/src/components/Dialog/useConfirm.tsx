@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import Modal from './Modal.container';
-import { Button } from './widgets/imports';
+import { Button, Portal } from './widgets/imports';
 
 const NOOP = () => {};
 
@@ -46,7 +46,7 @@ export function useConfirm(
   }, []);
   const node = (
     <Modal.Root open={open} onOpenChange={onOpenChange}>
-      <Modal.Portal>
+      <Portal>
         <Modal.Backdrop />
         <Modal.Positioner>
           <Modal.Content role="alertdialog">
@@ -82,7 +82,7 @@ export function useConfirm(
             </Modal.Action>
           </Modal.Content>
         </Modal.Positioner>
-      </Modal.Portal>
+      </Portal>
     </Modal.Root>
   );
   return [node, onOpen] as const;

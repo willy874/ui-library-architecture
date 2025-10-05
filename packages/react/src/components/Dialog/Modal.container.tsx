@@ -2,8 +2,7 @@ import { splitProps } from '@/utils/splitProps';
 import { injectDataset } from '@/utils/injectDataset';
 import { injectBaseProps } from '@/utils/define-inject-context';
 import { dialog, type DialogVariant } from '@/styled-system/recipes';
-import DialogPortal from './widgets/Portal';
-import type { DialogPortalProps } from './widgets/Portal';
+import { Portal, type PortalProps } from './widgets/imports';
 import type { DialogPositionerProps } from './widgets/Positioner';
 import type { DialogTriggerProps } from './widgets/Trigger';
 import type { DialogBackdropProps } from './widgets/Backdrop';
@@ -15,6 +14,7 @@ import type { DialogActionProps } from './widgets/Action';
 import defineDialog from './Dialog.atomic';
 import { fadeInPlugin } from './plugins/fadeInAnimate';
 import { modalPlugin } from './plugins/modal';
+import { DialogConsumer } from './core/context';
 
 const { Root, Trigger, Backdrop, Positioner, Content, Title, Description, CloseTrigger, Action } =
   defineDialog((props) => {
@@ -50,7 +50,7 @@ export interface ModalProps extends BaseModalProps, Partial<DialogVariant> {
     title?: DialogTitleProps;
     description?: DialogDescriptionProps;
     action?: DialogActionProps;
-    portal?: DialogPortalProps;
+    portal?: PortalProps;
   };
   titleNode?: React.ReactNode;
   descriptionNode?: React.ReactNode;
@@ -69,39 +69,35 @@ const propKeys = [
 ] as const;
 
 function Modal(props: ModalProps) {
-  const [{ attrs, children, titleNode, descriptionNode, actionNode, triggerNode }, rootProps] =
+  const [{ attrs = {}, children, titleNode, descriptionNode, actionNode, triggerNode }, rootProps] =
     splitProps(props, ...propKeys);
-  const triggerProps = attrs?.trigger || {};
-  const contentProps = attrs?.content || {};
-  const closeTriggerProps = attrs?.closeTrigger || {};
-  const backdropProps = attrs?.backdrop || {};
-  const positionerProps = attrs?.positioner || {};
-  const titleProps = attrs?.title || {};
-  const descriptionProps = attrs?.description || {};
-  const actionProps = attrs?.action || {};
-  const portalProps = attrs?.portal || {};
   return (
     <ModalRoot {...rootProps}>
-      {triggerNode && <Trigger {...triggerProps}>{triggerNode}</Trigger>}
-      <DialogPortal {...portalProps}>
-        <Backdrop {...backdropProps} />
-        <Positioner {...positionerProps}>
-          <Content {...contentProps}>
-            <CloseTrigger {...closeTriggerProps} />
-            {titleNode && <Title {...titleProps}>{titleNode}</Title>}
-            {descriptionNode && <Description {...descriptionProps}>{descriptionNode}</Description>}
-            {children}
-            {actionNode && <Action {...actionProps}>{actionNode}</Action>}
-          </Content>
-        </Positioner>
-      </DialogPortal>
+      {triggerNode && <Trigger {...attrs.trigger}>{triggerNode}</Trigger>}
+      <DialogConsumer>
+        {(ctx) => (
+          <Portal {...ctx.getPortalProps(attrs.portal)}>
+            <Backdrop {...attrs.backdrop} />
+            <Positioner {...attrs.positioner}>
+              <Content {...attrs.content}>
+                <CloseTrigger {...attrs.closeTrigger} />
+                {titleNode && <Title {...attrs.title}>{titleNode}</Title>}
+                {descriptionNode && (
+                  <Description {...attrs.description}>{descriptionNode}</Description>
+                )}
+                {children}
+                {actionNode && <Action {...attrs.action}>{actionNode}</Action>}
+              </Content>
+            </Positioner>
+          </Portal>
+        )}
+      </DialogConsumer>
     </ModalRoot>
   );
 }
 
 Modal.displayName = 'Modal';
 Modal.Root = ModalRoot;
-Modal.Portal = DialogPortal;
 Modal.Trigger = Trigger;
 Modal.Backdrop = Backdrop;
 Modal.Positioner = Positioner;

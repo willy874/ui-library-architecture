@@ -188,85 +188,94 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   );
 
   const getBackdropProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         ...api.getBackdropProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'div'>,
     [api, controlProviderProps],
   );
 
   const getPortalProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         open: api.open,
         autoLock: props.preventScroll,
         autoDestroy: true,
         getRootNode,
+        ...overrides,
       }) as PortalProps,
     [api.open, getRootNode, props.preventScroll],
   );
 
   const getPositionerProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         ...api.getPositionerProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'div'>,
     [api, controlProviderProps],
   );
 
   const getContentProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         ...api.getContentProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'div'>,
     [api, controlProviderProps],
   );
 
   const getTitleProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         ...api.getTitleProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'div'>,
     [api, controlProviderProps],
   );
 
   const getActionProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         id: ids.action,
         'data-part': parts.action,
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'div'>,
     [ids.action, controlProviderProps],
   );
 
   const getDescriptionProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'div'>) =>
       ({
         ...api.getDescriptionProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'div'>,
     [api, controlProviderProps],
   );
 
   const getOpenTriggerProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'button'>) =>
       ({
         ...api.getTriggerProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'button'>,
     [api, controlProviderProps],
   );
 
   const getCloseTriggerProps = useCallback(
-    () =>
+    (overrides?: HTMLProps<'button'>) =>
       ({
         ...api.getCloseTriggerProps(),
         ...controlProviderProps,
+        ...overrides,
       }) as HTMLProps<'button'>,
     [api, controlProviderProps],
   );
