@@ -32,5 +32,8 @@ export function createUIPreset(): Preset {
       createButtonPreset(),
       createDialogPreset(),
     ],
+    staticCss: {
+      recipes: '*',
+    },
   });
 }
