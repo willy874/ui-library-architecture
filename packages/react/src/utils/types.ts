@@ -1,5 +1,7 @@
 export type RootNode = ShadowRoot | Document | DocumentFragment | Element;
 
+export type GetContainer = string | RootNode | (() => RootNode) | false;
+
 export type Assign<T, U> = Omit<T, keyof U> & U;
 
 export type Pretty<T> = { [K in keyof T]: T[K] } & {};
