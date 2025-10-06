@@ -1,6 +1,7 @@
 import { createContext, useContext, useRef, useState } from 'react';
 import { isBrowser } from '@/utils/is';
 import { useInternalLayoutEffect } from '@/utils/hooks/useInternalLayoutEffect';
+import { useEnvironmentContext } from '@/utils/hooks/useEnvironmentContext';
 
 export type QueueCreate = (appendFunc: VoidFunction) => void;
 
@@ -13,11 +14,12 @@ const EMPTY_LIST = [] as VoidFunction[];
  * @param render Render DOM in document
  */
 export default function useDom(render: boolean): [HTMLDivElement, QueueCreate] {
+  const environment = useEnvironmentContext();
   const [ele] = useState<HTMLDivElement>(() => {
     if (!isBrowser()) {
       return null as unknown as HTMLDivElement;
     }
-    return document.createElement('div');
+    return environment.getDocument().createElement('div');
   });
 
   const appendedRef = useRef(false);
@@ -39,7 +41,7 @@ export default function useDom(render: boolean): [HTMLDivElement, QueueCreate] {
   useInternalLayoutEffect(() => {
     function append() {
       if (!ele.parentElement) {
-        document.body.appendChild(ele);
+        environment.getDocument().body.appendChild(ele);
       }
       appendedRef.current = true;
     }

@@ -1,3 +1,4 @@
+import { environmentContext } from '@/utils/environment-context';
 import { removeCSS, updateCSS } from '../../../utils/dynamicCSS';
 
 type ScrollBarSize = { width: number; height: number };
@@ -9,7 +10,8 @@ type ExtendCSSStyleDeclaration = CSSStyleDeclaration & {
 
 let cached: ScrollBarSize;
 
-function measureScrollbarSize(ele?: HTMLElement): ScrollBarSize {
+function measureScrollbarSize(ele?: HTMLElement, environment = environmentContext): ScrollBarSize {
+  const document = environment.getDocument();
   const randomId = `rc-scrollbar-measure-${Math.random().toString(36).substring(7)}`;
   const measureEle = document.createElement('div');
   measureEle.id = randomId;

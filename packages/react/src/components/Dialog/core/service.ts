@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { normalizeProps, useMachine } from '@zag-js/react';
 import * as dialog from '@zag-js/dialog';
-import { dialogAnatomy } from '@ui-library-architecture/anatomy';
-import type { HTMLProps } from '@/utils/factory';
+import type { DefaultHTMLProps, HTMLProps, PolymorphicProps } from '@/utils/factory';
 import { EventEmitter } from '@/utils/events';
 import { proxy, watch } from '@/utils/proxy';
 import type { PortalProps } from '@/components/Portal';
-import { useDialogLifecycle } from '../hooks/useDialogLifecycle';
+import { useDialogLifecycle } from './hooks/useDialogLifecycle';
 import type {
   DialogPlugin,
   DialogPluginFactory,
@@ -19,8 +18,8 @@ import { LifecycleStatesCollection } from './constant';
 import type { Parts } from './anatomy';
 import { modalPlugin } from '../plugins/modal';
 import { fadeInPlugin } from '../plugins/fadeInAnimate';
-
-const parts = dialogAnatomy.build();
+import { mergeProps } from '@/utils/mergeProps';
+import type { GetContainer } from '@/utils/types';
 
 interface DialogEvents {
   openChange: (params: { open: boolean }) => void;
@@ -30,16 +29,17 @@ interface DialogEvents {
   afterClose: (params: LifeCycleParams) => void;
 }
 
-type ElementIds = {
-  [K in keyof typeof parts]?: string;
+type PartsRecord<T> = {
+  [K in Parts]?: T;
 };
 
 export interface UseDialogServiceProps {
   id?: string;
-  ids?: ElementIds;
+  ids?: PartsRecord<string>;
+  classNames?: PartsRecord<string>;
   defaultOpen?: boolean;
   open?: boolean;
-  getRootNode?: dialog.Props['getRootNode'];
+  getRootNode?: GetContainer;
   onOpenChange?: dialog.Props['onOpenChange'];
   onBeforeOpen?: DialogEvents['beforeOpen'];
   onAfterOpen?: DialogEvents['afterOpen'];
@@ -60,6 +60,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
     open: propOpen,
     id: propId,
     ids: propIds,
+    classNames,
     getRootNode,
     onOpenChange,
     onBeforeOpen,
@@ -188,102 +189,133 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   );
 
   const getBackdropProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        ...api.getBackdropProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'div'>,
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps>(
+        {
+          ...api.getBackdropProps(),
+          ...controlProviderProps,
+          className: classNames?.backdrop,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   const getPortalProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        open: api.open,
-        autoLock: props.preventScroll,
-        autoDestroy: true,
-        getRootNode,
-        ...overrides,
-      }) as PortalProps,
+    (overrides?: PortalProps) =>
+      mergeProps<PortalProps>(
+        {
+          open: api.open,
+          autoLock: props.preventScroll,
+          autoDestroy: true,
+          getRootNode,
+        },
+        { ...overrides },
+      ),
     [api.open, getRootNode, props.preventScroll],
   );
 
   const getPositionerProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        ...api.getPositionerProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'div'>,
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps & PolymorphicProps>(
+        {
+          ...api.getPositionerProps(),
+          ...controlProviderProps,
+          className: classNames?.positioner,
+          render: () => {},
+          ref: animationRef,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   const getContentProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        ...api.getContentProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'div'>,
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps>(
+        {
+          ...api.getContentProps(),
+          ...controlProviderProps,
+          className: classNames?.content,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   const getTitleProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        ...api.getTitleProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'div'>,
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps>(
+        {
+          ...api.getTitleProps(),
+          ...controlProviderProps,
+          className: classNames?.title,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   const getActionProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        id: ids.action,
-        'data-part': parts.action,
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'div'>,
+    (overrides?: DefaultHTMLProps) => {
+      const attrs = { 'data-part': 'action' };
+      return mergeProps<DefaultHTMLProps>(
+        {
+          id: ids.action,
+          ...attrs,
+          ...controlProviderProps,
+          className: classNames?.action,
+        },
+        { ...overrides },
+      );
+    },
     [ids.action, controlProviderProps],
   );
 
   const getDescriptionProps = useCallback(
-    (overrides?: HTMLProps<'div'>) =>
-      ({
-        ...api.getDescriptionProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'div'>,
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps>(
+        {
+          ...api.getDescriptionProps(),
+          ...controlProviderProps,
+          className: classNames?.description,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   const getOpenTriggerProps = useCallback(
     (overrides?: HTMLProps<'button'>) =>
-      ({
-        ...api.getTriggerProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'button'>,
+      mergeProps<HTMLProps<'button'>>(
+        {
+          ...api.getTriggerProps(),
+          ...controlProviderProps,
+          className: classNames?.trigger,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   const getCloseTriggerProps = useCallback(
-    (overrides?: HTMLProps<'button'>) =>
-      ({
-        ...api.getCloseTriggerProps(),
-        ...controlProviderProps,
-        ...overrides,
-      }) as HTMLProps<'button'>,
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps>(
+        {
+          ...api.getCloseTriggerProps(),
+          ...controlProviderProps,
+          className: classNames?.closeTrigger,
+        },
+        { ...overrides },
+      ),
     [api, controlProviderProps],
   );
 
   return {
     open: api.open,
-    state: animationState,
-    animationRef,
+    onOpen: () => emitOpenChange(true),
+    onClose: () => emitOpenChange(false),
+    setContext: setDialogContext,
     getBackdropProps,
     getPortalProps,
     getPositionerProps,
@@ -293,9 +325,6 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
     getActionProps,
     getOpenTriggerProps,
     getCloseTriggerProps,
-    onOpen: () => emitOpenChange(true),
-    onClose: () => emitOpenChange(false),
-    setContext: setDialogContext,
   };
 };
 

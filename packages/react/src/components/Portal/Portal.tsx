@@ -5,11 +5,8 @@ import useScrollLocker from './hooks/useScrollLocker';
 import useDom, { OrderContext } from './hooks/useDom';
 import { useForkRef } from '@/utils/hooks/composeRefs';
 import { useEnvironmentContext } from '@/utils/hooks/useEnvironmentContext';
-import type { RootNode } from '@/utils/types';
-
-type ContainerType = Element | DocumentFragment | false;
-
-type GetContainer = string | RootNode | (() => RootNode) | false;
+import type { GetContainer } from '@/utils/types';
+import { environmentContext } from '@/utils/environment-context';
 
 export interface PortalProps {
   getRootNode?: GetContainer;
@@ -19,7 +16,12 @@ export interface PortalProps {
   autoLock?: boolean;
 }
 
-const getPortalContainer = (getContainer: GetContainer): Element | DocumentFragment | false => {
+const getPortalContainer = (
+  getContainer: GetContainer,
+  environment = environmentContext,
+): Element | DocumentFragment | false => {
+  const document = environment.getDocument();
+
   if (getContainer === false) {
     return false;
   }
@@ -47,9 +49,10 @@ const getPortalContainer = (getContainer: GetContainer): Element | DocumentFragm
 
 const Portal = forwardRef<unknown, PortalProps>((props, ref) => {
   const { open, autoLock, getRootNode, autoDestroy = true, children } = props;
-  const env = useEnvironmentContext();
+  const environment = useEnvironmentContext();
+  const document = environment.getDocument();
   const [shouldRender, setShouldRender] = useState(open);
-  const getContainer = getRootNode || env.getRootNode;
+  const getContainer = getRootNode || environment.getRootNode;
 
   const mergedRender = shouldRender || open;
 
@@ -59,12 +62,12 @@ const Portal = forwardRef<unknown, PortalProps>((props, ref) => {
     }
   }, [open, autoDestroy]);
 
-  const [innerContainer, setInnerContainer] = useState<ContainerType | false | null>(() =>
-    getPortalContainer(getContainer || false),
+  const [innerContainer, setInnerContainer] = useState<Element | DocumentFragment | false | null>(
+    () => getPortalContainer(getContainer || false, environment),
   );
 
   useEffect(() => {
-    const customizeContainer = getPortalContainer(getContainer || false);
+    const customizeContainer = getPortalContainer(getContainer || false, environment);
     setInnerContainer(customizeContainer ?? null);
   }, [getContainer]);
 
