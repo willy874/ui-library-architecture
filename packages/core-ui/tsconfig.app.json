@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "rootDir": ".",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2017",
@@ -30,8 +29,8 @@
 
     /* Path alias */
     "paths": {
-      "@/*": ["src/*"],
-      "styled-system/*": ["src/styled-system/*"]
+      "@/*": ["./src/*"],
+      "styled-system/*": ["./src/styled-system/*"]
     }
   },
 
