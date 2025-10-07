@@ -1,3 +1,4 @@
+import { environmentContext } from './environment-context';
 import { isBrowser } from './is';
 
 const APPEND_ORDER = 'data-rc-order';
@@ -30,7 +31,9 @@ function getMark({ mark }: Options = {}) {
   return MARK_KEY;
 }
 
-function getContainer(option: Options) {
+function getContainer(option: Options, environment = environmentContext) {
+  const document = environment.getDocument();
+
   if (option.attachTo) {
     return option.attachTo;
   }
@@ -56,10 +59,11 @@ function findStyles(container: ContainerType) {
   ) as HTMLStyleElement[];
 }
 
-export function injectCSS(css: string, option: Options = {}) {
+export function injectCSS(css: string, option: Options = {}, environment = environmentContext) {
   if (!isBrowser()) {
     return null;
   }
+  const document = environment.getDocument();
 
   const { csp, prepend, priority = 0 } = option;
   const mergedOrder = getOrder(prepend);
@@ -129,7 +133,12 @@ export function removeCSS(key: string, option: Options = {}) {
 /**
  * qiankun will inject `appendChild` to insert into other
  */
-function syncRealContainer(container: ContainerType, option: Options) {
+function syncRealContainer(
+  container: ContainerType,
+  option: Options,
+  environment = environmentContext,
+) {
+  const document = environment.getDocument();
   const cachedRealContainer = containerCache.get(container);
 
   // Find real container when not cached or cached container removed

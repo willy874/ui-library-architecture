@@ -7,7 +7,7 @@ import { createInputPreset } from './components/Input';
 import { createFieldPreset } from './components/Field';
 import { createButtonPreset } from './components/Button';
 import { createDialogPreset } from './components/Dialog';
-import { createGlobalVars } from './theme/globalVars';
+import { createGlobalVars } from '../utils/globalVars';
 
 const createTokenPreset = () => {
   return definePreset({
@@ -32,5 +32,8 @@ export function createUIPreset(): Preset {
       createButtonPreset(),
       createDialogPreset(),
     ],
+    staticCss: {
+      recipes: '*',
+    },
   });
 }

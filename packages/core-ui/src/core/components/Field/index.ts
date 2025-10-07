@@ -1,5 +1,7 @@
-import { definePreset, defineSemanticTokens, defineSlotRecipe } from '@pandacss/dev';
+import { defineParts, definePreset, defineSemanticTokens, defineSlotRecipe } from '@pandacss/dev';
 import { fieldAnatomy } from '@ui-library-architecture/anatomy';
+
+const parts = defineParts(fieldAnatomy.build());
 
 export const token = defineSemanticTokens({
   colors: {
@@ -22,10 +24,10 @@ export const token = defineSemanticTokens({
   },
 });
 
-export const slotRecipe = defineSlotRecipe({
+export const recipe = defineSlotRecipe({
   className: 'ui-field',
   slots: fieldAnatomy.keys(),
-  base: {
+  base: parts({
     root: {
       display: 'flex',
       flexDirection: 'column',
@@ -91,10 +93,10 @@ export const slotRecipe = defineSlotRecipe({
         outline: 'none',
       },
     },
-  },
+  }),
   variants: {
     variant: {
-      outlined: {
+      outlined: parts({
         wrapper: {
           backgroundColor: '{colors.input.normal.bg}',
           borderColor: '{colors.input.normal.border}',
@@ -171,8 +173,8 @@ export const slotRecipe = defineSlotRecipe({
             backgroundColor: 'transparent',
           },
         },
-      },
-      none: {
+      }),
+      none: parts({
         root: {
           display: 'flex',
           flexDirection: 'column',
@@ -187,7 +189,7 @@ export const slotRecipe = defineSlotRecipe({
         select: {
           color: 'inherit',
         },
-      },
+      }),
     },
   },
   defaultVariants: {
@@ -195,15 +197,25 @@ export const slotRecipe = defineSlotRecipe({
   },
 });
 
-export function createFieldPreset() {
+interface FieldPreset {
+  slotRecipes?: (arg: typeof recipe) => typeof recipe;
+  semanticTokens?: (arg: typeof token) => typeof token;
+}
+
+const NOOP = <T>(x: T) => x;
+
+export function createFieldPreset(config: FieldPreset = {}) {
+  const { slotRecipes = NOOP, semanticTokens = NOOP } = config;
+  const _slotRecipes = slotRecipes(recipe);
+  const _semanticTokens = semanticTokens(token);
   return definePreset({
     name: 'ui-Field',
     theme: {
       extend: {
         slotRecipes: {
-          field: slotRecipe,
+          field: _slotRecipes,
         },
-        semanticTokens: token,
+        semanticTokens: _semanticTokens,
       },
     },
   });

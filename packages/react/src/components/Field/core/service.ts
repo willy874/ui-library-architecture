@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ariaAttr, dataAttr } from '@zag-js/dom-query';
 import { useEnvironmentContext } from '@/utils/hooks/useEnvironmentContext';
-import type { HTMLProps } from '@/utils/factory';
+import type { DefaultHTMLProps, HTMLProps } from '@/utils/factory';
 import { parts } from './anatomy';
 import type { Parts } from './anatomy';
+import { mergeProps } from '@/utils/mergeProps';
 
-type ElementIds = {
-  [K in Parts]?: string;
-} & {
-  control?: string;
+type PartsRecord<T> = {
+  [K in Parts]?: T;
 };
 
 type InputType =
@@ -26,7 +25,8 @@ type InputType =
 
 export interface UseFieldServiceProps {
   id?: string;
-  ids?: ElementIds;
+  ids?: PartsRecord<string>;
+  classNames?: PartsRecord<string>;
   required?: boolean;
   disabled?: boolean;
   invalid?: boolean;
@@ -48,7 +48,8 @@ export const propKeys = [
 
 export const useFieldService = (props: UseFieldServiceProps) => {
   const {
-    ids,
+    ids = {},
+    classNames = {},
     disabled = false,
     invalid = false,
     valid = false,
@@ -60,14 +61,14 @@ export const useFieldService = (props: UseFieldServiceProps) => {
   const env = useEnvironmentContext();
   const uid = useId();
   const id = props.id ?? uid;
-  const rootId = ids?.control ?? `field::${id}`;
-  const labelId = ids?.label ?? `field::${id}::label`;
-  const errorTextId = ids?.errorText ?? `field::${id}::error-text`;
-  const passwordControlId = ids?.passwordControl ?? `field::${id}::password-control`;
-  const helperId = ids?.helper ?? `field::${id}::helper`;
-  const prefixId = ids?.prefix ?? `field::${id}::prefix`;
-  const suffixId = ids?.suffix ?? `field::${id}::suffix`;
-  const wrapperId = ids?.wrapper ?? `field::${id}::wrapper`;
+  const rootId = ids.root ?? `field::${id}`;
+  const labelId = ids.label ?? `field::${id}::label`;
+  const errorTextId = ids.errorText ?? `field::${id}::error-text`;
+  const passwordControlId = ids.passwordControl ?? `field::${id}::password-control`;
+  const helperId = ids.helper ?? `field::${id}::helper`;
+  const prefixId = ids.prefix ?? `field::${id}::prefix`;
+  const suffixId = ids.suffix ?? `field::${id}::suffix`;
+  const wrapperId = ids.wrapper ?? `field::${id}::wrapper`;
 
   const [hasNode, setHasNode] = useState({
     errorText: false,
@@ -152,113 +153,158 @@ export const useFieldService = (props: UseFieldServiceProps) => {
   );
 
   const getLabelProps = useCallback(
-    (overrides?: HTMLProps<'label'>) => ({
-      ...getControlProps(),
-      ...parts.label.attrs,
-      id: labelId,
-      htmlFor: id,
-      ...overrides,
-    }),
+    (overrides?: HTMLProps<'label'>) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.label.attrs,
+          id: labelId,
+          htmlFor: id,
+          className: classNames.label,
+        },
+        { ...overrides },
+      ),
     [getControlProps, labelId, id],
   );
 
   const getInputProps = useCallback(
-    (overrides?: HTMLProps<'input'>) => ({
-      ...getControlProps(),
-      ...parts.input.attrs,
-      type: type === 'password' ? passwordInputType : type,
-      ...overrides,
-    }),
+    (overrides?: HTMLProps<'input'>) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.input.attrs,
+          type: type === 'password' ? passwordInputType : type,
+          className: classNames.input,
+        },
+        { ...overrides },
+      ),
     [getControlProps, passwordInputType, type],
   );
 
   const getTextareaProps = useCallback(
-    (overrides?: HTMLProps<'textarea'>) => ({
-      ...getControlProps(),
-      ...parts.textarea.attrs,
-      ...overrides,
-    }),
+    (overrides?: HTMLProps<'textarea'>) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.textarea.attrs,
+          className: classNames.textarea,
+        },
+        { ...overrides },
+      ),
     [getControlProps],
   );
 
   const getSelectProps = useCallback(
-    (overrides?: HTMLProps<'select'>) => ({
-      ...getControlProps(),
-      ...parts.select.attrs,
-      ...overrides,
-    }),
+    (overrides?: HTMLProps<'select'>) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.select.attrs,
+          className: classNames.select,
+        },
+        { ...overrides },
+      ),
     [getControlProps],
   );
 
   const getHelperProps = useCallback(
-    (overrides?: HTMLProps<'span'>) => ({
-      ...getControlProps(),
-      ...parts.helper.attrs,
-      id: helperId,
-      ...overrides,
-    }),
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.helper.attrs,
+          id: helperId,
+          className: classNames.helper,
+        },
+        { ...overrides },
+      ),
     [getControlProps, helperId],
   );
 
   const getPrefixProps = useCallback(
-    (overrides?: HTMLProps<'div'>) => ({
-      ...getControlProps(),
-      ...parts.prefix.attrs,
-      id: prefixId,
-      ...overrides,
-    }),
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.prefix.attrs,
+          id: prefixId,
+          className: classNames.prefix,
+        },
+        { ...overrides },
+      ),
     [getControlProps, prefixId],
   );
 
   const getSuffixProps = useCallback(
-    (overrides?: HTMLProps<'div'>) => ({
-      ...getControlProps(),
-      ...parts.suffix.attrs,
-      id: suffixId,
-      ...overrides,
-    }),
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.suffix.attrs,
+          id: suffixId,
+          className: classNames.suffix,
+        },
+        { ...overrides },
+      ),
     [getControlProps, suffixId],
   );
 
   const getErrorTextProps = useCallback(
-    (overrides?: HTMLProps<'span'>) => ({
-      ...getControlProps(),
-      ...parts.errorText.attrs,
-      id: errorTextId,
-      'aria-live': 'polite',
-      hidden: !invalid,
-      ...overrides,
-    }),
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps<DefaultHTMLProps>(
+        {
+          ...getControlProps(),
+          ...parts.errorText.attrs,
+          id: errorTextId,
+          'aria-live': 'polite',
+          hidden: !invalid,
+          className: classNames.errorText,
+        },
+        { ...overrides },
+      ),
     [getControlProps, errorTextId, invalid],
   );
 
   const getWrapperProps = useCallback(
-    (overrides?: HTMLProps<'div'>) => ({
-      ...getControlProps(),
-      ...parts.wrapper.attrs,
-      id: wrapperId,
-      ...overrides,
-    }),
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.wrapper.attrs,
+          id: wrapperId,
+          className: classNames.wrapper,
+        },
+        { ...overrides },
+      ),
     [getControlProps, wrapperId],
   );
 
+  const togglePasswordVisibility = useCallback(() => {
+    setPasswordInputType((prev) => (prev === 'text' ? 'password' : 'text'));
+  }, []);
+
   const getPasswordControlProps = useCallback(
-    (overrides?: HTMLProps<'div'>) => ({
-      ...getControlProps(),
-      ...parts.passwordControl.attrs,
-      id: passwordControlId,
-      role: 'button',
-      tabIndex: -1,
-      'aria-label': isPasswordVisible ? 'Hide password' : 'Show password',
-      ...overrides,
-    }),
+    (overrides?: DefaultHTMLProps) =>
+      mergeProps(
+        {
+          ...getControlProps(),
+          ...parts.passwordControl.attrs,
+          id: passwordControlId,
+          role: 'button',
+          tabIndex: -1,
+          'aria-label': isPasswordVisible ? 'Hide password' : 'Show password',
+          onClick: togglePasswordVisibility,
+          className: classNames.passwordControl,
+        },
+        { ...overrides },
+      ),
     [getControlProps, isPasswordVisible, passwordControlId],
   );
 
   return {
     isPasswordVisible,
-    togglePasswordVisibility: () =>
-      setPasswordInputType((prev) => (prev === 'text' ? 'password' : 'text')),
+    togglePasswordVisibility,
+    // Getters for various parts of the field
     getRootProps,
     getLabelProps,
     getErrorTextProps,

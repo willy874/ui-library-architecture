@@ -1,5 +1,7 @@
+import type { DefaultHTMLProps, HTMLProps } from '@/utils/factory';
 import type { Parts } from './anatomy';
 import { EventEmitter } from '@/utils/events';
+import type { PortalProps } from '@/components/Portal';
 
 export type DialogState =
   | 'open'
@@ -55,3 +57,15 @@ export interface DialogPlugin extends DialogPluginHooks, DialogPluginProperties 
 export type DialogPluginFactory = (
   context: DialogPluginContext<DialogPlugin>,
 ) => Partial<DialogPluginProperties> & Partial<DialogPluginHooks>;
+
+export interface ModalPartProps {
+  portal?: PortalProps;
+  trigger?: HTMLProps<'button'>;
+  content?: DefaultHTMLProps;
+  closeTrigger?: DefaultHTMLProps;
+  backdrop?: DefaultHTMLProps;
+  positioner?: DefaultHTMLProps;
+  title?: DefaultHTMLProps;
+  description?: DefaultHTMLProps;
+  action?: DefaultHTMLProps;
+}

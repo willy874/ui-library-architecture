@@ -1,20 +1,11 @@
-import { createContext } from '../create-context'
-import type { RootNode } from '../types'
+import { createContext } from '../create-context';
+import { environmentContext, type EnvironmentContext } from '../environment-context';
 
-export interface UseEnvironmentContext {
-  getRootNode(): RootNode
-  getDocument(): Document
-  getWindow(): Window & typeof globalThis
-}
-
-export const [EnvironmentContextProvider, useEnvironmentContext] = createContext<UseEnvironmentContext>({
-  name: 'EnvironmentContext',
-  hookName: 'useEnvironmentContext',
-  providerName: '<EnvironmentProvider />',
-  strict: false,
-  defaultValue: {
-    getRootNode: () => document,
-    getDocument: () => document,
-    getWindow: () => window,
-  },
-})
+export const [EnvironmentContextProvider, useEnvironmentContext] =
+  createContext<EnvironmentContext>({
+    name: 'EnvironmentContext',
+    hookName: 'useEnvironmentContext',
+    providerName: '<EnvironmentProvider />',
+    strict: false,
+    defaultValue: environmentContext,
+  });

@@ -1,6 +1,6 @@
 import { defineTokens, defineRecipe, definePreset } from '@pandacss/dev';
 import { theme } from './theme';
-import { dynamicCss } from '../../theme/globalVars';
+import { dynamicCss } from '@/utils/globalVars';
 
 export const token = defineTokens({
   colors: {
