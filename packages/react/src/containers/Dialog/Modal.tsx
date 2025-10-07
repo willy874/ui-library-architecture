@@ -4,7 +4,7 @@ import { ui } from '@/utils/factory';
 import { CloseIcon } from '@/assets';
 import { Portal } from '@/components/Portal';
 import { Button } from '@/components/Button';
-import { DialogContext, fadeInPlugin, modalPlugin, useDialogService } from '@/components/Dialog';
+import { fadeInPlugin, modalPlugin, useDialogService } from '@/components/Dialog';
 import type { ModalPartProps, UseDialogServiceProps } from '@/components/Dialog';
 
 export interface ModalProps extends Omit<UseDialogServiceProps, 'plugins'>, Partial<DialogVariant> {
@@ -38,7 +38,6 @@ function Modal(props: ModalProps) {
     getActionProps,
     getOpenTriggerProps,
     getCloseTriggerProps,
-    ...rootProps
   } = useDialogService({
     classNames: dialog(variants),
     plugins: [fadeInPlugin, modalPlugin],
@@ -46,7 +45,7 @@ function Modal(props: ModalProps) {
   });
   const { children, titleNode, descriptionNode, actionNode, triggerNode, attrs } = containerProps;
   return (
-    <DialogContext.Provider value={rootProps}>
+    <>
       {triggerNode && <Button {...getOpenTriggerProps(attrs?.trigger)}>{triggerNode}</Button>}
       <Portal {...getPortalProps(attrs?.portal)}>
         <ui.div {...getBackdropProps(attrs?.backdrop)} />
@@ -62,7 +61,7 @@ function Modal(props: ModalProps) {
           </ui.div>
         </ui.div>
       </Portal>
-    </DialogContext.Provider>
+    </>
   );
 }
 

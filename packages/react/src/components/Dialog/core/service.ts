@@ -59,8 +59,8 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
   const {
     open: propOpen,
     id: propId,
-    ids: propIds,
-    classNames,
+    ids: propIds = {},
+    classNames = {},
     getRootNode,
     onOpenChange,
     onBeforeOpen,
@@ -76,14 +76,14 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
 
   const ids = useMemo<Record<Parts, string>>(
     () => ({
-      action: propIds?.action ?? `dialog::${id}::action`,
-      backdrop: propIds?.backdrop ?? `dialog::${id}::backdrop`,
-      closeTrigger: propIds?.closeTrigger ?? `dialog::${id}::close-trigger`,
-      content: propIds?.content ?? `dialog::${id}::content`,
-      description: propIds?.description ?? `dialog::${id}::description`,
-      positioner: propIds?.positioner ?? `dialog::${id}::positioner`,
-      title: propIds?.title ?? `dialog::${id}::title`,
-      trigger: propIds?.trigger ?? `dialog::${id}::trigger`,
+      action: propIds.action ?? `dialog::${id}::action`,
+      backdrop: propIds.backdrop ?? `dialog::${id}::backdrop`,
+      closeTrigger: propIds.closeTrigger ?? `dialog::${id}::close-trigger`,
+      content: propIds.content ?? `dialog::${id}::content`,
+      description: propIds.description ?? `dialog::${id}::description`,
+      positioner: propIds.positioner ?? `dialog::${id}::positioner`,
+      title: propIds.title ?? `dialog::${id}::title`,
+      trigger: propIds.trigger ?? `dialog::${id}::trigger`,
     }),
     [propIds, id],
   );
@@ -194,7 +194,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getBackdropProps(),
           ...controlProviderProps,
-          className: classNames?.backdrop,
+          className: classNames.backdrop,
         },
         { ...overrides },
       ),
@@ -221,7 +221,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getPositionerProps(),
           ...controlProviderProps,
-          className: classNames?.positioner,
+          className: classNames.positioner,
           render: () => {},
           ref: animationRef,
         },
@@ -236,7 +236,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getContentProps(),
           ...controlProviderProps,
-          className: classNames?.content,
+          className: classNames.content,
         },
         { ...overrides },
       ),
@@ -249,7 +249,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getTitleProps(),
           ...controlProviderProps,
-          className: classNames?.title,
+          className: classNames.title,
         },
         { ...overrides },
       ),
@@ -264,7 +264,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
           id: ids.action,
           ...attrs,
           ...controlProviderProps,
-          className: classNames?.action,
+          className: classNames.action,
         },
         { ...overrides },
       );
@@ -278,7 +278,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getDescriptionProps(),
           ...controlProviderProps,
-          className: classNames?.description,
+          className: classNames.description,
         },
         { ...overrides },
       ),
@@ -291,7 +291,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getTriggerProps(),
           ...controlProviderProps,
-          className: classNames?.trigger,
+          className: classNames.trigger,
         },
         { ...overrides },
       ),
@@ -304,7 +304,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
         {
           ...api.getCloseTriggerProps(),
           ...controlProviderProps,
-          className: classNames?.closeTrigger,
+          className: classNames.closeTrigger,
         },
         { ...overrides },
       ),
@@ -316,6 +316,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
     onOpen: () => emitOpenChange(true),
     onClose: () => emitOpenChange(false),
     setContext: setDialogContext,
+    // Getters for various parts
     getBackdropProps,
     getPortalProps,
     getPositionerProps,
