@@ -3,7 +3,7 @@ import { dialog, type DialogVariant } from '@/styled-system/recipes';
 import { ui } from '@/utils/factory';
 import { CloseIcon } from '@/assets';
 import { Portal } from '@/components/Portal';
-import { Button } from '@/components/Button';
+import { Button } from '@/containers/Button';
 import { DialogContext, fadeInPlugin, modalPlugin, useDialogService } from '@/components/Dialog';
 import type { ModalPartProps, UseDialogServiceProps } from '@/components/Dialog';
 
