@@ -4,7 +4,7 @@ import { ui } from '@/utils/factory';
 import { CloseIcon } from '@/assets';
 import { Portal } from '@/components/Portal';
 import { Button } from '@/components/Button';
-import { fadeInPlugin, modalPlugin, useDialogService } from '@/components/Dialog';
+import { DialogContext, fadeInPlugin, modalPlugin, useDialogService } from '@/components/Dialog';
 import type { ModalPartProps, UseDialogServiceProps } from '@/components/Dialog';
 
 export interface ModalProps extends Omit<UseDialogServiceProps, 'plugins'>, Partial<DialogVariant> {
@@ -28,40 +28,41 @@ const propKeys = [
 function Modal(props: ModalProps) {
   const [containerProps, serviceParams] = splitProps(props, ...propKeys);
   const variants = dialog.getVariantProps(dialog.splitVariantProps(props)[0]);
-  const {
-    getPortalProps,
-    getBackdropProps,
-    getPositionerProps,
-    getContentProps,
-    getTitleProps,
-    getDescriptionProps,
-    getActionProps,
-    getOpenTriggerProps,
-    getCloseTriggerProps,
-  } = useDialogService({
+  const service = useDialogService({
     classNames: dialog(variants),
     plugins: [fadeInPlugin, modalPlugin],
     ...serviceParams,
   });
-  const { children, titleNode, descriptionNode, actionNode, triggerNode, attrs } = containerProps;
+  const {
+    children,
+    titleNode,
+    descriptionNode,
+    actionNode,
+    triggerNode,
+    attrs = {},
+  } = containerProps;
   return (
-    <>
-      {triggerNode && <Button {...getOpenTriggerProps(attrs?.trigger)}>{triggerNode}</Button>}
-      <Portal {...getPortalProps(attrs?.portal)}>
-        <ui.div {...getBackdropProps(attrs?.backdrop)} />
-        <ui.div {...getPositionerProps(attrs?.positioner)}>
-          <ui.div {...getContentProps(attrs?.content)}>
-            <ui.button {...getCloseTriggerProps(attrs?.closeTrigger)}>{<CloseIcon />}</ui.button>
-            {titleNode && <ui.div {...getTitleProps(attrs?.title)}>{titleNode}</ui.div>}
+    <DialogContext.ServiceProvider value={service}>
+      {triggerNode && (
+        <Button {...service.getOpenTriggerProps(attrs.trigger)}>{triggerNode}</Button>
+      )}
+      <Portal {...service.getPortalProps(attrs.portal)}>
+        <ui.div {...service.getBackdropProps(attrs.backdrop)} />
+        <ui.div {...service.getPositionerProps(attrs.positioner)}>
+          <ui.div {...service.getContentProps(attrs.content)}>
+            <ui.button {...service.getCloseTriggerProps(attrs.closeTrigger)}>
+              {<CloseIcon />}
+            </ui.button>
+            {titleNode && <ui.div {...service.getTitleProps(attrs.title)}>{titleNode}</ui.div>}
             {descriptionNode && (
-              <ui.div {...getDescriptionProps(attrs?.description)}>{descriptionNode}</ui.div>
+              <ui.div {...service.getDescriptionProps(attrs.description)}>{descriptionNode}</ui.div>
             )}
             {children}
-            {actionNode && <ui.div {...getActionProps(attrs?.action)}>{actionNode}</ui.div>}
+            {actionNode && <ui.div {...service.getActionProps(attrs.action)}>{actionNode}</ui.div>}
           </ui.div>
         </ui.div>
       </Portal>
-    </>
+    </DialogContext.ServiceProvider>
   );
 }
 

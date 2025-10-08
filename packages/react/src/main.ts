@@ -1,8 +1,13 @@
 import './global.css';
+
+export * from './components/Button';
 export * from './components/Input';
 export * from './components/Field';
-export * from './components/Button';
+export * from './components/Portal';
 export * from './components/Dialog';
+
+export * from './containers/Dialog';
+export * from './containers/Field';
 
 const UI_TAG = 'data-ui-library-architecture';
 

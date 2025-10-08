@@ -1,16 +1,20 @@
 import { createContext, useContext } from 'react';
 
-interface CreateServiceContextResult<P, R> {
-  Provider: (p: React.ProviderProps<P>) => React.JSX.Element;
+interface CreateMachineContextResult<P, R> {
+  MachineProvider: (p: React.ProviderProps<P>) => React.JSX.Element;
+  ServiceProvider: (p: React.ProviderProps<R>) => React.JSX.Element;
   Consumer: (p: React.ConsumerProps<R>) => React.JSX.Element;
   useService: () => R;
 }
 
-export function createServiceContext<P, R>(useHook: (p: P) => R): CreateServiceContextResult<P, R> {
+export function createMachineContext<P, R>(useHook: (p: P) => R): CreateMachineContextResult<P, R> {
   const Context = createContext<R | null>(null);
   return {
-    Provider: ({ value, children }) => {
+    MachineProvider: ({ value, children }) => {
       return <Context.Provider value={useHook(value)}>{children}</Context.Provider>;
+    },
+    ServiceProvider: ({ value, children }) => {
+      return <Context.Provider value={value}>{children}</Context.Provider>;
     },
     Consumer: ({ children }) => {
       return (

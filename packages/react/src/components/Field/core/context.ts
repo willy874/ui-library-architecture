@@ -1,6 +1,6 @@
-import { createServiceContext } from '@/utils/create-service-context';
+import { createMachineContext } from '@/utils/create-machine-context';
 import { useFieldService, type UseFieldServiceReturn } from './service';
 
 export interface FieldContextValue extends UseFieldServiceReturn {}
 
-export const FieldContext = createServiceContext(useFieldService);
+export const FieldContext = createMachineContext(useFieldService);
