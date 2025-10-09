@@ -3,7 +3,7 @@ import { input } from 'styled-system/recipes';
 import { ui, type HTMLProps } from '@/utils/factory';
 import { useForkRef } from '@/utils/hooks/composeRefs';
 import { mergeProps } from '@/utils/mergeProps';
-import { SelectContext } from '@/components/Select';
+import { SelectContext } from '@/components';
 
 export interface SelectProps extends HTMLProps<'select'> {
   ref: React.Ref<HTMLSelectElement>;

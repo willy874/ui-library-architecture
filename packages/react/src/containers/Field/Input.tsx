@@ -3,7 +3,7 @@ import { input } from 'styled-system/recipes';
 import { ui, type HTMLProps } from '@/utils/factory';
 import { useForkRef } from '@/utils/hooks/composeRefs';
 import { mergeProps } from '@/utils/mergeProps';
-import { InputContext } from '@/components/Input';
+import { InputContext } from '@/components';
 
 export interface InputProps extends HTMLProps<'input'> {
   ref: React.Ref<HTMLInputElement>;
