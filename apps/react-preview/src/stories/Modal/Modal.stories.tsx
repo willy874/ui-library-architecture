@@ -21,26 +21,18 @@ export default meta;
 export const Base: StoryObj = {
   render: () => {
     return (
-      <Modal.Root>
-        <Modal.Trigger>Open Dialog</Modal.Trigger>
-        <Modal.Portal>
-          <Modal.Backdrop />
-          <Modal.Positioner>
-            <Modal.Content>
-              <Modal.Title>Dialog Title</Modal.Title>
-              <Modal.Description>This is a description of the dialog.</Modal.Description>
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                <img width="160" height="160" src={AskingQuestionImage} alt="" />
-              </div>
-            </Modal.Content>
-          </Modal.Positioner>
-        </Modal.Portal>
-      </Modal.Root>
+      <Modal
+        titleNode="Modal Title"
+        descriptionNode="This is a description of the modal."
+        triggerNode="Open Modal"
+      >
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+          <img width="160" height="160" src={AskingQuestionImage} alt="" />
+        </div>
+      </Modal>
     );
   },
 };
 
 export { Control } from './examples/control';
-export { ActionBar } from './examples/action-bar';
-export { ConfirmHook } from './examples/confirm';
 export { Position } from './examples/position';
