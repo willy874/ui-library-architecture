@@ -76,14 +76,14 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
 
   const ids = useMemo<Record<Parts, string>>(
     () => ({
-      action: propIds.action ?? `dialog::${id}::action`,
-      backdrop: propIds.backdrop ?? `dialog::${id}::backdrop`,
-      closeTrigger: propIds.closeTrigger ?? `dialog::${id}::close-trigger`,
-      content: propIds.content ?? `dialog::${id}::content`,
-      description: propIds.description ?? `dialog::${id}::description`,
-      positioner: propIds.positioner ?? `dialog::${id}::positioner`,
-      title: propIds.title ?? `dialog::${id}::title`,
-      trigger: propIds.trigger ?? `dialog::${id}::trigger`,
+      action: propIds.action ?? `dialog__${id}__action`,
+      backdrop: propIds.backdrop ?? `dialog__${id}__backdrop`,
+      closeTrigger: propIds.closeTrigger ?? `dialog__${id}__close-trigger`,
+      content: propIds.content ?? `dialog__${id}__content`,
+      description: propIds.description ?? `dialog__${id}__description`,
+      positioner: propIds.positioner ?? `dialog__${id}__positioner`,
+      title: propIds.title ?? `dialog__${id}__title`,
+      trigger: propIds.trigger ?? `dialog__${id}__trigger`,
     }),
     [propIds, id],
   );
@@ -222,7 +222,6 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
           ...api.getPositionerProps(),
           ...controlProviderProps,
           className: classNames.positioner,
-          render: () => {},
           ref: animationRef,
         },
         { ...overrides },

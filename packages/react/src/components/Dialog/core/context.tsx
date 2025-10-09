@@ -1,6 +1,7 @@
-import { createServiceContext } from '@/utils/create-service-context';
-import { useDialogService, type UseDialogServiceReturn } from './service';
+import { createMachineContext } from '@/utils/create-machine-context';
+import { useDialogService } from './service';
+import type { UseDialogServiceReturn } from './service';
 
 export interface DialogContextValue extends UseDialogServiceReturn {}
 
-export const DialogContext = createServiceContext(useDialogService);
+export const DialogContext = createMachineContext(useDialogService);

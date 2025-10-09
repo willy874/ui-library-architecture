@@ -1,3 +1,2 @@
-export { default as Input } from './Input'
-export type { InputProps } from './Input'
-export { InputContext } from './Input.context'
+export { InputContext } from './context';
+export type { InputContextValue } from './context';

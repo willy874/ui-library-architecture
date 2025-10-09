@@ -1,7 +1,9 @@
 import { mergeProps } from '@zag-js/core';
-import { Children, cloneElement, forwardRef, isValidElement, memo, useRef } from 'react';
+import { Children, cloneElement, forwardRef, isValidElement, memo, useState } from 'react';
 import React from 'react';
 import { composeRefs } from './hooks/composeRefs';
+
+const NOOP = () => {};
 
 export interface PolymorphicProps {
   asChild?: boolean;
@@ -41,9 +43,8 @@ const withAsChild = (Component: React.ElementType) => {
   const Comp = memo(
     forwardRef<unknown, UiPropsWithRef<typeof Component>>((props, ref) => {
       const { asChild, render, children, ...restProps } = props;
-
-      const renderRef = useRef(render);
-      renderRef.current(props);
+      const [renderFn] = useState(() => render || NOOP);
+      renderFn();
 
       if (!asChild) {
         return (

@@ -1,10 +1,16 @@
 import { splitProps } from '@/utils/splitProps';
+import { ui, type DefaultHTMLProps, type HTMLProps } from '@/utils/factory';
 import { field } from '@/styled-system/recipes';
 import type { FieldVariant } from '@/styled-system/recipes';
-import { ui, type DefaultHTMLProps, type HTMLProps } from '@/utils/factory';
+import { Eye, EyeSlash } from '@/assets';
 import { FieldContext, useFieldService } from '@/components/Field';
 import type { UseFieldServiceProps } from '@/components/Field';
-import { Eye, EyeSlash } from '@/assets';
+import Input from './Input';
+import Select from './Select';
+import Textarea from './Textarea';
+import { InputContext } from '@/components/Input';
+import { SelectContext } from '@/components/Select';
+import { TextareaContext } from '@/components/Textarea';
 
 interface FieldPartProps {
   root?: DefaultHTMLProps;
@@ -25,7 +31,7 @@ export interface FieldProps extends Omit<UseFieldServiceProps, 'plugins'>, Parti
   prefixNode?: React.ReactNode;
   suffixNode?: React.ReactNode;
   helperNode?: React.ReactNode;
-  childrenType?: 'input' | 'select' | 'textarea' | 'custom';
+  childrenType?: 'input' | 'select' | 'textarea';
   children?: React.ReactNode;
   attrs?: FieldPartProps;
 }
@@ -42,7 +48,6 @@ const propKeys = [
 
 function Field(props: FieldProps) {
   const [containerProps, serviceParams] = splitProps(props, ...propKeys);
-  const variants = field.getVariantProps(field.splitVariantProps(props)[0]);
   const {
     attrs = {},
     children,
@@ -50,60 +55,74 @@ function Field(props: FieldProps) {
     suffixNode,
     helperNode,
     labelNode,
-    childrenType = 'custom',
+    childrenType,
   } = containerProps;
-  const {
-    isPasswordVisible,
-    getRootProps,
-    getControlProps,
-    getLabelProps,
-    getErrorTextProps,
-    getWrapperProps,
-    getPasswordControlProps,
-    getHelperProps,
-    getPrefixProps,
-    getSuffixProps,
-    getInputProps,
-    getTextareaProps,
-    getSelectProps,
-  } = useFieldService({
-    classNames: field(variants),
+  const fieldVariants = field.getVariantProps(field.splitVariantProps(props)[0]);
+  const service = useFieldService({
+    classNames: field(fieldVariants),
     ...serviceParams,
   });
   const isPassword = serviceParams.type === 'password';
   return (
-    <ui.div {...getRootProps(attrs.root)}>
-      <ui.label {...getLabelProps(attrs.label)}>{labelNode}</ui.label>
-      <ui.div {...getWrapperProps(attrs.wrapper)}>
-        <ui.div {...getPrefixProps(attrs.prefix)}>{prefixNode}</ui.div>
-        {(() => {
-          if (childrenType === 'custom') {
+    <FieldContext.ServiceProvider value={service}>
+      <ui.div {...service.getRootProps(attrs.root)}>
+        <ui.label {...service.getLabelProps(attrs.label)}>{labelNode}</ui.label>
+        <ui.div {...service.getWrapperProps(attrs.wrapper)}>
+          <ui.div {...service.getPrefixProps(attrs.prefix)}>{prefixNode}</ui.div>
+          {(() => {
+            if (childrenType === 'input') {
+              if (children) {
+                return (
+                  <InputContext.Provider value={service.getInputProps(attrs.input)}>
+                    {children}
+                  </InputContext.Provider>
+                );
+              } else {
+                return <Input {...service.getInputProps(attrs.input)} />;
+              }
+            }
+            if (childrenType === 'select') {
+              if (children) {
+                return (
+                  <SelectContext.Provider value={service.getSelectProps(attrs.select)}>
+                    {children}
+                  </SelectContext.Provider>
+                );
+              } else {
+                return <Select {...service.getSelectProps(attrs.select)} />;
+              }
+            }
+            if (childrenType === 'textarea') {
+              if (children) {
+                return (
+                  <TextareaContext.Provider value={service.getTextareaProps(attrs.textarea)}>
+                    {children}
+                  </TextareaContext.Provider>
+                );
+              } else {
+                return <Textarea {...service.getTextareaProps(attrs.textarea)} />;
+              }
+            }
             return children;
-          }
-          if (childrenType === 'input') {
-            return <ui.input {...getInputProps(attrs.input)} />;
-          }
-          if (childrenType === 'select') {
-            return <ui.select {...getSelectProps(attrs.select)}>{children}</ui.select>;
-          }
-          if (childrenType === 'textarea') {
-            return <ui.textarea {...getTextareaProps(attrs.textarea)}>{children}</ui.textarea>;
-          }
-          return children;
-        })()}
-        {isPassword ? (
-          <ui.div {...getPasswordControlProps(attrs.passwordControl)}>
-            {isPasswordVisible ? <EyeSlash /> : <Eye />}
-          </ui.div>
-        ) : (
-          <ui.div {...getSuffixProps(attrs.suffix)}>{suffixNode}</ui.div>
-        )}
+          })()}
+          {isPassword ? (
+            <ui.div {...service.getPasswordControlProps(attrs.passwordControl)}>
+              {service.isPasswordVisible ? <EyeSlash /> : <Eye />}
+            </ui.div>
+          ) : (
+            <ui.div {...service.getSuffixProps(attrs.suffix)}>{suffixNode}</ui.div>
+          )}
+        </ui.div>
+        <ui.div {...service.getHelperProps(attrs.helper)}>{helperNode}</ui.div>
       </ui.div>
-      <ui.div {...getHelperProps(attrs.helper)}>{helperNode}</ui.div>
-    </ui.div>
+    </FieldContext.ServiceProvider>
   );
 }
 
 Field.displayName = 'Field';
+Field.Input = Input;
+Field.Select = Select;
+Field.Option = ui.option;
+Field.Textarea = Textarea;
 
 export default Field;

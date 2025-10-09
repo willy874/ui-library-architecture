@@ -16,15 +16,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Base: Story = {
-  render: (args: any) => (
-    <Field {...args}>
-      <Field.Input placeholder="Placeholder" />
-    </Field>
-  ),
+  render: (args: any) => <Field childrenType="input" {...args} />,
 };
 
 export { Input } from './examples/input';
 export { InputState } from './examples/input-state';
 export { Select } from './examples/select';
 export { Textarea } from './examples/textarea';
-export { CustomInput, CustomInputLongMessage } from './examples/custom-input';
