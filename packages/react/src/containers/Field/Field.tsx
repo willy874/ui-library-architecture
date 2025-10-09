@@ -6,7 +6,11 @@ import { Eye, EyeSlash } from '@/assets';
 import { FieldContext, useFieldService } from '@/components/Field';
 import type { UseFieldServiceProps } from '@/components/Field';
 import Input from './Input';
+import Select from './Select';
+import Textarea from './Textarea';
 import { InputContext } from '@/components/Input';
+import { SelectContext } from '@/components/Select';
+import { TextareaContext } from '@/components/Textarea';
 
 interface FieldPartProps {
   root?: DefaultHTMLProps;
@@ -78,12 +82,26 @@ function Field(props: FieldProps) {
               }
             }
             if (childrenType === 'select') {
-              return <ui.select {...service.getSelectProps(attrs.select)}>{children}</ui.select>;
+              if (children) {
+                return (
+                  <SelectContext.Provider value={service.getSelectProps(attrs.select)}>
+                    {children}
+                  </SelectContext.Provider>
+                );
+              } else {
+                return <Select {...service.getSelectProps(attrs.select)} />;
+              }
             }
             if (childrenType === 'textarea') {
-              return (
-                <ui.textarea {...service.getTextareaProps(attrs.textarea)}>{children}</ui.textarea>
-              );
+              if (children) {
+                return (
+                  <TextareaContext.Provider value={service.getTextareaProps(attrs.textarea)}>
+                    {children}
+                  </TextareaContext.Provider>
+                );
+              } else {
+                return <Textarea {...service.getTextareaProps(attrs.textarea)} />;
+              }
             }
             return children;
           })()}
@@ -102,5 +120,9 @@ function Field(props: FieldProps) {
 }
 
 Field.displayName = 'Field';
+Field.Input = Input;
+Field.Select = Select;
+Field.Option = ui.option;
+Field.Textarea = Textarea;
 
 export default Field;

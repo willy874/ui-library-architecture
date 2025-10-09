@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-interface CreateMachineContextResult<P, R> {
+export interface CreateMachineContextResult<P, R> {
   MachineProvider: (p: React.ProviderProps<P>) => React.JSX.Element;
   ServiceProvider: (p: React.ProviderProps<R>) => React.JSX.Element;
   Consumer: (p: React.ConsumerProps<R>) => React.JSX.Element;

@@ -58,17 +58,17 @@ export const useFieldService = (props: UseFieldServiceProps) => {
     type = 'text',
   } = props;
 
-  const env = useEnvironmentContext();
+  const environment = useEnvironmentContext();
   const uid = useId();
   const id = props.id ?? uid;
-  const rootId = ids.root ?? `field::${id}`;
-  const labelId = ids.label ?? `field::${id}::label`;
-  const errorTextId = ids.errorText ?? `field::${id}::error-text`;
-  const passwordControlId = ids.passwordControl ?? `field::${id}::password-control`;
-  const helperId = ids.helper ?? `field::${id}::helper`;
-  const prefixId = ids.prefix ?? `field::${id}::prefix`;
-  const suffixId = ids.suffix ?? `field::${id}::suffix`;
-  const wrapperId = ids.wrapper ?? `field::${id}::wrapper`;
+  const rootId = ids.root ?? `field__${id}`;
+  const labelId = ids.label ?? `field__${id}__label`;
+  const errorTextId = ids.errorText ?? `field__${id}__error-text`;
+  const passwordControlId = ids.passwordControl ?? `field__${id}__password-control`;
+  const helperId = ids.helper ?? `field__${id}__helper`;
+  const prefixId = ids.prefix ?? `field__${id}__prefix`;
+  const suffixId = ids.suffix ?? `field__${id}__suffix`;
+  const wrapperId = ids.wrapper ?? `field__${id}__wrapper`;
 
   const [hasNode, setHasNode] = useState({
     errorText: false,
@@ -98,25 +98,25 @@ export const useFieldService = (props: UseFieldServiceProps) => {
     if (!rootNode) return;
 
     const checkTextElements = () => {
-      const docOrShadowRoot = env.getRootNode() as ShadowRoot | Document;
+      const docOrShadowRoot = environment.getRootNode();
       setHasNode({
-        errorText: !!docOrShadowRoot.getElementById(errorTextId),
-        helper: !!docOrShadowRoot.getElementById(helperId),
-        prefix: !!docOrShadowRoot.getElementById(prefixId),
-        suffix: !!docOrShadowRoot.getElementById(suffixId),
-        passwordControl: !!docOrShadowRoot.getElementById(passwordControlId),
-        wrapper: !!docOrShadowRoot.getElementById(wrapperId),
+        errorText: !!docOrShadowRoot.querySelector(`#${errorTextId}`),
+        helper: !!docOrShadowRoot.querySelector(`#${helperId}`),
+        prefix: !!docOrShadowRoot.querySelector(`#${prefixId}`),
+        suffix: !!docOrShadowRoot.querySelector(`#${suffixId}`),
+        passwordControl: !!docOrShadowRoot.querySelector(`#${passwordControlId}`),
+        wrapper: !!docOrShadowRoot.querySelector(`#${wrapperId}`),
       });
     };
 
     checkTextElements();
 
-    const win = env.getWindow();
+    const win = environment.getWindow();
     const observer = new win.MutationObserver(checkTextElements);
     observer.observe(rootNode, { childList: true, subtree: true });
 
     return () => observer.disconnect();
-  }, [env, errorTextId, helperId, passwordControlId, prefixId, suffixId, wrapperId]);
+  }, [environment, errorTextId, helperId, passwordControlId, prefixId, suffixId, wrapperId]);
 
   const getRootProps = useCallback(
     (overrides?: HTMLProps<'div'>) => ({
