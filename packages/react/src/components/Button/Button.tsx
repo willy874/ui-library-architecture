@@ -45,7 +45,7 @@ const Button = forwardRef<HTMLElement, ButtonProps>(function (props, ref) {
   const $disabled = isShowSpin || disabled;
 
   const attrs = mergeProps<any>(rest, {
-    role: 'button',
+    role: Component === 'button' ? undefined : 'button',
     disabled: $disabled,
     'data-icon': dataAttr(!!icon),
     ref: refCallback,

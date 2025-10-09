@@ -1,2 +1,2 @@
-export { default as CoreButton } from './Button';
-export type { ButtonProps as CoreButtonProps } from './Button';
+export { default as Button } from './Button';
+export type { ButtonProps, ButtonHTMLAttributes } from './Button';
