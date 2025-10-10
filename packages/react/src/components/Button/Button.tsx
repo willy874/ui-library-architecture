@@ -11,8 +11,7 @@ const useComponents = defineComponents({
   Spin: Spinner,
 });
 
-export interface ButtonProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
+export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   as?: keyof typeof ui;
   disabled?: boolean;
   icon?: boolean;
@@ -55,8 +54,3 @@ const Button = forwardRef<HTMLElement, ButtonProps>(function (props, ref) {
 });
 
 export default Button;
-
-export type ButtonHTMLAttributes<T extends HTMLElement> = Omit<
-  React.ButtonHTMLAttributes<T>,
-  keyof React.HTMLAttributes<T>
->;
