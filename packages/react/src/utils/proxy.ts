@@ -1,1 +1,1 @@
-export { reactive as proxy, watch, computed } from '@vue/reactivity';
+export { reactive as proxy, isReactive as isProxy, watch, computed } from '@vue/reactivity';
