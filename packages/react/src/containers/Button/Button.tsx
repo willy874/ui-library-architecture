@@ -1,8 +1,10 @@
 import { forwardRef } from 'react';
 import { button, type ButtonVariant } from '@/styled-system/recipes';
-import { injectDataset } from '@/utils/injectDataset';
-import { Button as CoreButton } from '@/components';
-import type { ButtonProps as CoreButtonProps } from '@/components';
+import { useForkRef } from '@/utils/hooks/composeRefs';
+import { useButtonService } from '@/components';
+import type { ButtonServiceProps } from '@/components';
+import { ui } from '@/utils/factory';
+import { Spinner } from './imports';
 
 type ButtonHTMLAttributes<T extends HTMLElement> = Omit<
   React.ButtonHTMLAttributes<T>,
@@ -10,47 +12,81 @@ type ButtonHTMLAttributes<T extends HTMLElement> = Omit<
 >;
 
 export interface ContainerButtonProps
-  extends Omit<CoreButtonProps, 'as'>,
+  extends ButtonServiceProps,
     ButtonHTMLAttributes<HTMLButtonElement>,
-    Partial<ButtonVariant> {}
+    Partial<ButtonVariant> {
+  icon?: boolean;
+}
 
 export const ContainerButton = forwardRef(
   (props: ContainerButtonProps, ref: React.Ref<HTMLElement>) => {
-    const variants = button.getVariantProps(button.splitVariantProps(props)[0]) as ButtonVariant;
-    const dataset = injectDataset({
-      variant: variants.variant,
-      theme: variants.theme,
-      size: variants.size,
-      shape: variants.shape,
+    const [variantsProps, restProps] = button.splitVariantProps(props);
+    const variants = button.getVariantProps(variantsProps) as ButtonVariant;
+    const composeRef = useForkRef(ref, restProps.ref);
+    const { getBlockProps, getSpinnerProps, isShowSpin } = useButtonService({
+      ...restProps,
+      ref: composeRef,
+      classNames: {
+        root: button(variants),
+      },
+      variants: {
+        variant: variants.variant,
+        theme: variants.theme,
+        size: variants.size,
+        shape: variants.shape,
+        icon: !!props.icon,
+      },
     });
-    const newProps = {
-      className: button(variants),
-      ...dataset,
-      ...props,
-    };
-    return <CoreButton as="button" {...newProps} ref={ref} />;
+    return (
+      <ui.div {...getBlockProps()}>
+        {isShowSpin ? (
+          <ui.div {...getSpinnerProps()}>
+            <Spinner />
+          </ui.div>
+        ) : (
+          props.children
+        )}
+      </ui.div>
+    );
   },
 );
 
 export interface BlockButtonProps
-  extends Omit<CoreButtonProps, 'as'>,
+  extends ButtonServiceProps,
     ButtonHTMLAttributes<HTMLButtonElement>,
-    Partial<ButtonVariant> {}
+    Partial<ButtonVariant> {
+  icon?: boolean;
+}
 
 export const BlockButton = forwardRef((props: BlockButtonProps, ref: React.Ref<HTMLElement>) => {
-  const variants = button.getVariantProps(button.splitVariantProps(props)[0]) as ButtonVariant;
-  const dataset = injectDataset({
-    variant: variants.variant,
-    theme: variants.theme,
-    size: variants.size,
-    shape: variants.shape,
+  const [variantsProps, restProps] = button.splitVariantProps(props);
+  const variants = button.getVariantProps(variantsProps) as ButtonVariant;
+  const composeRef = useForkRef(ref, restProps.ref);
+  const { getBlockProps, getSpinnerProps, isShowSpin } = useButtonService({
+    ...restProps,
+    ref: composeRef,
+    classNames: {
+      root: button(variants),
+    },
+    variants: {
+      variant: variants.variant,
+      theme: variants.theme,
+      size: variants.size,
+      shape: variants.shape,
+      icon: !!props.icon,
+    },
   });
-  const newProps = {
-    className: button(variants),
-    ...dataset,
-    ...props,
-  };
-  return <CoreButton {...newProps} ref={ref} />;
+  return (
+    <ui.div {...getBlockProps()}>
+      {isShowSpin ? (
+        <ui.div {...getSpinnerProps()}>
+          <Spinner />
+        </ui.div>
+      ) : (
+        props.children
+      )}
+    </ui.div>
+  );
 });
 
 type AnchorHTMLAttributes<T extends HTMLElement> = Omit<
@@ -59,22 +95,39 @@ type AnchorHTMLAttributes<T extends HTMLElement> = Omit<
 >;
 
 export interface LinkButtonProps
-  extends Omit<CoreButtonProps, 'as'>,
+  extends ButtonServiceProps,
     AnchorHTMLAttributes<HTMLAnchorElement>,
-    Partial<ButtonVariant> {}
+    Partial<ButtonVariant> {
+  icon?: boolean;
+}
 
 export const LinkButton = forwardRef((props: LinkButtonProps, ref: React.Ref<HTMLElement>) => {
-  const variants = button.getVariantProps(button.splitVariantProps(props)[0]) as ButtonVariant;
-  const dataset = injectDataset({
-    variant: variants.variant,
-    theme: variants.theme,
-    size: variants.size,
-    shape: variants.shape,
+  const [variantsProps, restProps] = button.splitVariantProps(props);
+  const variants = button.getVariantProps(variantsProps) as ButtonVariant;
+  const composeRef = useForkRef(ref, restProps.ref);
+  const { getLinkProps, getSpinnerProps, isShowSpin } = useButtonService({
+    ...restProps,
+    ref: composeRef,
+    classNames: {
+      root: button(variants),
+    },
+    variants: {
+      variant: variants.variant,
+      theme: variants.theme,
+      size: variants.size,
+      shape: variants.shape,
+      icon: !!props.icon,
+    },
   });
-  const newProps = {
-    className: button(variants),
-    ...dataset,
-    ...props,
-  };
-  return <CoreButton as="a" {...newProps} ref={ref} />;
+  return (
+    <ui.a {...getLinkProps()}>
+      {isShowSpin ? (
+        <ui.div {...getSpinnerProps()}>
+          <Spinner />
+        </ui.div>
+      ) : (
+        props.children
+      )}
+    </ui.a>
+  );
 });
