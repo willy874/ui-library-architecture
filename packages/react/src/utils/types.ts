@@ -13,3 +13,11 @@ export type StyleAttributes<T extends string = string> = {
 } & { className: string };
 
 export type Props = Readonly<Record<string, unknown>>;
+
+export type DeepReadonly<T> = T extends (infer R)[]
+  ? ReadonlyArray<DeepReadonly<R>>
+  : T extends Function
+    ? T
+    : T extends object
+      ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+      : T;

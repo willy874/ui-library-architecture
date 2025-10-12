@@ -1,4 +1,4 @@
-import { proxy, watch } from '@/utils/proxy';
+import { proxy, isProxy, watch } from '@/utils/proxy';
 import { getProperty } from '@/utils/getProperty';
 import type {
   PluginContext,
@@ -20,16 +20,17 @@ export function createPluginContext<
   environment?: EnvironmentContext;
 }): PluginContext<Attrs, Methods, State, Parts> {
   const { initialState, parts, environment = environmentContext } = params;
-  const state = proxy(
-    typeof initialState === 'function' ? initialState() : { ...initialState },
-  ) as State;
+  const state = (() => {
+    const init = typeof initialState === 'function' ? initialState() : initialState;
+    return isProxy(init) ? init : proxy({ ...init });
+  })();
   const clearup: (() => void)[] = [];
 
   return {
     ...environment,
-    __attrs__: {} as Attrs,
-    __state__: {} as State,
-    __methods__: {} as Methods,
+    getInstance: (): Attrs & Methods & { getState: () => State } => {
+      throw new Error('getInstance method is not implemented.');
+    },
     prop: (key) => getProperty(state, key),
     watch: (key: string, callback: (value: any, prevValue: any) => void) => {
       clearup.push(
