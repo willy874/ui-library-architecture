@@ -1,19 +1,27 @@
 import type { InferProp, FlatKeyof } from '@/utils/getProperty';
+import type { EnvironmentContext } from '@/utils/environment-context';
 
 export type PluginState = Record<string, any>;
+export type PluginParts = Record<
+  string,
+  (env: EnvironmentContext) => HTMLElement[] | HTMLElement | null
+>;
 
-export type PluginEvents = Record<string, (...args: any[]) => boolean> & {
-  created?: () => void;
-  destroyed?: () => void;
-};
+export interface PluginProperties {
+  name: string;
+}
+
+export type PluginHooks = Record<string, (...args: any[]) => any>;
 
 export interface PluginContext<
+  Attrs extends PluginProperties,
+  Methods extends PluginHooks = {},
   State extends PluginState = {},
-  Ev extends PluginEvents = {},
-  Parts extends string = string,
-> {
-  __events__: Ev;
+  Parts extends PluginParts = {},
+> extends EnvironmentContext {
   __state__: State;
+  __attrs__: Attrs;
+  __methods__: Methods;
   prop: <K extends string>(
     key: FlatKeyof<State>,
   ) => InferProp<State, K> extends object ? Readonly<InferProp<State, K>> : InferProp<State, K>;
@@ -21,20 +29,10 @@ export interface PluginContext<
     key: K,
     callback: (value: InferProp<State, K>, prevValue: InferProp<State, K>) => void,
   ) => () => void;
-  emit: <K extends keyof Ev>(type: K, ...payload: Parameters<Ev[K]>) => void;
-  on: <K extends keyof Ev>(type: K, listener: Ev[K]) => void;
-  getPart: (part: Parts) => HTMLElement | null;
+  getParts: <K extends keyof Parts>(key: K) => ReturnType<Parts[K]>;
   destroy: () => void;
 }
 
-export interface PluginProperties {
-  name: string;
-}
-
-export interface PluginHooks {}
-
-export type PluginFactory<
-  T extends PluginContext,
-  P extends PluginProperties,
-  H extends PluginHooks,
-> = (context: T) => Partial<P> & Partial<H>;
+export type PluginFactory<T extends PluginContext<{ name: string }>> = (
+  context: T,
+) => Partial<T['__attrs__']> & Partial<T['__methods__']>;
