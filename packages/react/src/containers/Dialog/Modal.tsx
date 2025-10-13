@@ -1,12 +1,12 @@
 import { splitProps } from '@/utils/splitProps';
-import { dialog, type DialogVariant } from '@/styled-system/recipes';
+import { modal, type ModalVariant } from '@/styled-system/recipes';
 import { ui } from '@/utils/factory';
 import { CloseIcon } from '@/assets';
 import { Portal, DialogContext, fadeInPlugin, modalPlugin, useDialogService } from '@/components';
 import type { ModalPartProps, UseDialogServiceProps } from '@/components';
 import { Button } from '@/containers/Button';
 
-export interface ModalProps extends Omit<UseDialogServiceProps, 'plugins'>, Partial<DialogVariant> {
+export interface ModalProps extends Omit<UseDialogServiceProps, 'plugins'>, Partial<ModalVariant> {
   titleNode?: React.ReactNode;
   descriptionNode?: React.ReactNode;
   actionNode?: React.ReactNode;
@@ -26,9 +26,9 @@ const propKeys = [
 
 function Modal(props: ModalProps) {
   const [containerProps, serviceParams] = splitProps(props, ...propKeys);
-  const variants = dialog.getVariantProps(dialog.splitVariantProps(props)[0]);
+  const variants = modal.getVariantProps(modal.splitVariantProps(props)[0]);
   const service = useDialogService({
-    classNames: dialog(variants),
+    classNames: modal(variants),
     plugins: [fadeInPlugin, modalPlugin],
     ...serviceParams,
   });
