@@ -123,6 +123,7 @@ export const useDialogService = (props: UseDialogServiceProps = {}) => {
     };
     return instance;
   }, [ids, ...plugins]);
+
   const hookRef = useRef(getHookInstance());
   useEffect(() => {
     hookRef.current = getHookInstance();

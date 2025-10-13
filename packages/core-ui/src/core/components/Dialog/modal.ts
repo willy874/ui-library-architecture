@@ -1,14 +1,12 @@
-import { definePreset, defineSemanticTokens, defineSlotRecipe, defineParts } from '@pandacss/dev';
+import { definePreset, defineSemanticTokens, defineSlotRecipe } from '@pandacss/dev';
 import { dialogAnatomy } from '@ui-library-architecture/anatomy';
 
 const token = defineSemanticTokens({});
 
-const parts = defineParts(dialogAnatomy.build());
-
 const slotRecipe = defineSlotRecipe({
   className: 'ui-modal',
   slots: dialogAnatomy.keys(),
-  base: parts({
+  base: {
     backdrop: {
       position: 'fixed',
       inset: 0,
@@ -56,34 +54,34 @@ const slotRecipe = defineSlotRecipe({
         flexGrow: 1,
       },
     },
-  }),
+  },
   variants: {
     size: {
-      sm: parts({
+      sm: {
         content: {
           width: '280px',
         },
-      }),
-      md: parts({
+      },
+      md: {
         content: {
           width: '360px',
         },
-      }),
-      lg: parts({
+      },
+      lg: {
         content: {
           width: '480px',
         },
-      }),
-      xl: parts({
+      },
+      xl: {
         content: {
           width: '640px',
         },
-      }),
-      full: parts({
+      },
+      full: {
         content: {
           width: '100%',
         },
-      }),
+      },
     },
   },
   defaultVariants: {

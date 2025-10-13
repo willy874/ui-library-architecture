@@ -64,12 +64,12 @@ export const recipe = defineRecipe({
       outlineWidth: '{borderWidths.1}',
       outlineColor: 'var(--colors-button-outline-focus)',
     },
-    '&:hover&:not(:disabled)': {
+    '&:hover&:not(:disabled,[data-disabled])': {
       backgroundColor: 'var(--colors-button-bg-hover)',
       borderColor: 'var(--colors-button-border-hover)',
       color: 'var(--colors-button-text-hover)',
     },
-    '&:active&:not(:disabled)': {
+    '&:active&:not(:disabled,[data-disabled])': {
       '--transforms-scale-x': 'scaleX(1.02)',
       '--transforms-scale-y': 'scaleY(1.02)',
     },
@@ -81,22 +81,22 @@ export const recipe = defineRecipe({
     },
     '&:link': {
       color: 'var(--colors-button-link)',
-      '&:visited:not(:disabled)': {
+      '&:visited:not(:disabled,[data-disabled])': {
         color: 'var(--colors-button-link-visited)',
       },
-      '&:hover&:not(:disabled)': {
+      '&:hover&:not(:disabled,[data-disabled])': {
         color: 'var(--colors-button-link-hover)',
       },
-      '&:active&:not(:disabled)': {
+      '&:active&:not(:disabled,[data-disabled])': {
         color: 'var(--colors-button-link-active)',
       },
-      '&:focus&:not(:disabled)': {
+      '&:focus&:not(:disabled,[data-disabled])': {
         '--shadows-base': '0 0 0 3px var(--colors-button-link-outline-focus)',
         outlineStyle: 'solid',
         outlineWidth: '{borderWidths.2}',
         outlineColor: 'var(--colors-button-link-outline-focus)',
       },
-      '&:disabled': {
+      '&:disabled,[data-disabled]': {
         color: 'var(--colors-button-link-disabled)',
       },
     },
@@ -134,16 +134,16 @@ export const recipe = defineRecipe({
         py: '{spacing.1}',
         px: '{spacing.2}',
         gap: '0.625rem',
-        '&[data-icon]': {
+        '&[data-button-icon]': {
           fontSize: '{fontSizes.md}',
-          '&:not([data-variant=text],[data-variant=link])': {
+          '&:not([data-button-variant=text],[data-button-variant=link])': {
             padding: '{spacing.1}',
           },
         },
-        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+        '&[data-button-variant="filled"]&:not([data-button-shape="circle"],[data-button-icon])': {
           minWidth: '4rem',
         },
-        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+        '&[data-button-variant="outlined"]&:not([data-button-shape="circle"],[data-button-icon])': {
           minWidth: '4rem',
         },
       },
@@ -152,16 +152,16 @@ export const recipe = defineRecipe({
         py: '{spacing.2}',
         px: '{spacing.4}',
         gap: '0.625rem',
-        '&[data-icon]': {
+        '&[data-button-icon]': {
           fontSize: '{fontSizes.2xl}',
-          '&:not([data-variant=text],[data-variant=link])': {
+          '&:not([data-button-variant=text],[data-button-variant=link])': {
             padding: '{spacing.2}',
           },
         },
-        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+        '&[data-button-variant="filled"]&:not([data-button-shape="circle"],[data-button-icon])': {
           minWidth: '6rem',
         },
-        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+        '&[data-button-variant="outlined"]&:not([data-button-shape="circle"],[data-button-icon])': {
           minWidth: '6rem',
         },
       },
@@ -170,16 +170,16 @@ export const recipe = defineRecipe({
         py: '{spacing.3}',
         px: '{spacing.6}',
         gap: '0.625rem',
-        '&[data-icon]': {
+        '&[data-button-icon]': {
           fontSize: '{fontSizes.3xl}',
-          '&:not([data-variant=text],[data-variant=link])': {
+          '&:not([data-button-variant=text],[data-button-variant=link])': {
             padding: '{spacing.3}',
           },
         },
-        '&[data-variant="filled"]&:not([data-shape="circle"],[data-icon])': {
+        '&[data-button-variant="filled"]&:not([data-button-shape="circle"],[data-button-icon])': {
           minWidth: '8rem',
         },
-        '&[data-variant="outlined"]&:not([data-shape="circle"],[data-icon])': {
+        '&[data-button-variant="outlined"]&:not([data-button-shape="circle"],[data-button-icon])': {
           minWidth: '8rem',
         },
       },

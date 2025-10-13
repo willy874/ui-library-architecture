@@ -6,7 +6,7 @@ import { seedTokens } from './theme/seed';
 import { createInputPreset } from './components/Input';
 import { createFieldPreset } from './components/Field';
 import { createButtonPreset } from './components/Button';
-import { createDialogPreset } from './components/Dialog';
+import { createModalPreset } from './components/Dialog';
 import { createGlobalVars } from '../utils/globalVars';
 
 const createTokenPreset = () => {
@@ -30,10 +30,7 @@ export function createUIPreset(): Preset {
       createInputPreset(),
       createFieldPreset(),
       createButtonPreset(),
-      createDialogPreset(),
+      createModalPreset(),
     ],
-    staticCss: {
-      recipes: '*',
-    },
   });
 }
