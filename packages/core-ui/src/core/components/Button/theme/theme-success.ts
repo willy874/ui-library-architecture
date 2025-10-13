@@ -68,8 +68,8 @@ export const link: SystemStyleObject = {
 };
 
 export const theme: SystemStyleObject = {
-  '&[data-variant="filled"]': filled,
-  '&[data-variant="outlined"]': outlined,
-  '&[data-variant="text"]': text,
-  '&[data-variant="link"]': link,
+  '&[data-button-variant="filled"]': filled,
+  '&[data-button-variant="outlined"]': outlined,
+  '&[data-button-variant="text"]': text,
+  '&[data-button-variant="link"]': link,
 };

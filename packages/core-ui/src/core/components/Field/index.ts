@@ -1,7 +1,5 @@
-import { defineParts, definePreset, defineSemanticTokens, defineSlotRecipe } from '@pandacss/dev';
+import { definePreset, defineSemanticTokens, defineSlotRecipe } from '@pandacss/dev';
 import { fieldAnatomy } from '@ui-library-architecture/anatomy';
-
-const parts = defineParts(fieldAnatomy.build());
 
 export const token = defineSemanticTokens({
   colors: {
@@ -27,7 +25,7 @@ export const token = defineSemanticTokens({
 export const recipe = defineSlotRecipe({
   className: 'ui-field',
   slots: fieldAnatomy.keys(),
-  base: parts({
+  base: {
     root: {
       display: 'flex',
       flexDirection: 'column',
@@ -93,10 +91,10 @@ export const recipe = defineSlotRecipe({
         outline: 'none',
       },
     },
-  }),
+  },
   variants: {
     variant: {
-      outlined: parts({
+      outlined: {
         wrapper: {
           backgroundColor: '{colors.input.normal.bg}',
           borderColor: '{colors.input.normal.border}',
@@ -173,8 +171,8 @@ export const recipe = defineSlotRecipe({
             backgroundColor: 'transparent',
           },
         },
-      }),
-      none: parts({
+      },
+      none: {
         root: {
           display: 'flex',
           flexDirection: 'column',
@@ -189,7 +187,7 @@ export const recipe = defineSlotRecipe({
         select: {
           color: 'inherit',
         },
-      }),
+      },
     },
   },
   defaultVariants: {

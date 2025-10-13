@@ -1,2 +1,2 @@
-export { createDialogPreset } from './dialog';
+// export { createDialogPreset } from './dialog';
 export { createModalPreset } from './modal';
