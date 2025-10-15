@@ -1,4 +1,3 @@
-import { Button as CoreButton } from '@/components';
 import { ContainerButton, BlockButton, LinkButton } from './Button';
 import type { ContainerButtonProps, BlockButtonProps, LinkButtonProps } from './Button';
 
@@ -11,7 +10,6 @@ type ButtonComponent = React.ForwardRefExoticComponent<
 };
 
 export const Button = Object.assign(ContainerButton, {
-  Core: CoreButton,
   Block: BlockButton,
   Link: LinkButton,
 }) as ButtonComponent;
