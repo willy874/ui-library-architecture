@@ -12,12 +12,35 @@ const rootPath = process.cwd();
 
 const pkgPath = resolve(rootPath, 'package.json');
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
+
+const getExternal = (
+  packagesNames: Record<string, string> = {},
+  exclude: (string | RegExp)[] = [],
+) => {
+  return Object.keys(packagesNames).reduce(
+    (acc, name) => {
+      if (
+        exclude.some((item) => {
+          if (typeof item === 'string') return item === name;
+          if (item instanceof RegExp) return item.test(name);
+          return false;
+        })
+      ) {
+        return acc;
+      }
+      acc.push(name);
+      acc.push(new RegExp(`^${name}/.*`));
+      return acc;
+    },
+    [] as (string | RegExp)[],
+  );
+};
+
 const external = [
   ...NODEJS_EXTERNALS,
   /^node:/,
-  ...Object.keys(pkg?.dependencies || {}),
-  ...Object.keys(pkg?.peerDependencies || {}),
-  'react/jsx-runtime',
+  ...getExternal(pkg?.dependencies),
+  ...getExternal(pkg?.peerDependencies),
 ];
 
 const renderBanner = (fileName: string) => {
