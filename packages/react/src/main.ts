@@ -17,3 +17,8 @@ export async function setupStyles(getRootNode?: () => Document | ShadowRoot | HT
   const node = getRootNode ? getRootNode() : document.head;
   node.appendChild(style);
 }
+
+export { splitProps } from '@/utils/splitProps';
+export { ui } from '@/utils/factory';
+export { useForkRef } from '@/utils/hooks/composeRefs';
+export type { DefaultHTMLProps, HTMLProps } from '@/utils/factory';
