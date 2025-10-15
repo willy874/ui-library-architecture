@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "build": "storybook build"
+    "build:panda": "panda codegen",
+    "dev": "pnpm build:panda & storybook dev -p 6006",
+    "build": "build:panda & storybook build"
   },
   "keywords": [],
   "author": "",
@@ -17,12 +18,14 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "4.1.1",
+    "@pandacss/dev": "1.3.0",
     "@storybook/addon-a11y": "9.1.5",
     "@storybook/addon-docs": "9.1.5",
     "@storybook/addon-vitest": "9.1.5",
     "@storybook/react-vite": "9.1.5",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
+    "@ui-library-architecture/core-ui": "workspace:*",
     "@ui-library-architecture/eslint-config": "workspace:*",
     "@ui-library-architecture/rollup-plugin-svgr": "workspace:*",
     "@vitest/browser": "3.2.4",
