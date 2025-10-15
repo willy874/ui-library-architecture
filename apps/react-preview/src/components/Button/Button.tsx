@@ -4,6 +4,8 @@ import { useButtonService, useForkRef, ui } from '@ui-library-architecture/react
 import type { ButtonServiceProps } from '@ui-library-architecture/react';
 import { button, type ButtonVariant } from 'styled-system/recipes';
 
+const Spinner = () => <SpinnerIcon />;
+
 type ButtonHTMLAttributes<T extends HTMLElement> = Omit<
   React.ButtonHTMLAttributes<T>,
   keyof React.HTMLAttributes<T>
@@ -18,7 +20,7 @@ export interface ContainerButtonProps
 
 export const ContainerButton = forwardRef(
   (props: ContainerButtonProps, ref: React.Ref<HTMLElement>) => {
-    const [variantsProps, restProps] = button.splitVariantProps(props);
+    const [variantsProps, { icon, ...restProps }] = button.splitVariantProps(props);
     const variants = button.getVariantProps(variantsProps) as ButtonVariant;
     const composeRef = useForkRef(ref, restProps.ref);
     const { getBlockProps, getSpinnerProps, isShowSpin } = useButtonService({
@@ -32,14 +34,14 @@ export const ContainerButton = forwardRef(
         theme: variants.theme,
         size: variants.size,
         shape: variants.shape,
-        icon: !!props.icon,
+        icon: !!icon,
       },
     });
     return (
       <ui.div {...getBlockProps()}>
         {isShowSpin ? (
           <ui.div {...getSpinnerProps()}>
-            <SpinnerIcon />
+            <Spinner />
           </ui.div>
         ) : (
           props.children
@@ -57,7 +59,7 @@ export interface BlockButtonProps
 }
 
 export const BlockButton = forwardRef((props: BlockButtonProps, ref: React.Ref<HTMLElement>) => {
-  const [variantsProps, restProps] = button.splitVariantProps(props);
+  const [variantsProps, { icon, ...restProps }] = button.splitVariantProps(props);
   const variants = button.getVariantProps(variantsProps) as ButtonVariant;
   const composeRef = useForkRef(ref, restProps.ref);
   const { getBlockProps, getSpinnerProps, isShowSpin } = useButtonService({
@@ -71,14 +73,14 @@ export const BlockButton = forwardRef((props: BlockButtonProps, ref: React.Ref<H
       theme: variants.theme,
       size: variants.size,
       shape: variants.shape,
-      icon: !!props.icon,
+      icon: !!icon,
     },
   });
   return (
     <ui.div {...getBlockProps()}>
       {isShowSpin ? (
         <ui.div {...getSpinnerProps()}>
-          <SpinnerIcon />
+          <Spinner />
         </ui.div>
       ) : (
         props.children
@@ -100,7 +102,7 @@ export interface LinkButtonProps
 }
 
 export const LinkButton = forwardRef((props: LinkButtonProps, ref: React.Ref<HTMLElement>) => {
-  const [variantsProps, restProps] = button.splitVariantProps(props);
+  const [variantsProps, { icon, ...restProps }] = button.splitVariantProps(props);
   const variants = button.getVariantProps(variantsProps) as ButtonVariant;
   const composeRef = useForkRef(ref, restProps.ref);
   const { getLinkProps, getSpinnerProps, isShowSpin } = useButtonService({
@@ -114,14 +116,14 @@ export const LinkButton = forwardRef((props: LinkButtonProps, ref: React.Ref<HTM
       theme: variants.theme,
       size: variants.size,
       shape: variants.shape,
-      icon: !!props.icon,
+      icon: !!icon,
     },
   });
   return (
     <ui.a {...getLinkProps()}>
       {isShowSpin ? (
         <ui.div {...getSpinnerProps()}>
-          <SpinnerIcon />
+          <Spinner />
         </ui.div>
       ) : (
         props.children
