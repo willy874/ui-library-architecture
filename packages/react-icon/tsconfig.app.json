@@ -30,11 +30,10 @@
 
     /* Path alias */
     "paths": {
-      "@/*": ["./src/*"],
-      "styled-system/*": ["./src/styled-system/*"]
+      "@/*": ["./src/*"]
     }
   },
 
-  "include": ["**/*.ts", "**/*.tsx", "**/*.mdx"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

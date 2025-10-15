@@ -1,16 +1,20 @@
-import { splitProps } from '@/utils/splitProps';
-import { ui, type DefaultHTMLProps, type HTMLProps } from '@/utils/factory';
-import { field } from '@/styled-system/recipes';
-import type { FieldVariant } from '@/styled-system/recipes';
-import { Eye, EyeSlash } from '@/assets';
 import {
   FieldContext,
   useFieldService,
   InputContext,
   SelectContext,
   TextareaContext,
-} from '@/components';
-import type { UseFieldServiceProps } from '@/components';
+  splitProps,
+  ui,
+} from '@ui-library-architecture/react';
+import type {
+  DefaultHTMLProps,
+  HTMLProps,
+  UseFieldServiceProps,
+} from '@ui-library-architecture/react';
+import { EyeIcon, EyeSlashIcon } from '@ui-library-architecture/react-icon';
+import { field } from 'styled-system/recipes';
+import type { FieldVariant } from 'styled-system/recipes';
 import Input from './Input';
 import Select from './Select';
 import Textarea from './Textarea';
@@ -110,7 +114,7 @@ function Field(props: FieldProps) {
           })()}
           {isPassword ? (
             <ui.div {...service.getPasswordControlProps(attrs.passwordControl)}>
-              {service.isPasswordVisible ? <EyeSlash /> : <Eye />}
+              {service.isPasswordVisible ? <EyeSlashIcon /> : <EyeIcon />}
             </ui.div>
           ) : (
             <ui.div {...service.getSuffixProps(attrs.suffix)}>{suffixNode}</ui.div>

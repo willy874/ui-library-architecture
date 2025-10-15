@@ -1,9 +1,7 @@
 import { forwardRef, useContext, useRef } from 'react';
 import { input } from 'styled-system/recipes';
-import { ui, type HTMLProps } from '@/utils/factory';
-import { useForkRef } from '@/utils/hooks/composeRefs';
-import { mergeProps } from '@/utils/mergeProps';
-import { SelectContext } from '@/components';
+import { mergeProps, useForkRef, SelectContext, ui } from '@ui-library-architecture/react';
+import type { HTMLProps } from '@ui-library-architecture/react';
 
 export interface SelectProps extends HTMLProps<'select'> {
   ref: React.Ref<HTMLSelectElement>;

@@ -1,24 +1,12 @@
 {
-  "name": "@ui-library-architecture/react",
+  "name": "@ui-library-architecture/react-icon",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . & tsc -b",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@ui-library-architecture/anatomy": "workspace:*",
-    "@vue/reactivity": "3.5.22",
-    "@zag-js/core": "1.24.2",
-    "@zag-js/dialog": "1.24.2",
-    "@zag-js/dom-query": "1.24.2",
-    "@zag-js/react": "1.24.2",
-    "clsx": "2.1.1",
-    "eventemitter3": "5.0.1",
-    "react-is": "19.1.1"
+    "lint": "eslint . & tsc -b"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -27,26 +15,23 @@
   "devDependencies": {
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
-    "@types/react-is": "19.0.0",
     "@ui-library-architecture/builder-base": "workspace:*",
     "@ui-library-architecture/eslint-config": "workspace:*",
     "@ui-library-architecture/rollup-plugin-svgr": "workspace:*",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react-oxc@0.4.1",
     "globby": "14.1.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
     "typescript": "5.9.2",
     "vite": "npm:rolldown-vite@7.1.8",
     "vite-plugin-dts": "4.5.4"
   },
-  "main": "dist/main.cjs.js",
-  "module": "dist/main.esm.js",
-  "types": "dist/main.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/main.d.ts",
-      "require": "./dist/main.common.js",
-      "import": "./dist/main.esm.js"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.common.js",
+      "import": "./dist/index.esm.js"
     },
     "./package.json": "./package.json"
   }
