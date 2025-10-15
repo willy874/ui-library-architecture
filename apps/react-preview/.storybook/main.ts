@@ -22,6 +22,7 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           '@': resolve(rootPath, 'src'),
+          'styled-system': resolve(rootPath, 'src', 'styled-system'),
         },
       },
     });
