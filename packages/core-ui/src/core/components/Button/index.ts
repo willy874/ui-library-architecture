@@ -58,18 +58,18 @@ export const recipe = defineRecipe({
     boxShadow: dynamicCss.shadows,
     transition: dynamicCss.transition,
     '--transitions-base': 'transform 0.2s',
-    '&:focus&:not(:disabled)': {
+    '&:focus&:not(:disabled,[data-disabled],[aria-disabled])': {
       '--shadows-base': '0 0 0 3px var(--colors-button-outline-focus)',
       outlineStyle: 'solid',
       outlineWidth: '{borderWidths.1}',
       outlineColor: 'var(--colors-button-outline-focus)',
     },
-    '&:hover&:not(:disabled,[data-disabled])': {
+    '&:hover&:not(:disabled,[data-disabled],[aria-disabled])': {
       backgroundColor: 'var(--colors-button-bg-hover)',
       borderColor: 'var(--colors-button-border-hover)',
       color: 'var(--colors-button-text-hover)',
     },
-    '&:active&:not(:disabled,[data-disabled])': {
+    '&:active&:not(:disabled,[data-disabled],[aria-disabled])': {
       '--transforms-scale-x': 'scaleX(1.02)',
       '--transforms-scale-y': 'scaleY(1.02)',
     },
@@ -81,22 +81,22 @@ export const recipe = defineRecipe({
     },
     '&:link': {
       color: 'var(--colors-button-link)',
-      '&:visited:not(:disabled,[data-disabled])': {
+      '&:visited:not(:disabled,[data-disabled],[aria-disabled])': {
         color: 'var(--colors-button-link-visited)',
       },
-      '&:hover&:not(:disabled,[data-disabled])': {
+      '&:hover&:not(:disabled,[data-disabled],[aria-disabled])': {
         color: 'var(--colors-button-link-hover)',
       },
-      '&:active&:not(:disabled,[data-disabled])': {
+      '&:active&:not(:disabled,[data-disabled],[aria-disabled])': {
         color: 'var(--colors-button-link-active)',
       },
-      '&:focus&:not(:disabled,[data-disabled])': {
+      '&:focus&:not(:disabled,[data-disabled],[aria-disabled])': {
         '--shadows-base': '0 0 0 3px var(--colors-button-link-outline-focus)',
         outlineStyle: 'solid',
         outlineWidth: '{borderWidths.2}',
         outlineColor: 'var(--colors-button-link-outline-focus)',
       },
-      '&:disabled,[data-disabled]': {
+      _disabled: {
         color: 'var(--colors-button-link-disabled)',
       },
     },
@@ -140,12 +140,6 @@ export const recipe = defineRecipe({
             padding: '{spacing.1}',
           },
         },
-        '&[data-button-variant="filled"]&:not([data-button-shape="circle"],[data-button-icon])': {
-          minWidth: '4rem',
-        },
-        '&[data-button-variant="outlined"]&:not([data-button-shape="circle"],[data-button-icon])': {
-          minWidth: '4rem',
-        },
       },
       medium: {
         fontSize: '{fontSizes.md}',
@@ -158,12 +152,6 @@ export const recipe = defineRecipe({
             padding: '{spacing.2}',
           },
         },
-        '&[data-button-variant="filled"]&:not([data-button-shape="circle"],[data-button-icon])': {
-          minWidth: '6rem',
-        },
-        '&[data-button-variant="outlined"]&:not([data-button-shape="circle"],[data-button-icon])': {
-          minWidth: '6rem',
-        },
       },
       large: {
         fontSize: '{fontSizes.lg}',
@@ -175,12 +163,6 @@ export const recipe = defineRecipe({
           '&:not([data-button-variant=text],[data-button-variant=link])': {
             padding: '{spacing.3}',
           },
-        },
-        '&[data-button-variant="filled"]&:not([data-button-shape="circle"],[data-button-icon])': {
-          minWidth: '8rem',
-        },
-        '&[data-button-variant="outlined"]&:not([data-button-shape="circle"],[data-button-icon])': {
-          minWidth: '8rem',
         },
       },
     },
@@ -196,7 +178,6 @@ export const recipe = defineRecipe({
       },
       circle: {
         borderRadius: '{radii.circle}',
-        minWidth: 'auto',
       },
     },
   },

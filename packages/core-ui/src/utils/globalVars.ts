@@ -11,7 +11,7 @@ export const dynamicCss = {
     'var(--filters-blur) var(--filters-brightness) var(--filters-contrast) var(--filters-grayscale) var(--filters-hue-rotate) var(--filters-invert) var(--filters-saturate) var(--filters-sepia) var(--filters-drop-shadow)',
   transition:
     'var(--transition-property) var(--transition-duration) var(--transition-timing-function) var(--transition-delay) var(--transition-behavior), var(--transitions-base), var(--transitions-extends)',
-};
+} as const;
 
 export const createGlobalVars = (): Config['globalVars'] => {
   const DEFAULT_VALUES = {
