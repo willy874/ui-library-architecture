@@ -23,7 +23,7 @@ export const ContainerButton = forwardRef(
     const [variantsProps, { icon, ...restProps }] = button.splitVariantProps(props);
     const variants = button.getVariantProps(variantsProps) as ButtonVariant;
     const composeRef = useForkRef(ref, restProps.ref);
-    const { getBlockProps, getSpinnerProps, isShowSpin } = useButtonService({
+    const { getButtonProps, getSpinnerProps, isShowSpin } = useButtonService({
       ...restProps,
       ref: composeRef,
       classNames: {
@@ -38,7 +38,7 @@ export const ContainerButton = forwardRef(
       },
     });
     return (
-      <ui.div {...getBlockProps()}>
+      <ui.button {...getButtonProps()}>
         {isShowSpin ? (
           <ui.div {...getSpinnerProps()}>
             <Spinner />
@@ -46,7 +46,7 @@ export const ContainerButton = forwardRef(
         ) : (
           props.children
         )}
-      </ui.div>
+      </ui.button>
     );
   },
 );
