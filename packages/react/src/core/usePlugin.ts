@@ -17,6 +17,7 @@ interface UsePluginOptions<
   Parts extends PluginParts = {},
   T extends PluginContext = PluginContext<Attrs, Methods, State, Parts>,
 > {
+  initialAttrs?: Attrs;
   initialState: (() => State) | State;
   parts?: Parts;
   plugins?: PluginFactory<T>[];
@@ -29,7 +30,7 @@ export function usePlugin<
   Parts extends PluginParts = {},
   T extends PluginContext = PluginContext<Attrs, Methods, State, Parts>,
 >(options: UsePluginOptions): T {
-  const { initialState, parts, plugins = [] } = options;
+  const { initialState, initialAttrs, parts, plugins = [] } = options;
   const [context] = useState(() =>
     createPluginContext({
       initialState,
@@ -71,6 +72,7 @@ export function usePlugin<
   }, [plugins]);
 
   useEffect(() => {
+    Object.assign(context, initialAttrs || {});
     for (const key in attrs) {
       Reflect.set(context, key, (attrs as any)[key]);
     }
