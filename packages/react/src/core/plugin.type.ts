@@ -34,6 +34,7 @@ export interface PluginContext<
   getInstance: () => PluginInstance<Attrs, Methods, State>;
   prop: <K extends string>(
     key: FlatKeyof<State>,
+    value?: InferProp<State, K>,
   ) => InferProp<State, K> extends object ? DeepReadonly<InferProp<State, K>> : InferProp<State, K>;
   watch: <K extends FlatKeyof<State>>(
     key: K,
