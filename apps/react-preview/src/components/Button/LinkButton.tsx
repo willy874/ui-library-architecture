@@ -1,26 +1,26 @@
 import { forwardRef } from 'react';
-import { useButtonService, useForkRef, ui, splitProps } from '@ui-library-architecture/react';
-import type { ButtonServiceProps } from '@ui-library-architecture/react';
+import {
+  splitProps,
+  ui,
+  useButtonService,
+  useForkRef,
+  type ButtonServiceProps,
+} from '@ui-library-architecture/react';
 import { buttonStyles, buttonVariantKeys, type ButtonVariant } from './styles';
-import { Spinner } from './imports';
+import { Spinner, type ButtonHTMLAttributes } from './imports';
 
-type ButtonHTMLAttributes<T extends HTMLElement> = Omit<
-  React.ButtonHTMLAttributes<T>,
-  keyof React.HTMLAttributes<T>
->;
-
-export interface ContainerButtonProps
+export interface LinkButtonProps
   extends ButtonServiceProps,
-    ButtonHTMLAttributes<HTMLButtonElement>,
+    ButtonHTMLAttributes<HTMLAnchorElement>,
     Partial<ButtonVariant> {
   icon?: boolean;
 }
 
-export const Button = forwardRef((props: ContainerButtonProps, ref: React.Ref<HTMLElement>) => {
+export const LinkButton = forwardRef((props: LinkButtonProps, ref: React.Ref<HTMLElement>) => {
   const [variantProps, { icon, ...restProps }] = splitProps(props, ...buttonVariantKeys);
   const [styles, variants] = buttonStyles(variantProps);
   const composeRef = useForkRef(ref, restProps.ref);
-  const { getButtonProps, getSpinnerProps, isShowSpin } = useButtonService({
+  const { getLinkProps, getSpinnerProps, isShowSpin } = useButtonService({
     ...restProps,
     ref: composeRef,
     classNames: {
@@ -35,7 +35,7 @@ export const Button = forwardRef((props: ContainerButtonProps, ref: React.Ref<HT
     },
   });
   return (
-    <ui.button {...getButtonProps()}>
+    <ui.a {...getLinkProps()}>
       {isShowSpin ? (
         <ui.div {...getSpinnerProps()}>
           <Spinner />
@@ -43,6 +43,6 @@ export const Button = forwardRef((props: ContainerButtonProps, ref: React.Ref<HT
       ) : (
         props.children
       )}
-    </ui.button>
+    </ui.a>
   );
 });

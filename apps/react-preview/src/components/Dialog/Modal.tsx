@@ -9,8 +9,8 @@ import {
 } from '@ui-library-architecture/react';
 import type { UseDialogServiceProps, ModalPartProps } from '@ui-library-architecture/react';
 import { CloseIcon } from '@ui-library-architecture/react-icon';
-import { modal, type ModalVariant } from 'styled-system/recipes';
 import { Button } from '@/components/Button';
+import { modalStyles, modalVariantKeys, type ModalVariant } from './styles';
 
 export interface ModalProps extends Omit<UseDialogServiceProps, 'plugins'>, Partial<ModalVariant> {
   titleNode?: React.ReactNode;
@@ -32,9 +32,10 @@ const propKeys = [
 
 function Modal(props: ModalProps) {
   const [containerProps, serviceParams] = splitProps(props, ...propKeys);
-  const variants = modal.getVariantProps(modal.splitVariantProps(props)[0]);
+  const [variantProps] = splitProps(props, ...modalVariantKeys);
+  const [styles] = modalStyles(variantProps);
   const service = useDialogService({
-    classNames: modal(variants),
+    classNames: styles,
     plugins: [fadeInPlugin, modalPlugin],
     ...serviceParams,
   });

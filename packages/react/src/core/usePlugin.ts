@@ -9,18 +9,18 @@ import type {
 } from './plugin.type';
 import { createPluginContext } from './plugin.context';
 import { EventEmitter } from '@/utils/events';
+import { useEnvironmentContext } from '@/utils/hooks/useEnvironmentContext';
 
 interface UsePluginOptions<
   Attrs extends PluginProperties = {},
   Methods extends PluginHooks = {},
   State extends PluginState = {},
   Parts extends PluginParts = {},
-  T extends PluginContext = PluginContext<Attrs, Methods, State, Parts>,
 > {
   initialAttrs?: Attrs;
   initialState: (() => State) | State;
   parts?: Parts;
-  plugins?: PluginFactory<T>[];
+  plugins?: PluginFactory<PluginContext<Attrs, Methods, State, Parts>>[];
 }
 
 export function usePlugin<
@@ -28,22 +28,23 @@ export function usePlugin<
   Methods extends PluginHooks = {},
   State extends PluginState = {},
   Parts extends PluginParts = {},
-  T extends PluginContext = PluginContext<Attrs, Methods, State, Parts>,
->(options: UsePluginOptions): T {
+>(
+  options: UsePluginOptions<Attrs, Methods, State, Parts>,
+): PluginContext<Attrs, Methods, State, Parts> {
   const { initialState, initialAttrs, parts, plugins = [] } = options;
+  const environment = useEnvironmentContext();
   const [context] = useState(() =>
-    createPluginContext({
+    createPluginContext<Attrs, Methods, State, Parts>({
       initialState,
       parts,
+      environment,
     }),
   );
 
   const [emitter] = useState(() => new EventEmitter());
 
   const { methods, attrs } = useMemo(() => {
-    const results = plugins.map((plugin) => {
-      return plugin(context);
-    });
+    const results = plugins.map((factory) => factory(context));
 
     const _attrs: Attrs = {} as Attrs;
     const _methods: Methods = {} as Methods;
@@ -92,5 +93,5 @@ export function usePlugin<
     };
   }, []);
 
-  return context as T;
+  return context;
 }

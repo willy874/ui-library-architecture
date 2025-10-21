@@ -1,15 +1,15 @@
-import { ContainerButton, BlockButton, LinkButton } from './Button';
-import type { ContainerButtonProps, BlockButtonProps, LinkButtonProps } from './Button';
+import { Button as _Button, type ContainerButtonProps } from './Button';
+import { BlockButton as _BlockButton, type BlockButtonProps } from './BlockButton';
+import { LinkButton as _LinkButton, type LinkButtonProps } from './LinkButton';
 
-type ButtonComponent = React.ForwardRefExoticComponent<
+export const Button = _Button as React.ForwardRefExoticComponent<
   ContainerButtonProps & React.RefAttributes<HTMLButtonElement>
-> & {
-  Core: React.ForwardRefExoticComponent<LinkButtonProps & React.RefAttributes<HTMLElement>>;
-  Block: React.ForwardRefExoticComponent<BlockButtonProps & React.RefAttributes<HTMLElement>>;
-  Link: React.ForwardRefExoticComponent<LinkButtonProps & React.RefAttributes<HTMLAnchorElement>>;
-};
+>;
 
-export const Button = Object.assign(ContainerButton, {
-  Block: BlockButton,
-  Link: LinkButton,
-}) as ButtonComponent;
+export const BlockButton = _BlockButton as React.ForwardRefExoticComponent<
+  BlockButtonProps & React.RefAttributes<HTMLElement>
+>;
+
+export const LinkButton = _LinkButton as React.ForwardRefExoticComponent<
+  LinkButtonProps & React.RefAttributes<HTMLAnchorElement>
+>;
