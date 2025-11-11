@@ -49,9 +49,6 @@ pnpm setup:dev
 ### Development
 
 ```bash
-# Start development with file watching
-pnpm pkg:watch
-
 # Build packages
 pnpm pkg:build
 
